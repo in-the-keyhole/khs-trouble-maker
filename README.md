@@ -56,7 +56,7 @@ Trouble Maker is a Java Spring Boot application that communicates with a a clien
 `NOTE:` Trouble Maker client servlet implementation can be found at [THIS](https://github.com/in-the-keyhole/khs-trouble-maker-client) repo.
 
 ####Dashboard
-The Trouble Maker Dashboard has and event log and also allows services to be selected and killed on demand, and also invoke other trouble making issues against these services.  
+The Trouble Maker Dashboard has and event log and also allows services to be selected and killed on demand, and also invoke other trouble making issues against these services. NOTE: Dashboard defaults to and discovers services from a local instance of `Eureka`. 
 
 ![](/img/trouble-screen.png)
 
