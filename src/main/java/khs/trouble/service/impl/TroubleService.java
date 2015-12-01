@@ -1,3 +1,19 @@
+/*
+ * Copyright 2015 Keyhole Software LLC.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package khs.trouble.service.impl;
 
 import java.util.Arrays;
@@ -80,9 +96,6 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 					+ e.getMessage());
 		}
 
-		// ResponseEntity<T> result = restTemplate.getForEntity(url, type);
-		// return result.getBody();
-
 		return serviceName;
 
 	}
@@ -107,33 +120,6 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 		String url = registry.lookup(serviceName) + "trouble/load";
 
 		eventService.load(serviceName, url,threads);
-
-		// String url = registry.lookup(serviceName) + "/trouble/block";
-
-		// invoke kill api...
-		//
-		// RestTemplate restTemplate = new RestTemplate();
-		//
-		// HttpHeaders headers = new HttpHeaders();
-		// headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
-		// headers.add("token", token);
-		// headers.add("timeout", "" + timeout);
-		// HttpEntity<String> entity = new HttpEntity<String>("parameters",
-		// headers);
-		//
-		// try {
-		//
-		// ResponseEntity<String> result = restTemplate.exchange(url,
-		// HttpMethod.GET, entity, String.class);
-		//
-		// eventService.blocked(serviceName,url);
-		//
-		// } catch (Exception e) {
-		//
-		// eventService.attempted("Attempted to Block service " + serviceName
-		// + " at " + url + " Failed due to exception "
-		// + e.getMessage());
-		// }
 
 		return serviceName;
 
@@ -273,7 +259,7 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 
 					} catch (Exception e) {
 
-						eventService.attempted("Attempted to Block service "
+						eventService.attempted("Attempted to Load service "
 								+ serviceName + " at " + url
 								+ " Failed due to exception " + e.getMessage());
 					}
