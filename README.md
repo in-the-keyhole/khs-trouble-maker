@@ -11,7 +11,10 @@ Trouble Maker
 Netflix implemented `Chaos Monkey` to randomly take down services during normal business hours. Trouble Maker does the same thing, but also provides an adhoc console to produce common troublesome issues in your platform so you can test it's durability on demand. 
 
 ####How Trouble Maker Works
-Trouble Maker is a Java Spring Boot application that communicates with a a client service that has a small servlet registered with a Java API based service application. By default trouble maker accesses `Eureka` to discover services, and based upon a `chron` task, randomly select a a service to kill (i.e. shutdown). 
+Trouble Maker is a Java Spring Boot application that communicates with a a client service that has a small servlet registered with a Java API based service application. By default trouble maker accesses `Eureka` to discover services, and based upon a `chron` task, randomly select a a service to kill (i.e. shutdown).
+
+By default when started, once a day Monday through Friday a random service will be selected and killed. This option can be turned off and when this occurs can be configured. See configuration options section below. 
+ 
 
 ####Installing and Running
 
@@ -72,9 +75,21 @@ From the dashboard a service can be selected and the following trouble applied
 
 `EXCEPTION` - The selected service will throw an exception. This tests the exception handling logging, handling, and reporting mechanisms of the service.
 
+####Configuration Options
 
+These options are defined in the property file located at src/main/resources/META-INF/spring/trouble.properties
 
-
+	###When to invoke trouble maker KILL service, default 2:00 pm Monday through Friday
+	trouble.cron=0 0 14 * * MON-FRI
+	
+	### Access token that trouble maker client  
+	trouble.token=abc123
+	
+	###Threads to spawn when Blocking trouble is invoked, default is 200
+	###blocking.threads=200  
+	
+	###Trouble Service name, defaults to trouble.maker
+	#trouble.service.name = trouble.maker
 
 
 
