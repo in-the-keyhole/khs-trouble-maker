@@ -30,8 +30,8 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
 
-@Service
-public class ServiceRegistry implements IServiceRegistry {
+
+public class EuerekaServiceRegistry implements IServiceRegistry {
 
 
 	@Autowired

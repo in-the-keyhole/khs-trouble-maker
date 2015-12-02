@@ -89,3 +89,30 @@ These options are defined in the property file located at src/main/resources/MET
 	
 	###Trouble Service name, defaults to trouble.maker
 	#trouble.service.name = trouble.maker
+	
+####Pluggable Service Registry
+
+By default, trouble maker uses Netflix's Eureka service registry. However, any other service registry mechanism can be used.  Trouble Maker uses a service registry to discover services instances that it can apply trouble to.  
+
+To use an alternative service registry simply implement the Interface contract shown below. 
+
+	public interface IServiceRegistry {
+		public void start();
+		public String lookup(String serviceName);	
+		public List<String> serviceNames();
+	}
+
+Then register it in the `src/main/resources/META-INF/spring/application-context-service-registry.xml` file as shown below. 
+
+	<bean id="serviceregistry" class="khs.trouble.service.impl.MyServiceRegistry">
+	</bean> 
+
+####Token Based Access 
+
+
+
+
+
+
+
+
