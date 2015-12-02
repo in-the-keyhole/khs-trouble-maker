@@ -1,13 +1,12 @@
 # Trouble Maker
-
 Proactive Failure
 -----------------
 A successful Micro Service platform requires a durable and resilient environment that supports the ability to continously deploy multiple services. Automated deployment is a must, and when possible, automated recovery from failures should be implemented, and yes failures will happen, (i.e. "Murphy's Law")
 
 Instead of waiting for a failure to occur and seeing how durable and resilent your plaftorm is. Be proactive and make failure a `USE CASE` of your platform.  If you know failures are occurring and pagers are not going off at 3 a.m. and the help desk is not being called. Then you know your system if durable. 
 
-Trouble Maker 
--------------
+What is Trouble Maker 
+---------------------
 Netflix implemented `Chaos Monkey` to randomly take down services during normal business hours. Trouble Maker does the same thing, but also provides an adhoc console to produce common troublesome issues in your platform so you can test it's durability on demand. 
 
 ####How Trouble Maker Works
