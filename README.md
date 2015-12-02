@@ -109,7 +109,9 @@ Then register it in the `src/main/resources/META-INF/spring/application-context-
 
 ####Token Based Access 
 
+Requests made to a client trouble servlet supplies a token defined in the `trouble.properties` in the request header. This token needs to match the token supplied in the trouble client servlets init parameters. If they match then the operation will be performed. This type of access should be sufficient for internal behind the firewall access.
 
+Here's a [LINK](https://github.com/in-the-keyhole/khs-trouble-maker-client) to the Trouble Client repository.  
 
 
 
