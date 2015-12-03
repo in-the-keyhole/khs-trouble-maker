@@ -31,7 +31,7 @@ import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
 
 
-public class EuerekaServiceRegistry implements IServiceRegistry {
+public class EurekaServiceRegistry implements IServiceRegistry {
 
 
 	@Autowired

@@ -25,6 +25,7 @@ import khs.trouble.base.BaseService;
 import khs.trouble.model.Target;
 import khs.trouble.repository.TroubleRepository;
 import khs.trouble.service.IServiceRegistry;
+import khs.trouble.util.FormatUrl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,6 +57,8 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 	@Value("${blocking.threads:200}")
 	Integer threads;
 	
+	@Value("${trouble.ssl:false}")
+	Boolean ssl;
 	
 	public String randomKill(String ltoken) {
        
@@ -71,7 +74,7 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = registry.lookup(serviceName) + "/trouble/kill";
+		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/kill",ssl);
 
 		// invoke kill api...
 
@@ -117,7 +120,7 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 			spawnLoadThread(serviceName, 1000);
 		}
 
-		String url = registry.lookup(serviceName) + "trouble/load";
+		String url = FormatUrl.url(registry.lookup(serviceName) + "trouble/load",ssl);
 
 		eventService.load(serviceName, url,threads);
 
@@ -150,7 +153,7 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = registry.lookup(serviceName) + "/trouble/exception";
+		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/exception",ssl);
 
 		// invoke kill api...
 
@@ -194,7 +197,7 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = registry.lookup(serviceName) + "/trouble/memory";
+		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/memory",ssl);
 
 		// invoke memory api...
 
@@ -238,8 +241,8 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 			public void run() {
 				try {
 
-					String url = registry.lookup(serviceName)
-							+ "/trouble/load";
+					String url = FormatUrl.url(registry.lookup(serviceName)
+							+ "/trouble/load",ssl);
 
 					// invoke kill api...
 

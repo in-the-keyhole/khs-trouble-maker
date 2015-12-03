@@ -169,7 +169,7 @@ public class EurekaRegistry {
         LOG.info("Found an instance of "+vipAddress+"  service to talk to from eureka: "
                 + nextServerInfo.getHostName() + ":" + nextServerInfo.getPort());
 
-        address = "http://"+nextServerInfo.getHostName()+":"+nextServerInfo.getPort()+"/";
+        address = nextServerInfo.getHostName()+":"+nextServerInfo.getPort()+"/";
         
         if (validate) {
         
