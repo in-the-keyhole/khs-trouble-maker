@@ -90,6 +90,9 @@ These options are defined in the property file located at src/main/resources/MET
 	###Trouble Service name, defaults to trouble.maker
 	#trouble.service.name = trouble.maker
 	
+	###use https when accessing client api
+	trouble.ssl=false
+	
 ####Pluggable Service Registry
 
 By default, trouble maker uses Netflix's Eureka service registry. However, any other service registry mechanism can be used.  Trouble Maker uses a service registry to discover services instances that it can apply trouble to.  
