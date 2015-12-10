@@ -74,7 +74,7 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/kill",ssl);
+		String url = FormatUrl.url(registry.lookup(serviceName) + "trouble/kill",ssl);
 
 		// invoke kill api...
 

@@ -10,6 +10,12 @@
 	<name>khs-trouble-maker</name>
 	<url>http://maven.apache.org</url>
 
+     <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.5.RELEASE</version>
+    </parent>
+
 	<build>
 		<finalName>khs-trouble-maker</finalName>
 		<plugins>

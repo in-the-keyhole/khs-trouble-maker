@@ -23,11 +23,14 @@ import khs.trouble.base.BaseService;
 import khs.trouble.model.Event;
 import khs.trouble.repository.EventRepository;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventService extends BaseService<EventRepository,Event> {
 
+	@Value("${trouble.timeout:300000}")
+	private Long timeout;
 	
 	public void killed(String serviceName,String url) {
 		
@@ -54,7 +57,7 @@ public class EventService extends BaseService<EventRepository,Event> {
 		Event event = new Event();
 		event.setCreated(new Date());
 		event.setAction("LOAD");
-		event.setDescription(serviceName.toUpperCase() + " Load of ("+threads+" threads) started at: "+url);
+		event.setDescription(serviceName.toUpperCase() + " Load of ("+threads+" threads) started at: "+url+" will timeout in "+timeout());
 		this.repository.persist(event);
 		
 	}
@@ -74,13 +77,20 @@ public class EventService extends BaseService<EventRepository,Event> {
 		Event event = new Event();
 		event.setCreated(new Date());
 		event.setAction("MEMORY");
-		event.setDescription(serviceName.toUpperCase() + " Memory Consumed at: "+url);
+		event.setDescription(serviceName.toUpperCase() + " Memory Consumed at: "+url+" will timeout in "+timeout());
 		this.repository.persist(event);
 		
 	}
    
    
-   
+   public void eventInfo(String msg) {
+		Event event = new Event();
+		event.setCreated(new Date());
+		event.setAction("INFO");
+		event.setDescription(msg);
+		this.repository.persist(event);
+	  	   
+   }
    
   
 	public void attempted(String msg) {
@@ -102,6 +112,28 @@ public class EventService extends BaseService<EventRepository,Event> {
 		this.repository.persist(event);
 		
 	}
+	
+	public void notStarted()  {
+		Event event = new Event();
+		event.setCreated(new Date());
+		event.setAction("NOT STARTED");
+		event.setDescription("Service Registry Not Found, Make sure it has been started or is accessible");
+		this.repository.persist(event);
+		
+	}
+	
+	
+	public String timeout() {
+		
+		String msg = timeout == 0 ? "NEVER" : "" + (timeout / 60000)
+				+ " minute(s)";
+		
+		return msg;
+		
+	}
+	
+	
+	
 	
 	public List<Event> events()  {
 		

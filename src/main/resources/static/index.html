@@ -1,0 +1,142 @@
+<html>
+
+
+<!-- Bootstrap theme, make things look good -->
+<link rel="stylesheet" href="lib/bootstrap-3.3.2/css/bootstrap.min.css" />
+
+
+<!-- Minimum Required Libraries for Backbone -->
+<script src="lib/underscore-1.4.4.js"></script>
+<script src="lib/jquery-1.11.3.min.js"></script>
+<script src="lib/backbone-0.9.10.js"></script>
+<script src="lib/c3.min.js"></script>
+<script src="lib/d3.min.js"></script>
+<script src="lib/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+
+<script src="app/event.model.js"></script>
+<script src="app/event.item.view.js"></script>
+<script src="app/event.list.view.js"></script>
+<script src="app/action.view.js"></script>
+<script src="app/settings.view.js"></script>
+
+
+<!-- load backbone views and Models in Global NameSpace 
+     DEMONSTRATION PURPOSES ONLY, in real life use a module loading framework like requirejs-->
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<div class="container-fluid">
+
+	<div class="row">
+
+					<div class="col-md-12">
+						<p class="text-center">
+						<blockquote>KHS - Trouble Maker<span id="info"></span></blockquote>
+						</p>
+					</div>
+	</div>
+
+	<div class="row">
+	<!-- LIST -->
+	 <div id="actions" class="col-md-12">
+	   
+	     
+	   <form id="actions" class="form-inline">
+	    
+	 <!--   <div class="form-group">
+	    
+	     <label for="srvc">Service:</label>
+	    
+	    <select id="services" class="form-control">
+    		<option value="one">One</option>
+    		<option value="two">Two</option>
+    		<option value="three">Three</option>
+    		<option value="four">Four</option>
+    		<option value="five">Five</option>
+		</select>
+		
+		    <span>&nbsp;&nbsp;</span>
+		
+		</div>
+		
+		<div class="form-group">
+		
+		<button class="btn btn-warning" type="button">Kill</button>
+		<button class="btn btn-warning" type="button">Block</button>
+		<button class="btn btn-warning" type="button">Exception</button>
+		
+		-->
+				
+		</div>			
+				
+	</form>    
+	   
+	 </div>
+	 
+	 <div class="row">
+	<!-- LIST -->
+	 <div class="col-md-12">
+	 
+	  <div>
+	    
+	   <div class="panel panel-primary">
+	   
+	       <div class="panel-heading">
+    		<h3 id="panel-title" class="panel-title">Event Log</h3>
+           </div>
+
+		  <div id="events" class="panel-body">
+		     <table class="table">
+ 
+             <tr><th>Date</th><th>Action</th><th>Message</th></tr>
+              
+ 
+         </table>
+		</div>	 	
+		
+     </div>
+    </div>  
+
+	     	   
+	 </div>
+
+	</div>
+	
+	
+
+</div>
+
+
+  <script>
+  		
+  $.ajax({
+	  url: "/api/services",
+	}).done(function(data) {
+		  actions = new ActionView({services: data});
+	      actions.render();
+	
+	});
+      
+        events= new Event.Collection();
+				events.fetch({
+					url : 'api/events',
+					success : function(col, response, options) {
+
+						var view = new EventListView({
+							collection : events,
+							fetch :false
+						});
+						// view.render();
+
+						
+
+					}
+				});
+
+   </script>
+
+
+</html>

@@ -141,9 +141,7 @@ public class Application implements ServletContextInitializer {
 		crossOriginFilterRegistration.addMappingForUrlPatterns(
 				EnumSet.of(DispatcherType.REQUEST), true, "/api/*");
 
-
-		servletContext.getServletRegistration("default")
-				.addMapping("/app/*");
+		servletContext.getServletRegistration("default").addMapping("/app/*");
 		servletContext.setInitParameter("sherpaConfigLocation",
 				"classpath:sherpa.properties");
 		servletContext.addListener(SherpaContextListener.class.getName());
@@ -152,10 +150,15 @@ public class Application implements ServletContextInitializer {
 		servletRegistration.addMapping("/api");
 		servletRegistration.addMapping("/api/*");
 
+		if (registry.start()) {
 
-		registry.start();
+			eventService.started();
+		}
 
-		eventService.started();
+		else {
+
+			eventService.notStarted();
+		}
 
 	}
 

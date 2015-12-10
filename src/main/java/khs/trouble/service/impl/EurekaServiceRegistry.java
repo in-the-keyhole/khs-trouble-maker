@@ -18,6 +18,7 @@ package khs.trouble.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import khs.trouble.service.IServiceRegistry;
 import khs.trouble.util.EurekaRegistry;
@@ -33,6 +34,7 @@ import com.netflix.discovery.shared.Applications;
 
 public class EurekaServiceRegistry implements IServiceRegistry {
 
+	private Logger LOG = Logger.getLogger(EurekaServiceRegistry.class.getName());
 
 	@Autowired
 	EurekaRegistry registry;
@@ -41,8 +43,17 @@ public class EurekaServiceRegistry implements IServiceRegistry {
 	private String troubleMakerServiceName;
 	
 	@Override
-	public void start() {
-		registry.registerAndStart();
+	public boolean start() {
+	
+		boolean started = true;
+		try {
+		  registry.registerAndStart();
+		} catch(RuntimeException e) {
+			LOG.info("Eureka Not Started...");
+			started = false;
+		}
+		return started;
+		
 	}
 
 	@Override

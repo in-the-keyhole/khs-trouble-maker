@@ -45,10 +45,9 @@ public class TroubleEndpoint {
 
 	@Autowired
 	IServiceRegistry serviceRegistry;
-	
+
 	@Value("${trouble.token}")
 	String token;
-	
 
 	@Action(mapping = "/random/kill", method = MethodRequest.GET)
 	public boolean randomKill(HttpServletRequest request) {
@@ -56,86 +55,87 @@ public class TroubleEndpoint {
 		return true;
 
 	}
-	
+
 	@Action(mapping = "/kill/{service}", method = MethodRequest.GET)
-	public boolean kill(@Param("service") String serviceName,HttpServletRequest request) {
-		service.kill(serviceName,token);
+	public boolean kill(@Param("service") String serviceName,
+			HttpServletRequest request) {
+		service.kill(serviceName, token);
 		return true;
 
 	}
-	
-	
+
 	@Action(mapping = "/random/load", method = MethodRequest.GET)
 	public boolean randomBlock(HttpServletRequest request) {
 		service.randomLoad(token);
 		return true;
 
 	}
-	
+
 	@Action(mapping = "/load/{service}", method = MethodRequest.GET)
-	public boolean block(@Param("service") String serviceName,HttpServletRequest request) {
-		service.load(serviceName,token);
+	public boolean block(@Param("service") String serviceName,
+			HttpServletRequest request) {
+		service.load(serviceName, token);
 		return true;
 
 	}
 
 	@Action(mapping = "/exception/{service}", method = MethodRequest.GET)
-	public boolean exception(@Param("service") String serviceName,HttpServletRequest request) {
-		service.exception(serviceName,token);
+	public boolean exception(@Param("service") String serviceName,
+			HttpServletRequest request) {
+		service.exception(serviceName, token);
 		return true;
 
 	}
-	
+
 	@Action(mapping = "/random/exception/{service}", method = MethodRequest.GET)
-	public boolean randomException(@Param("service") String serviceName,HttpServletRequest request) {
-		service.exception(serviceName,token);
+	public boolean randomException(@Param("service") String serviceName,
+			HttpServletRequest request) {
+		service.exception(serviceName, token);
 		return true;
 
 	}
-	
-	
+
 	@Action(mapping = "/memory/{service}", method = MethodRequest.GET)
-	public boolean memory(@Param("service") String serviceName,HttpServletRequest request) {
-		service.memory(serviceName,token);
+	public boolean memory(@Param("service") String serviceName,
+			HttpServletRequest request) {
+		service.memory(serviceName, token);
 		return true;
 
 	}
-	
+
 	@Action(mapping = "/random/memory/{service}", method = MethodRequest.GET)
-	public boolean randomMemory(@Param("service") String serviceName,HttpServletRequest request) {
-		service.memory(serviceName,token);
+	public boolean randomMemory(@Param("service") String serviceName,
+			HttpServletRequest request) {
+		service.memory(serviceName, token);
 		return true;
 
 	}
-	
 
 	@Action(mapping = "/services", method = MethodRequest.GET)
 	public List<String> services() {
 
-		return serviceRegistry.serviceNames();
+		List<String> list = serviceRegistry.serviceNames();
+		if (list.isEmpty()) {
+			eventService
+					.eventInfo("No Services discovered, make sure service regisry is started and visible");
+		}
+
+		return list;
 
 	}
-	
+
 	@Action(mapping = "/events", method = MethodRequest.GET)
-	public Collection <Event> eventss() {
+	public Collection<Event> eventss() {
 
 		return eventService.events();
 
 	}
-	
+
 	@Action(mapping = "/valid", method = MethodRequest.GET)
 	public boolean valid(@Param("token") String ltoken) {
 
 		return token.equals(ltoken);
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
