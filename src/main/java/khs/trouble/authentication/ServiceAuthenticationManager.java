@@ -18,6 +18,8 @@ package khs.trouble.authentication;
 
 import java.util.Collection;
 
+import javax.security.auth.Subject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -38,8 +40,8 @@ public class ServiceAuthenticationManager implements AuthenticationManager {
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
 		
-		String serviceid = (String) authentication.getPrincipal();
-		String password = (String) authentication.getCredentials();
+		final String serviceid = (String) authentication.getPrincipal();
+		final String password = (String) authentication.getCredentials();
 		String[] rolesArray = null;
 		if (rolesArray != null) {
 			
@@ -75,6 +77,12 @@ public class ServiceAuthenticationManager implements AuthenticationManager {
 				
 				public Collection<? extends GrantedAuthority> getAuthorities() {
 					return null;
+				}
+
+		
+				public boolean implies(Subject subject) {
+					// TODO Auto-generated method stub
+					return false;
 				}
 			};
 			context.setAuthentication(authentication);

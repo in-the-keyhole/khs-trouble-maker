@@ -34,7 +34,7 @@ import com.khs.sherpa.annotation.Endpoint;
 import com.khs.sherpa.annotation.MethodRequest;
 import com.khs.sherpa.annotation.Param;
 
-@Endpoint(authenticated = false)
+//@Endpoint(authenticated = false)
 public class TroubleEndpoint {
 
 	@Autowired

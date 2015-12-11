@@ -17,8 +17,8 @@
 
 
 	<context:component-scan base-package="khs.trouble,khs.service">
-		<context:exclude-filter expression="org.springframework.stereotype.Controller"
-			type="annotation" />
+<!-- 		<context:exclude-filter expression="org.springframework.stereotype.Controller" -->
+<!-- 			type="annotation" /> -->
 	</context:component-scan>
 	
 <!-- 	<bean class="khs.service.authentication.BaseSessionTokenService" /> -->
@@ -36,6 +36,6 @@
 
 	</bean>
  	
- 
+    
 
 </beans> 

@@ -234,7 +234,7 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 	
 	
 
-	public void spawnLoadThread(String serviceName, final long sleep) {
+	public void spawnLoadThread(final String serviceName, final long sleep) {
 
 		Runnable run = new Runnable() {
 
