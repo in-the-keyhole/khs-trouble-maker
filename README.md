@@ -24,7 +24,9 @@ By default when started, once a day Monday through Friday, a random service will
 2. Start the Java Spring Boot APP, or import into a JAVA IDE and start (JRE 1.8+ required). 
 
 	java -jar jar/khs-trouble-maker.jar
-  
+ 
+A Eureka instances is required by default, see setting Eureka properties below 
+ 
 3. Open browser with the following URL: 
 
 	http://localhost:9110
@@ -116,7 +118,15 @@ Requests made to a client trouble servlet supplies a token defined in the `troub
 
 Here's a [LINK](https://github.com/in-the-keyhole/khs-trouble-maker-client) to the Trouble Client repository.  
 
+####Eureka Registry Properties 
 
+Trouble maker is implemented to register itself with a Eureka registry. You can set Eureka client properties from the command line. Here's how a Eureka registry location is set from the command line.
+
+	java -jar khs-trouble-maker.jar -Deureka.serviceUrl.default=http://localhost:8761/eureka/
+
+You can also create a Jar and set properties in the `src/main/resources/eureka-client.properties` file. 
+ 
+ 
 
 
 
