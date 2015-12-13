@@ -16,7 +16,7 @@
 
 package khs.trouble.repository;
 
-import khs.trouble.boot.JPABaseRepository;
+import khs.trouble.base.JPABaseRepository;
 import khs.trouble.model.Target;
 
 import org.springframework.stereotype.Component;

@@ -19,10 +19,8 @@ package khs.trouble.boot;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
-
 import khs.trouble.service.IServiceRegistry;
 import khs.trouble.service.impl.EventService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,13 +28,11 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory
 import org.springframework.boot.context.embedded.ServletContextInitializer;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @EnableScheduling
@@ -76,80 +72,15 @@ public class Application implements ServletContextInitializer {
 			throws ServletException {
 		System.out.println(Application.class.getName() + "#onStartup");
 
-//		final FilterRegistration urlRewritefilterRegistration = servletContext
-//				.addFilter(UrlRewriteFilter.class.getSimpleName(),
-//						UrlRewriteFilter.class);
-//		urlRewritefilterRegistration.addMappingForUrlPatterns(
-//				EnumSet.of(DispatcherType.REQUEST), true, "*");
-//		final FilterRegistration crossOriginFilterRegistration = servletContext
-//				.addFilter("SimpleCORSFilter", new Filter() { // https://spring.io/guides/gs/rest-service-cors/
-//							@Override
-//							public void doFilter(final ServletRequest req,
-//									final ServletResponse res,
-//									final FilterChain chain)
-//									throws IOException, ServletException {
-//								final HttpServletResponse response = (HttpServletResponse) res;
-//
-//								HttpServletRequest request = (HttpServletRequest) req;
-//								String clientOrigin = request
-//										.getHeader("origin");
-//								if (clientOrigin != null) {
-//									response.setHeader(
-//											"Access-Control-Allow-Origin",
-//											clientOrigin);
-//								} else {
-//									response.setHeader(
-//											"Access-Control-Allow-Origin", "*");
-//								}
-//								response.setHeader(
-//										"Access-Control-Allow-Credentials",
-//										"true");
-//								response.setHeader(
-//										"Access-Control-Allow-Methods",
-//										"POST, GET, OPTIONS, DELETE");
-//								response.setHeader(
-//										"Access-Control-Allow-Credentials",
-//										"true");
-//								response.setHeader("Access-Control-Max-Age",
-//										"3600");
-//								response.setHeader(
-//										"Access-Control-Allow-Headers",
-//										"x-requested-with, content-type, userid, token");
-//								chain.doFilter(req, res);
-//							}
-//
-//							@Override
-//							public void init(final FilterConfig filterConfig) {
-//							}
-//
-//							@Override
-//							public void destroy() {
-//							}
-//						});
-//
-//       servletContext.getServletRegistration("default").addMapping("/*");
-//
-//		crossOriginFilterRegistration.addMappingForUrlPatterns(
-//				EnumSet.of(DispatcherType.REQUEST), true, "/api/*");
-//
-//	    servletContext.getServletRegistration("default").addMapping("/app/*");
-//		servletContext.setInitParameter("sherpaConfigLocation",
-//				"classpath:sherpa.properties");
-//		servletContext.addListener(SherpaContextListener.class.getName());
-//		ServletRegistration servletRegistration = servletContext.addServlet(
-//				"sherpa", SherpaServlet.class);
-//		servletRegistration.addMapping("/api");
-//		servletRegistration.addMapping("/api/*");
-		
-		  System.out.println("Initialize servlets...");
-		    ServletRegistration servletRegistration = servletContext.addServlet("dispatcher", org.springframework.web.servlet.DispatcherServlet.class);
-		    servletRegistration.setInitParameter("contextClass",  org.springframework.web.context.support.AnnotationConfigWebApplicationContext.class.getName());
-		    servletRegistration.addMapping("/api/*");
-		  
-		
-		
-
-		
+		ServletRegistration servletRegistration = servletContext.addServlet(
+				"dispatcher",
+				org.springframework.web.servlet.DispatcherServlet.class);
+		servletRegistration
+				.setInitParameter(
+						"contextClass",
+						org.springframework.web.context.support.AnnotationConfigWebApplicationContext.class
+								.getName());
+		servletRegistration.addMapping("/api/*");
 
 		if (registry.start()) {
 
@@ -162,28 +93,9 @@ public class Application implements ServletContextInitializer {
 		}
 
 	}
-	
-	
-//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//		
-//		if (!registry.hasMappingForPattern("/**")) {
-//			registry.addResourceHandler("/**").addResourceLocations(
-//					CLASSPATH_RESOURCE_LOCATIONS);
-//		}
-//	}
-	
-	
 
 	public void setEnvironment(Environment environment) {
 		this.environment = environment;
 	}
-	
-//	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-//		"classpath:/META-INF/resources/", "classpath:/resources/",
-//		"classpath:/static/", "classpath:/public/" };
-	
-	
-	
-	
 
 }

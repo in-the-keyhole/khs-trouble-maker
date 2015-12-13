@@ -20,7 +20,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import khs.trouble.boot.JPABaseRepository;
+import khs.trouble.base.JPABaseRepository;
 import khs.trouble.model.Event;
 
 import org.springframework.stereotype.Component;
