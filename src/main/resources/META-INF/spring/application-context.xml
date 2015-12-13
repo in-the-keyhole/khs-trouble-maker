@@ -15,27 +15,15 @@
 	<context:property-placeholder
 		location="classpath*:/META-INF/spring/*.properties" />
 
-
 	<context:component-scan base-package="khs.trouble,khs.service">
-<!-- 		<context:exclude-filter expression="org.springframework.stereotype.Controller" -->
-<!-- 			type="annotation" /> -->
+
 	</context:component-scan>
 	
-<!-- 	<bean class="khs.service.authentication.BaseSessionTokenService" /> -->
 	
 	<bean id="dbAuthManager" class="khs.trouble.authentication.ServiceAuthenticationManager">
-<!-- 	   	<property name="authenticator" ref="authenticator"></property> -->
-	</bean> 
+<
+</bean> 
 	
-<!-- 	<bean id="authenticator" class="khs.service.authentication.UserAuthenticator"> -->
-	   
-<!-- 	</bean> -->
-	 	
-     <bean class="khs.trouble.authentication.ServiceAuthentication">
-		<property name="authenticationManager" ref="dbAuthManager"></property>
-
-	</bean>
- 	
     
 
 </beans> 

@@ -31,10 +31,6 @@ import org.springframework.security.core.context.SecurityContextImpl;
 
 public class ServiceAuthenticationManager implements AuthenticationManager {
 
-
-
-	//private Authenticator authenticator;
-	
 	
 	@Override
 	public Authentication authenticate(Authentication authentication)
