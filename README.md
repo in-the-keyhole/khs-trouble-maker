@@ -80,21 +80,28 @@ From the dashboard a service can be selected and the following troubles applied:
 
 These options are defined in the property file located at src/main/resources/META-INF/spring/trouble.properties
 
-	###When to invoke Trouble Maker KILL service, default 2:00 pm Monday through Friday
+	###When to invoke trouble maker KILL service, default 2:00 pm Monday through Friday
 	trouble.cron=0 0 14 * * MON-FRI
-	
-	### Access token that Trouble Maker client  
+
+	### Access token that trouble maker client  
 	trouble.token=abc123
-	
+
+	###Operation timeout in milliseconds, 0 means forever, default is 5 minutes
+	trouble.timeout=300000
+
 	###Threads to spawn when Blocking trouble is invoked, default is 200
-	###blocking.threads=200  
-	
+	blocking.threads=200  
+
 	###Trouble Service name, defaults to trouble.maker
-	#trouble.service.name = trouble.maker
+	trouble.service.name = trouble.maker
 	
-	###use https when accessing client api
+	###use https when accessing client servlet api
 	trouble.ssl=false
-	
+
+These properties can be set from the command line using VM argument. An example is shown below.
+
+	java -jar khs-trouble-maker.jar -Dtrouble.timeout=200000
+
 ####Pluggable Service Registry
 
 By default, trouble maker uses Netflix's Eureka service registry. However, any other service registry mechanism can be used.  Trouble Maker uses a service registry to discover services instances that it can apply trouble to.  
