@@ -19,8 +19,10 @@ package khs.trouble.boot;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+
 import khs.trouble.service.IServiceRegistry;
 import khs.trouble.service.impl.EventService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,6 +30,7 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory
 import org.springframework.boot.context.embedded.ServletContextInitializer;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -37,7 +40,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @EnableScheduling
 @EnableAsync
-@EnableWebSecurity
+// UComment to apply method custom web spring security
+//@EnableWebSecurity      
 @SpringBootApplication
 @ImportResource("classpath*:META-INF/spring/application-context*.xml")
 public class Application implements ServletContextInitializer {

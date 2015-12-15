@@ -118,7 +118,7 @@ ActionView = Backbone.View
 				    '<select id="services" class="form-control">';
 				 
 				    for (i = 0; i < this.services.length; i++) { 
-					    html += '<option value='+this.services[i]+'>'+this.services[i] + "</option>";
+					    html += '<option value="'+this.services[i]+'">'+this.services[i] + "</option>";
 					}
 		
 					

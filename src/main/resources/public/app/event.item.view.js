@@ -13,14 +13,15 @@ EventItemView = Backbone.View.extend({
 		var compiled_template = _.template(this.html());
 		var $el = $(this.el);
 		var m = this.model.toJSON();
-	
+	    m['date'] = this.formatDate(new Date(m.created));
+		
 		$el.append(compiled_template(m));
 
 	},
 
 	html : function() {
 
-		return '<tr><td id="<%=id%>-date"><%=created%> </td> '
+		return '<tr><td id="<%=id%>-date"><%=date%> </td> '
 				+ '<td id="<%=id%>-action"><%=action%> </td> '
 				+ '<td id="<%=id%>-description"> <%=description%> </td>'
 				+ '</tr>';

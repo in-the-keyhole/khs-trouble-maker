@@ -20,10 +20,11 @@
 	</context:component-scan>
 	
 	
-	<bean id="dbAuthManager" class="khs.trouble.authentication.ServiceAuthenticationManager">
-<
-</bean> 
+<!-- 	<bean id="dbAuthManager" class="khs.trouble.authentication.ServiceAuthenticationManager"> -->
+
+<!-- 	</bean>  -->
 	
-    
+	
+	
 
 </beans> 

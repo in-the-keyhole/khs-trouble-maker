@@ -44,7 +44,7 @@ public class TroubleController {
 	}
 	
 	
-	@RequestMapping(value = "/kill/{service}", method = RequestMethod.GET)
+	@RequestMapping(value = "/kill/{service:.+}", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean kill(@PathVariable("service") String serviceName,
 			HttpServletRequest request) {
@@ -61,7 +61,7 @@ public class TroubleController {
 
 	}
 
-	@RequestMapping(value = "/load/{service}", method = RequestMethod.GET)
+	@RequestMapping(value = "/load/{service:.+}", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean block(@PathVariable("service") String serviceName,
 			HttpServletRequest request) {
@@ -70,7 +70,7 @@ public class TroubleController {
 
 	}
 
-	@RequestMapping(value = "/exception/{service}", method = RequestMethod.GET)
+	@RequestMapping(value = "/exception/{service:.+}", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean exception(@PathVariable("service") String serviceName,
 			HttpServletRequest request) {
@@ -79,7 +79,7 @@ public class TroubleController {
 
 	}
 
-	@RequestMapping(value = "/random/exception/{service}", method = RequestMethod.GET)
+	@RequestMapping(value = "/random/exception/{servicee:.+}", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean randomException(@PathVariable("service") String serviceName,
 			HttpServletRequest request) {
@@ -88,7 +88,7 @@ public class TroubleController {
 
 	}
 
-	@RequestMapping(value = "/memory/{service}", method = RequestMethod.GET)
+	@RequestMapping(value = "/memory/{service:.+}", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean memory(@PathVariable("service") String serviceName,
 			HttpServletRequest request) {
@@ -97,7 +97,7 @@ public class TroubleController {
 
 	}
 
-	@RequestMapping(value = "/random/memory/{service}", method = RequestMethod.GET)
+	@RequestMapping(value = "/random/memory/{service:.+}", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean randomMemory(@PathVariable("service") String serviceName,
 			HttpServletRequest request) {
