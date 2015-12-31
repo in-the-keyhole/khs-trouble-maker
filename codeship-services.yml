@@ -1,0 +1,13 @@
+maven:
+  build:
+    image:  khs-project-service-maven
+    dockerfile_path: Dockerfile.maven
+  volumes:
+    - ./tmp:/app/target
+publish:
+  build:
+    image: keyholesoftware/khs-project-service
+    dockerfile_path: Dockerfile.package
+deploy:
+  image: keyholesoftware/khs-codeship-docker-deploy
+  encrypted_env_file: deployment.env.encrypted

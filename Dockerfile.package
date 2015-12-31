@@ -1,0 +1,10 @@
+FROM java:8
+
+ADD /tmp/app.jar /app.jar
+
+# so that it has a file modification time (Docker creates all container files in an "unmodified" state by default)
+RUN bash -c 'touch /app.jar'
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
