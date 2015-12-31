@@ -7,4 +7,4 @@ ADD . /usr/src/app
 RUN echo cache-6
 RUN mvn clean package --update-snapshots -Dmaven.test.skip=true
 EXPOSE 9110
-ENTRYPOINT ["java","-jar","target/app.jar"]
+ENTRYPOINT ["java","-jar","target/khs-trouble-maker.jar"]
