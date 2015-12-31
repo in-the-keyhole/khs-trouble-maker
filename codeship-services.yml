@@ -1,12 +1,12 @@
 maven:
   build:
-    image:  khs-project-service-maven
+    image:  khs-trouble-maker-maven
     dockerfile_path: Dockerfile.maven
   volumes:
     - ./tmp:/app/target
 publish:
   build:
-    image: keyholesoftware/khs-project-service
+    image: keyholesoftware/khs-trouble-maker
     dockerfile_path: Dockerfile.package
 deploy:
   image: keyholesoftware/khs-codeship-docker-deploy

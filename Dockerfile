@@ -6,5 +6,5 @@ RUN mvn verify clean --fail-never
 ADD . /usr/src/app
 RUN echo cache-6
 RUN mvn clean package --update-snapshots -Dmaven.test.skip=true
-EXPOSE 8080
+EXPOSE 9110
 ENTRYPOINT ["java","-jar","target/app.jar"]
