@@ -35,6 +35,15 @@ public class TroubleController {
 	@Value("${trouble.token}")
 	String token;
 	
+	@RequestMapping(value = "/access/token", method = RequestMethod.GET)
+	@ResponseBody
+	public String accessToken(HttpServletRequest request) {		
+		return token;
+
+	}
+	
+	
+	
 	@RequestMapping(value = "/random/kill", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean randomKill(HttpServletRequest request) {
