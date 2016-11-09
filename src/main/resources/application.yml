@@ -1,0 +1,26 @@
+server:
+  port: 9110
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+    register-with-eureka: false
+    
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    khs.trouble: DEBUG
+    
+###When to invoke trouble maker KILL service, default 2:00 pm Monday through Friday
+trouble:
+  cron: 0 0 14 * * MON-FRI
+  ### Access token that trouble maker client
+  token: abc123
+  ###Operation timeout in milliseconds, 0 means forever, default is 5 minutes
+  timeout: 300000
+  ###use https when accessing client servlet api
+  ssl: false
+  ###Threads to spawn when Blocking trouble is invoked, default is 200
+  blocking-threads: 200  

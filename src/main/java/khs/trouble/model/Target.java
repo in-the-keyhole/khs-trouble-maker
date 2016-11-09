@@ -22,23 +22,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="target")
+@Table(name = "target")
 public class Target {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="id")
+	@Column(name = "id")
 	private Long id;
-	
-	@Column(name="service")
+
+	@Column(name = "service")
 	private String service;
-	
-	@Column(name="type")
+
+	@Column(name = "type")
 	private String type;
 
-	
 	public String getType() {
 		return type;
 	}
@@ -62,7 +60,4 @@ public class Target {
 	public void setService(String service) {
 		this.service = service;
 	}
-	
-
-
 }

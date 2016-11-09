@@ -23,16 +23,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="schedule")
+@Table(name = "schedule")
 public class Schedule {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="id")
+	@Column(name = "id")
 	private Long id;
-	
-	
-	
-	
-
 }

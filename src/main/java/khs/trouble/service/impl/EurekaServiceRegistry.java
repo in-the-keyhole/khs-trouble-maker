@@ -16,80 +16,43 @@
 
 package khs.trouble.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-
-import khs.trouble.service.IServiceRegistry;
-import khs.trouble.util.EurekaRegistry;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.stereotype.Component;
 
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.shared.Application;
-import com.netflix.discovery.shared.Applications;
+import khs.trouble.service.IServiceRegistry;
 
-
+@Component
 public class EurekaServiceRegistry implements IServiceRegistry {
 
-	private Logger LOG = Logger.getLogger(EurekaServiceRegistry.class.getName());
-
 	@Autowired
-	EurekaRegistry registry;
-	
-	@Value("${trouble.service.name:trouble.maker}")
-	private String troubleMakerServiceName;
-	
+	DiscoveryClient discoveryClient;
+
 	@Override
 	public boolean start() {
-	
-		boolean started = true;
-		try {
-		  registry.registerAndStart();
-		} catch(RuntimeException e) {
-			LOG.info("Eureka Not Started...");
-			started = false;
-		}
-		return started;
-		
+		return this.discoveryClient != null;
 	}
 
 	@Override
 	public String lookup(String serviceName) {
-		return registry.discoverAddress(serviceName, false);
-	}
-	
-	
-	public List<String> services() {
-		
-		List<String> results = new ArrayList<String>();
-		Applications apps = registry.eurekaClient.getApplications();
-		
-		List<Application> list = apps.getRegisteredApplications();
-		for (Application a : list) {
-			List<InstanceInfo> instances = a.getInstances();
-			for (InstanceInfo i : instances) {
-				i.getVIPAddress();
-				results.add(i.getVIPAddress());
-				break;
-			}
-
+		String address = null;
+		List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
+		for (ServiceInstance serviceInstance : instances) {
+			address = serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/";
+			break;
 		}
-		
-		// Remove trouble maker service from list
-		results.remove(troubleMakerServiceName);
-		
-		return results;
-		
+		return address;
+	}
+
+	public List<String> serviceNames() {
+		return discoveryClient.getServices();
 	}
 
 	@Override
-	public List<String> serviceNames() {
-		return services();
+	public int instanceCount(String serviceName) {
+		return discoveryClient.getInstances(serviceName).size();
 	}
-	
-	
-
 }

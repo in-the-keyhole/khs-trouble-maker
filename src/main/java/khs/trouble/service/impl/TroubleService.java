@@ -19,28 +19,27 @@ package khs.trouble.service.impl;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Logger;
 
-import khs.trouble.base.BaseService;
-import khs.trouble.model.Target;
-import khs.trouble.repository.TroubleRepository;
-import khs.trouble.service.IServiceRegistry;
-import khs.trouble.util.FormatUrl;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Service
-public class TroubleService extends BaseService<TroubleRepository, Target> {
+import khs.trouble.service.IServiceRegistry;
+import khs.trouble.util.FormatUrl;
 
-	private Logger LOG = Logger.getLogger(TroubleService.class.getName());
+@Service
+public class TroubleService {
+
+	private Logger LOG = LoggerFactory.getLogger(TroubleService.class.getName());
 
 	@Autowired
 	IServiceRegistry registry;
@@ -54,63 +53,68 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 	@Value("${trouble.timeout:300000}")
 	Long timeout;
 
-	@Value("${blocking.threads:200}")
+	@Value("${trouble.blocking-threads:200}")
 	Integer threads;
-	
+
 	@Value("${trouble.ssl:false}")
 	Boolean ssl;
-	
+
+	@Value("${eureka.client.registry-fetch-interval-seconds}")
+	private Long monitorInterval;
+
 	public String randomKill(String ltoken) {
-       
 		String serviceName = randomService();
 		eventService.randomKilled(serviceName);
 		return kill(serviceName, ltoken);
-
 	}
 
 	public String kill(String serviceName, String ltoken) {
-
 		if (token != ltoken) {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(registry.lookup(serviceName) + "trouble/kill",ssl);
-
+		String url = FormatUrl.url(registry.lookup(serviceName) + "trouble/kill", ssl);
 		// invoke kill api...
-
 		RestTemplate restTemplate = new RestTemplate();
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		headers.add("token", token);
-		HttpEntity<String> entity = new HttpEntity<String>("parameters",
-				headers);
+		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
 		try {
-			ResponseEntity<String> result = restTemplate.exchange(url,
-					HttpMethod.GET, entity, String.class);
-
-			eventService.killed(serviceName, url);
-
+			// int instanceCount = registry.instanceCount(serviceName);
+			ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+			if (result.getStatusCode() == HttpStatus.OK) {
+				eventService.killed(serviceName, url);
+				// monitorServiceRecovery(serviceName, instanceCount);
+			}
 		} catch (Exception e) {
-
-			eventService.attempted("Attempted to Kill service " + serviceName
-					+ " at " + url + " Failed due to exception "
-					+ e.getMessage());
+			eventService.attempted("Attempted to Kill service " + serviceName + " at " + url + " Failed due to exception " + e.getMessage());
 		}
-
 		return serviceName;
-
 	}
 
+//	private void monitorServiceRecovery(String serviceName, int originalCount) {
+//		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+//
+//		Runnable run = () -> {
+//			LOG.debug("Checking status of " + serviceName);
+//			int currentCount = registry.instanceCount(serviceName);
+//			LOG.debug(serviceName + " instance count: " + currentCount);
+//			if (currentCount == originalCount) {
+//				LOG.info(serviceName + ": has recovered.");
+//				LOG.debug("TroubleMaker recover monitor stopped.");
+//				exec.shutdown();
+//			}
+//		};
+//		exec.scheduleAtFixedRate(run, monitorInterval, monitorInterval, TimeUnit.SECONDS);
+//	}
+
 	public String randomLoad(String ltoken) {
-
 		return load(randomService(), ltoken);
-
 	}
 
 	public String load(String serviceName, String ltoken) {
-
 		if (token != ltoken) {
 			throw new RuntimeException("Invalid Access Token");
 		}
@@ -120,16 +124,14 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 			spawnLoadThread(serviceName, 1000);
 		}
 
-		String url = FormatUrl.url(registry.lookup(serviceName) + "trouble/load",ssl);
+		String url = FormatUrl.url(registry.lookup(serviceName) + "trouble/load", ssl);
 
-		eventService.load(serviceName, url,threads);
+		eventService.load(serviceName, url, threads);
 
 		return serviceName;
-
 	}
 
 	public String randomService() {
-
 		Random rn = new Random();
 
 		List<String> list = registry.serviceNames();
@@ -138,22 +140,19 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 		int randomNum = rn.nextInt(range);
 
 		return list.get(randomNum);
-
 	}
-	
+
 	public String randomException(String ltoken) {
-
 		return exception(randomService(), ltoken);
-
 	}
-		
-	public String exception(String serviceName,String ltoken) {
-		
+
+	public String exception(String serviceName, String ltoken) {
+
 		if (token != ltoken) {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/exception",ssl);
+		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/exception", ssl);
 
 		// invoke kill api...
 
@@ -162,42 +161,27 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		headers.add("token", token);
-		HttpEntity<String> entity = new HttpEntity<String>("parameters",
-				headers);
+		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
 		try {
-			ResponseEntity<String> result = restTemplate.exchange(url,
-					HttpMethod.GET, entity, String.class);
-
+			restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 			eventService.exception(serviceName, url);
-
 		} catch (Exception e) {
-
-			eventService.attempted("Attempted to throw exception at service " + serviceName
-					+ " at " + url + " Failed due to exception "
-					+ e.getMessage());
+			eventService.attempted("Attempted to throw exception at service " + serviceName + " at " + url + " Failed due to exception " + e.getMessage());
 		}
-
-
 		return serviceName;
-	
 	}
-	
-    
+
 	public String randomMemory(String ltoken) {
-
 		return memory(randomService(), ltoken);
-
 	}
-	
-	
-	public String memory(String serviceName,String ltoken) {
-		
+
+	public String memory(String serviceName, String ltoken) {
 		if (token != ltoken) {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/memory",ssl);
+		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/memory", ssl);
 
 		// invoke memory api...
 
@@ -207,32 +191,16 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		headers.add("token", token);
 		headers.add("timeout", "" + timeout);
-		HttpEntity<String> entity = new HttpEntity<String>("parameters",
-				headers);
+		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
 		try {
-			ResponseEntity<String> result = restTemplate.exchange(url,
-					HttpMethod.GET, entity, String.class);
-
+			restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 			eventService.memory(serviceName, url);
-
 		} catch (Exception e) {
-
-			eventService.attempted("Attempted to consume memory at service " + serviceName
-					+ " at " + url + " Failed due to exception "
-					+ e.getMessage());
+			eventService.attempted("Attempted to consume memory at service " + serviceName + " at " + url + " Failed due to exception " + e.getMessage());
 		}
-
-
 		return serviceName;
-	
 	}
-	
-	
-	
-	
-	
-	
 
 	public void spawnLoadThread(final String serviceName, final long sleep) {
 
@@ -241,8 +209,7 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 			public void run() {
 				try {
 
-					String url = FormatUrl.url(registry.lookup(serviceName)
-							+ "/trouble/load",ssl);
+					String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/load", ssl);
 
 					// invoke kill api...
 
@@ -252,33 +219,22 @@ public class TroubleService extends BaseService<TroubleRepository, Target> {
 					headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 					headers.add("token", token);
 					headers.add("timeout", "" + timeout);
-					HttpEntity<String> entity = new HttpEntity<String>(
-							"parameters", headers);
+					HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
 					try {
-
-						ResponseEntity<String> result = restTemplate.exchange(
-								url, HttpMethod.GET, entity, String.class);
-
+						restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 					} catch (Exception e) {
-
-						eventService.attempted("Attempted to Load service "
-								+ serviceName + " at " + url
-								+ " Failed due to exception " + e.getMessage());
+						eventService.attempted("Attempted to Load service " + serviceName + " at " + url + " Failed due to exception " + e.getMessage());
 					}
-
 					Thread.sleep(sleep);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			}
-
 		};
 
 		Thread thread = new Thread(run);
 		thread.start();
 	}
-
 }

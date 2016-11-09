@@ -16,7 +16,6 @@
 
 package khs.trouble.model;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -26,23 +25,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="event")
+@Table(name = "event")
 public class Event {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="id")
+	@Column(name = "id")
 	private Long id;
-	
-	@Column(name="created")
-	private Date created;
-	
-	@Column(name="action")
-	private String action;
-	
-	@Column(name="description",length=500)
-	private String description;
 
+	@Column(name = "created")
+	private Date created;
+
+	@Column(name = "action")
+	private String action;
+
+	@Column(name = "description", length = 500)
+	private String description;
 
 	public String getAction() {
 		return action;
@@ -60,7 +58,6 @@ public class Event {
 		this.id = id;
 	}
 
-
 	public Date getCreated() {
 		return created;
 	}
@@ -76,8 +73,4 @@ public class Event {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
-	
-
 }

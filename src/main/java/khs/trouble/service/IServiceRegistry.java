@@ -19,7 +19,12 @@ package khs.trouble.service;
 import java.util.List;
 
 public interface IServiceRegistry {
+	
 	public boolean start();
+	
 	public String lookup(String serviceName);	
+
 	public List<String> serviceNames();
+	
+	public int instanceCount(String serviceName);
 }
