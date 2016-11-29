@@ -9,7 +9,7 @@ SettingsView = Backbone.View
 
 				var _this = this;
 				$.ajax({
-					  url: '/access/token/',
+					  url: '/api/access/token/',
 					}).done(function(data) {
 						  _this.token = data;
 						  _this.render();					
