@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,7 +35,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import khs.trouble.service.IServiceRegistry;
 import khs.trouble.util.FormatUrl;
 
 @Service
@@ -42,7 +43,7 @@ public class TroubleService {
 	private Logger LOG = LoggerFactory.getLogger(TroubleService.class.getName());
 
 	@Autowired
-	IServiceRegistry registry;
+	DiscoveryClient discoveryClient;
 
 	@Autowired
 	EventService eventService;
@@ -73,7 +74,7 @@ public class TroubleService {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(registry.lookup(serviceName) + "trouble/kill", ssl);
+		String url = FormatUrl.url(randomInstanceURL(serviceName) + "trouble/kill", ssl);
 		// invoke kill api...
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -94,21 +95,24 @@ public class TroubleService {
 		return serviceName;
 	}
 
-//	private void monitorServiceRecovery(String serviceName, int originalCount) {
-//		ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-//
-//		Runnable run = () -> {
-//			LOG.debug("Checking status of " + serviceName);
-//			int currentCount = registry.instanceCount(serviceName);
-//			LOG.debug(serviceName + " instance count: " + currentCount);
-//			if (currentCount == originalCount) {
-//				LOG.info(serviceName + ": has recovered.");
-//				LOG.debug("TroubleMaker recover monitor stopped.");
-//				exec.shutdown();
-//			}
-//		};
-//		exec.scheduleAtFixedRate(run, monitorInterval, monitorInterval, TimeUnit.SECONDS);
-//	}
+	// private void monitorServiceRecovery(String serviceName, int
+	// originalCount) {
+	// ScheduledExecutorService exec =
+	// Executors.newSingleThreadScheduledExecutor();
+	//
+	// Runnable run = () -> {
+	// LOG.debug("Checking status of " + serviceName);
+	// int currentCount = registry.instanceCount(serviceName);
+	// LOG.debug(serviceName + " instance count: " + currentCount);
+	// if (currentCount == originalCount) {
+	// LOG.info(serviceName + ": has recovered.");
+	// LOG.debug("TroubleMaker recover monitor stopped.");
+	// exec.shutdown();
+	// }
+	// };
+	// exec.scheduleAtFixedRate(run, monitorInterval, monitorInterval,
+	// TimeUnit.SECONDS);
+	// }
 
 	public String randomLoad(String ltoken) {
 		return load(randomService(), ltoken);
@@ -124,7 +128,7 @@ public class TroubleService {
 			spawnLoadThread(serviceName, 1000);
 		}
 
-		String url = FormatUrl.url(registry.lookup(serviceName) + "trouble/load", ssl);
+		String url = FormatUrl.url(randomInstanceURL(serviceName) + "trouble/load", ssl);
 
 		eventService.load(serviceName, url, threads);
 
@@ -132,14 +136,20 @@ public class TroubleService {
 	}
 
 	public String randomService() {
+		List<String> list = discoveryClient.getServices();
 		Random rn = new Random();
-
-		List<String> list = registry.serviceNames();
-
 		int range = list.size();
 		int randomNum = rn.nextInt(range);
-
 		return list.get(randomNum);
+	}
+
+	public String randomInstanceURL(String serviceName) {
+		List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
+		Random rn = new Random();
+		int range = instances.size();
+		int randomNum = rn.nextInt(range);
+		ServiceInstance serviceInstance = instances.get(randomNum);
+		return serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/";
 	}
 
 	public String randomException(String ltoken) {
@@ -152,7 +162,7 @@ public class TroubleService {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/exception", ssl);
+		String url = FormatUrl.url(randomInstanceURL(serviceName) + "/trouble/exception", ssl);
 
 		// invoke kill api...
 
@@ -181,7 +191,7 @@ public class TroubleService {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/memory", ssl);
+		String url = FormatUrl.url(randomInstanceURL(serviceName) + "/trouble/memory", ssl);
 
 		// invoke memory api...
 
@@ -209,7 +219,7 @@ public class TroubleService {
 			public void run() {
 				try {
 
-					String url = FormatUrl.url(registry.lookup(serviceName) + "/trouble/load", ssl);
+					String url = FormatUrl.url(randomInstanceURL(serviceName) + "/trouble/load", ssl);
 
 					// invoke kill api...
 

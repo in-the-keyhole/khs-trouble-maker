@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import khs.trouble.model.Event;
-import khs.trouble.service.IServiceRegistry;
 import khs.trouble.service.impl.EventService;
 import khs.trouble.service.impl.TroubleService;
 
@@ -28,7 +28,7 @@ public class TroubleController {
 	EventService eventService;
 
 	@Autowired
-	IServiceRegistry serviceRegistry;
+	DiscoveryClient discoveryClient;
 
 	@Value("${trouble.token}")
 	String token;
@@ -98,7 +98,7 @@ public class TroubleController {
 	@RequestMapping(value = "/services", method = RequestMethod.GET)
 	@ResponseBody
 	public List<String> services() {
-		List<String> list = serviceRegistry.serviceNames();
+		List<String> list = discoveryClient.getServices();
 		if (list.isEmpty()) {
 			eventService.eventInfo("No Services discovered, make sure service registry is started and visible");
 		}

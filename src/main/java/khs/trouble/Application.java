@@ -21,15 +21,17 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import khs.trouble.service.IServiceRegistry;
 import khs.trouble.service.impl.EventService;
 
 @SpringBootApplication
 @EnableScheduling
 @EnableAsync
+@EnableDiscoveryClient
 public class Application {
 
 	public static void main(final String[] args) {
@@ -37,14 +39,14 @@ public class Application {
 	}
 
 	@Autowired
-	private IServiceRegistry registry;
+	private DiscoveryClient discoveryClient;
 
 	@Autowired
 	private EventService eventService;
 
 	@PostConstruct
 	public void init() {
-		if (registry.start()) {
+		if (discoveryClient != null) {
 			eventService.started();
 		} else {
 			eventService.notStarted();
