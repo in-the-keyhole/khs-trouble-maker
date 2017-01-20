@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import {TroublemakerService} from './troublemaker.service';
 import {Event} from './event.model';
@@ -12,33 +12,37 @@ import {Event} from './event.model';
 export class EventlogComponent implements OnInit {
   // **********************************************************************
   private eventLog: Event[];
+
+   @Input() showSettings: boolean = false;
   // **********************************************************************
 
 
   // **********************************************************************
   constructor(private troublemakerService: TroublemakerService) { 
-
-    this.troublemakerService.reloadEventLog.subscribe(boolValue => { console.log('##### Triggered'); });
   }
 
   ngOnInit() {
+    // LOAD EVENT LOG INITIALLY
     this.loadEventLog();
-    //this.troublemakerService.getEvents().subscribe(events => {
-    //  this.eventLog = events;
-    //  console.log('EVENTS');
-    //  console.dir(this.eventLog);
-    //})
+
+    // LISTEN FOR EVENT TO RELOAD EVENT LOG FROM SERVICE
+    this.troublemakerService.reloadEventLog.subscribe(boolValue => { 
+      console.log('RELOAD OF EVENT LOG Triggered'); 
+      this.loadEventLog();
+    });
   }
   // **********************************************************************
 
 
+  // **********************************************************************
   loadEventLog() {
-    //console.log('RELOAD EVENT LOG: ' + boolValue);
+    console.log('LOAD EVENT LOG');
     this.troublemakerService.getEvents().subscribe(events => {
       this.eventLog = events;
       console.log('EVENTS');
       console.dir(this.eventLog);
     });
   }
+  // **********************************************************************
 
 }

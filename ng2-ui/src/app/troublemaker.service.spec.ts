@@ -60,7 +60,7 @@ describe('TroublemakerService', () => {
     it(': should return Access Token', async(inject([], () => {
         backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-        service.accessToken()
+        service.getAccessToken()
           .do(resp => {
             //console.dir(resp);
             expect(resp).toBe(fakeToken, `expected access token to be "${fakeToken}"`);
@@ -71,7 +71,7 @@ describe('TroublemakerService', () => {
     it(': should return Access Token', async(inject([], () => {
         backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-        service.accessToken()
+        service.getAccessToken()
           .do(resp => {
             expect(resp).not.toBe(fakeToken + '2', `expected access token to be "${fakeToken}"`);
           }).toPromise();

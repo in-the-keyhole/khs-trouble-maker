@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { EurekaServiceComponent } from './eurekaservice.component';
 import { EventlogComponent } from './eventlog.component';
+import { SettingsComponent } from './settings.component';
 import { TroublemakerService } from './troublemaker.service';
 
 describe('AppComponent', () => {
@@ -14,7 +15,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         EurekaServiceComponent,
-        EventlogComponent
+        EventlogComponent,
+        SettingsComponent
       ],
       imports: [
         HttpModule

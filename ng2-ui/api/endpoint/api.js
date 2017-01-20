@@ -12,6 +12,7 @@ exports.configure = function (api) {
     const apiRouter = express.Router();
 
     var currentBooleanValue = false;
+    var incrementer = 0;
 
     //require('./movies/movies').configure(apiRouter);
 
@@ -59,6 +60,9 @@ exports.configure = function (api) {
         res.status(200).json(services);
     });
     apiRouter.get('/events', function(req, res) {
+        //var parts = events[0].action.split('-');
+        //events[0].action = parts[0] + '-' + incrementer;
+        //incrementer++;
         res.status(200).json(events);
     });
 

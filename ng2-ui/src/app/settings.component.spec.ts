@@ -4,30 +4,30 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { EventlogComponent } from './eventlog.component';
+import { SettingsComponent } from './settings.component';
 import {TroublemakerService} from './troublemaker.service';
 
-describe('EventlogComponent', () => {
-  let component: EventlogComponent;
-  let fixture: ComponentFixture<EventlogComponent>;
+describe('SettingsComponent', () => {
+  let component: SettingsComponent;
+  let fixture: ComponentFixture<SettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ 
-        EventlogComponent 
+        SettingsComponent 
       ],
       imports: [
         HttpModule
       ],
       providers: [
         TroublemakerService
-      ],
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventlogComponent);
+    fixture = TestBed.createComponent(SettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

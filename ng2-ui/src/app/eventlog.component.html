@@ -1,32 +1,18 @@
-<div class="row">
-	  <!-- LIST -->
-	  <div class="col-md-12">
-      <div>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-    		    <h3 id="panel-title" class="panel-title">Event Log</h3>
-          </div>
-
-		      <div id="events" class="panel-body">
-            <table class="table">
-              <tbody>
-                <tr><th>Date</th><th>Action</th><th>Description</th></tr>
-
-                <tr *ngFor="let event of eventLog">
-                  <td id="{{event.id}}-date">{{event.created | date: 'MM/dd/yyyy h:m a'}}</td> 
-                  <td id="{{event.id}}-action">{{event.action}}</td> 
-                  <td id="{{event.id}}-description">{{event.description}}</td>
-                </tr>
-
-                <!-- 
-                <tr><td id="1-date">1/19/2017  9:24 am </td> <td id="1-action">STARTED </td> <td id="1-description"> Trouble maker started </td></tr>
-                <tr><td id="2-date">1/19/2017  9:26 am </td> <td id="2-action">KILLED </td> <td id="2-description"> EMPLOYEES killed at: http://John-HP:8082/trouble/kill </td></tr>
-                <tr><td id="3-date">1/19/2017  9:27 am </td> <td id="3-action">INFO </td> <td id="3-description"> No Services discovered, make sure service registry is started and visible </td></tr>
-                -->
-              </tbody>
-            </table>
-          </div>	 	
-        </div>
-      </div>
-    </div>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 id="panel-title" class="panel-title">Event Log</h3>
   </div>
+
+  <div id="events" class="panel-body">
+    <table class="table">
+      <tbody>
+        <tr><th>Date</th><th>Action</th><th>Description</th></tr>
+        <tr *ngFor="let event of eventLog">
+          <td id="{{event.id}}-date">{{event.created | date: 'MM/dd/yyyy h:m a'}}</td> 
+          <td id="{{event.id}}-action">{{event.action}}</td> 
+          <td id="{{event.id}}-description">{{event.description}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>	 	
+</div>

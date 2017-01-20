@@ -4,17 +4,21 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
-import { ServicesComponent } from './eurekaservice.component';
+import { EurekaServiceComponent } from './eurekaservice.component';
+import { EventlogComponent } from './eventlog.component';
+import { SettingsComponent } from './settings.component';
 import { TroublemakerService } from './troublemaker.service';
 
 describe('ServicesComponent', () => {
-  let component: ServicesComponent;
-  let fixture: ComponentFixture<ServicesComponent>;
+  let component: EurekaServiceComponent;
+  let fixture: ComponentFixture<EurekaServiceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ 
-        ServicesComponent 
+        EurekaServiceComponent,
+        EventlogComponent,
+        SettingsComponent
       ],
       imports: [
         HttpModule
@@ -27,7 +31,7 @@ describe('ServicesComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ServicesComponent);
+    fixture = TestBed.createComponent(EurekaServiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -35,4 +39,5 @@ describe('ServicesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

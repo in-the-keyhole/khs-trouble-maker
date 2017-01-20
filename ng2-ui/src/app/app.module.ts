@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { EurekaServiceComponent } from './eurekaservice.component';
 import { EventlogComponent } from './eventlog.component';
 import { TroublemakerService } from './troublemaker.service';
+import { SettingsComponent } from './settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EurekaServiceComponent,
-    EventlogComponent
+    EventlogComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,19 @@
           <button id="memory" class="btn btn-warning" type="button" (click)="memory()" [ngClass]="{disabled : !currentEurekaService}">Memory</button>
       </div>
       
-      <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false"></span>
+      <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false" (click)="showSettingsInfo()"></span>
     </form>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col-md-12">
+
+    <app-settings *ngIf="showSettings"></app-settings>
+
+    <app-eventlog *ngIf="!showSettings"></app-eventlog>
+
   </div>
 </div>
