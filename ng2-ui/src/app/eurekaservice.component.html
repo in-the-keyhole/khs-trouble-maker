@@ -1,0 +1,24 @@
+<div class="row">
+  <!-- LIST -->
+  <div id="actions" class="col-md-12">
+    <form id="actions" class="form-inline">
+      <div class="form-group">
+          <label for="srvc">Service: </label> 
+            <select id="services" class="form-control" (change)="changeService($event.target.value)">
+              <option value="">Select Eureka Service</option>
+              <option *ngFor="let eurekaService of eurekaServices" value="{{eurekaService}}">{{eurekaService}}</option>
+            </select>
+            <span>&nbsp;&nbsp;</span>
+      </div>
+        
+      <div class="form-group"> 
+          <button id="kill" class="btn btn-warning" type="button" (click)="kill()" [ngClass]="{disabled : !currentEurekaService}">Kill</button> 
+          <button id="load" class="btn btn-warning" type="button" (click)="load()" [ngClass]="{disabled : !currentEurekaService}">Load</button> 
+          <button id="exception" class="btn btn-warning" type="button" (click)="exception()" [ngClass]="{disabled : !currentEurekaService}">Exception</button> 
+          <button id="memory" class="btn btn-warning" type="button" (click)="memory()" [ngClass]="{disabled : !currentEurekaService}">Memory</button>
+      </div>
+      
+      <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false"></span>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+[
+    {"id":1,"created":1484839484074,"action":"STARTED","description":"Trouble maker started"},
+    {"id":2,"created":1484839594177,"action":"KILLED","description":"EMPLOYEES killed at: http://John-HP:8082/trouble/kill"},
+    {"id":3,"created":1484839646598,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"}
+]

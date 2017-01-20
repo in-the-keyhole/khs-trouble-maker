@@ -11,7 +11,9 @@ exports.configure = function (api) {
 
     const apiRouter = express.Router();
 
-    require('./movies/movies').configure(apiRouter);
+    var currentBooleanValue = false;
+
+    //require('./movies/movies').configure(apiRouter);
 
     api.use('/api', apiRouter);
 
@@ -19,4 +21,60 @@ exports.configure = function (api) {
         res.status(200);
         res.end();
     });
+
+
+    // ***************************************************
+    // MOCK DATA
+    var services = require('./mock/services.json');
+    var events = require('./mock/events.json');
+
+
+    // API ROUTES
+    apiRouter.get('/access/token', function(req, res) {
+            res.status(200).json('Random Access Token');
+    });
+    apiRouter.get('/valid', function(req, res) {
+        res.status(200).json(true);
+    });
+
+    apiRouter.get('/kill/:service', function(req, res) {
+        currentBooleanValue = !currentBooleanValue;
+        res.status(200).json(currentBooleanValue);
+    });
+    apiRouter.get('/load/:service', function(req, res) {
+        currentBooleanValue = !currentBooleanValue;
+        res.status(200).json(currentBooleanValue);
+    });
+    apiRouter.get('/exception/:service', function(req, res) {
+        currentBooleanValue = !currentBooleanValue;
+        res.status(200).json(currentBooleanValue);
+    });
+    apiRouter.get('/memory/:service', function(req, res) {
+        currentBooleanValue = !currentBooleanValue;
+        res.status(200).json(currentBooleanValue);
+    });
+
+
+    apiRouter.get('/services', function(req, res) {
+        res.status(200).json(services);
+    });
+    apiRouter.get('/events', function(req, res) {
+        res.status(200).json(events);
+    });
+
+    // THESE ARE NOT  CALLED FROM UI, BUT ARE IN TROUBLECONTROLLER
+    //apiRouter.get('/random/kill', function(req, res) {
+    //    res.status(200).json(true);
+    //});
+    //apiRouter.get('/random/load', function(req, res) {
+    //    res.status(200).json(false);
+    //});
+    //apiRouter.get('/random/exception/:service', function(req, res) {
+    //    res.status(200).json(false);
+    //});
+    //apiRouter.get('/random/memory/:service', function(req, res) {
+    //    res.status(200).json(true);
+    //});
+    // ***************************************************
+
 };

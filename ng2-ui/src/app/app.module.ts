@@ -4,17 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { EurekaServiceComponent } from './eurekaservice.component';
+import { EventlogComponent } from './eventlog.component';
+import { TroublemakerService } from './troublemaker.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EurekaServiceComponent,
+    EventlogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [TroublemakerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
