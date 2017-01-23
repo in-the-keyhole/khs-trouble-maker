@@ -4,24 +4,24 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { EurekaServiceComponent } from './eurekaservice.component';
-import { EventlogComponent } from './eventlog.component';
-import { TroublemakerService } from './troublemaker.service';
-import { SettingsComponent } from './settings.component';
+import { EurekaServiceModule } from './eurekaservice/eurekaservice.module';
+import { EventlogModule } from './eventlog/eventlog.module';
+import { AppService } from './app.service';
+import { SettingsModule } from './settings/settings.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    EurekaServiceComponent,
-    EventlogComponent,
-    SettingsComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    EventlogModule,
+    SettingsModule,
+    EurekaServiceModule
   ],
-  providers: [TroublemakerService],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

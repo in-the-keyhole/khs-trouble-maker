@@ -6,9 +6,13 @@
   <div id="events" class="panel-body">
     <table class="table">
       <tbody>
-        <tr><th>Date</th><th>Action</th><th>Description</th></tr>
+        <tr>
+          <th class="created">Date</th>
+          <th class="action">Action</th>
+          <th class="description">Description</th>
+        </tr>
         <tr *ngFor="let event of eventLog">
-          <td id="{{event.id}}-date">{{event.created | date: 'MM/dd/yyyy h:m a'}}</td> 
+          <td id="{{event.id}}-date">{{event.created | date: 'MM/dd/yyyy h:mm a'}}</td> 
           <td id="{{event.id}}-action">{{event.action}}</td> 
           <td id="{{event.id}}-description">{{event.description}}</td>
         </tr>

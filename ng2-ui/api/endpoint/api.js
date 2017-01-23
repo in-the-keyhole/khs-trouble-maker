@@ -3,11 +3,11 @@ var express = require('express');
 exports.configure = function (api) {
 
     // Uncomment to add a random 1 - 3 second delay - aids in testing visual transitions
-    //api.route('/api/*').all(function (req, res, next) {
-    //    setTimeout(function () {
-    //        next();
-    //    }, Math.floor(Math.random() * ((3000 - 1) + 1) + 1));
-    //});
+    api.route('/api/*').all(function (req, res, next) {
+        setTimeout(function () {
+            next();
+        }, Math.floor(Math.random() * ((3000 - 1) + 1) + 1));
+    });
 
     const apiRouter = express.Router();
 
@@ -60,9 +60,9 @@ exports.configure = function (api) {
         res.status(200).json(services);
     });
     apiRouter.get('/events', function(req, res) {
-        //var parts = events[0].action.split('-');
-        //events[0].action = parts[0] + '-' + incrementer;
-        //incrementer++;
+        var parts = events[0].action.split('-');
+        events[0].action = parts[0] + '-' + incrementer;
+        incrementer++;
         res.status(200).json(events);
     });
 

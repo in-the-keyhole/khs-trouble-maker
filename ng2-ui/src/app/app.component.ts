@@ -7,10 +7,6 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  //title = 'app works!';
-  title = 'KHS - Trouble Maker (Angular2)';
+  title = 'KHS - Trouble Maker';
 
-  getEvents(tmp): void {
-    console.log('GET EVENTS: ' + tmp);
-  }
 }

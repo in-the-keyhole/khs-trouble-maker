@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { TroublemakerService } from './troublemaker.service';
+import { AppService } from './app.service';
 
 import {MockBackend, MockConnection} from '@angular/http/testing';
 
@@ -18,21 +18,21 @@ describe('TroublemakerService', () => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
       providers: [
-        TroublemakerService,
+        AppService,
         {provide: XHRBackend, useClass: MockBackend}
       ]
     });
   });
 
   it('should be able to be injected',
-    inject([TroublemakerService], (service: TroublemakerService) => {
-      expect(service instanceof TroublemakerService).toBe(true);
+    inject([AppService], (service: AppService) => {
+      expect(service instanceof AppService).toBe(true);
   }));
 
   it('should be able to be instantiated with "new"', inject([Http], (http: Http) => {
         expect(http).not.toBeNull('http should be provided');
-        let service = new TroublemakerService(http);
-        expect(service instanceof TroublemakerService).toBe(true, '"new" service should be of type TroublemakerService');
+        let service = new AppService(http);
+        expect(service instanceof AppService).toBe(true, '"new" service should be of type AppService');
   }));
 
   it('should be able to inject MockBackend',
@@ -44,12 +44,12 @@ describe('TroublemakerService', () => {
   describe('Get Access Token', () => {
     let backend: MockBackend;
     let response: Response;    
-    let service: TroublemakerService;
+    let service: AppService;
     let fakeToken: string;
 
     beforeEach(inject([Http, XHRBackend], (http: Http, be: MockBackend) => {
         backend = be;
-        service = new TroublemakerService(http);
+        service = new AppService(http);
         fakeToken = 'Random Access Token';
         // SETUP MOCK RESPONSE
         let options = new ResponseOptions({status: 200, body: fakeToken});

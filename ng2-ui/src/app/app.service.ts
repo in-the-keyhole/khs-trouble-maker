@@ -4,26 +4,22 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 
-import {Event} from './event.model';
+import {Event} from './eventlog/event.model';
 
 @Injectable()
-export class TroublemakerService {
-    // **********************************************************************
+export class AppService {
+    // THESE ARE OUTPUTS THAT WILL BE LISTENED FOR 
     @Output() reloadEventLog: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() displaySettings: EventEmitter<boolean> = new EventEmitter<boolean>();
-    // **********************************************************************
 
 
 
-    // **********************************************************************
     constructor(private http: Http) { 
 
     }
-    // **********************************************************************
 
 
 
-    // **********************************************************************
     toggleSettings(val): void {
         this.displaySettings.emit(val);
     }
@@ -43,53 +39,36 @@ export class TroublemakerService {
           .map(response => response.json() as Event[]);
     }
 
+    triggerEventLogReload(): void {
+        this.reloadEventLog.emit(true);
+    }
+
     killEurekaService(eurekaService): Observable<boolean> {
         let returnValue = this.http.get('/api/kill/' + eurekaService)
           .map(response => response.json() as boolean);
 
-        this.reloadEventLog.emit(true);
-
         return returnValue;
-
-        //return this.http.get('/api/kill/' + eurekaService)
-        //   .map(response => response.json() as boolean);
     }
 
     loadEurekaService(eurekaService): Observable<boolean> {
         let returnValue = this.http.get('/api/load/' + eurekaService)
           .map(response => response.json() as boolean);
 
-        this.reloadEventLog.emit(true);
-
         return returnValue;
-
-        //return this.http.get('/api/load/' + eurekaService)
-        //  .map(response => response.json() as boolean);
     }
 
     exceptionEurekaService(eurekaService): Observable<boolean> {
         let returnValue = this.http.get('/api/exception/' + eurekaService)
           .map(response => response.json() as boolean);
 
-        this.reloadEventLog.emit(true);
-
         return returnValue;
-
-        //return this.http.get('/api/exception/' + eurekaService)
-        //   .map(response => response.json() as boolean);
     }
 
     memoryEurekaService(eurekaService): Observable<boolean> {
         let returnValue = this.http.get('/api/memory/' + eurekaService)
           .map(response => response.json() as boolean);
 
-        this.reloadEventLog.emit(true);
-
         return returnValue;
-
-        //return this.http.get('/api/memory/' + eurekaService)
-        //   .map(response => response.json() as boolean);
     }
-    // **********************************************************************
 
 }

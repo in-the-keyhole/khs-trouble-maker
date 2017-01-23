@@ -4,24 +4,33 @@ import { TestBed, async } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { EurekaServiceComponent } from './eurekaservice.component';
-import { EventlogComponent } from './eventlog.component';
-import { SettingsComponent } from './settings.component';
-import { TroublemakerService } from './troublemaker.service';
+
+//import { EurekaServiceComponent } from './eurekaservice.component';
+import { EurekaServiceModule } from './eurekaservice/eurekaservice.module';
+
+//import { EventlogComponent } from './eventlog.component';
+//import { SettingsComponent } from './settings.component';
+import { EventlogModule } from './eventlog/eventlog.module';
+import { SettingsModule } from './settings/settings.module';
+
+import { AppService } from './app.service';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        EurekaServiceComponent,
-        EventlogComponent,
-        SettingsComponent
+//        EurekaServiceComponent,
+//        EventlogComponent,
+//        SettingsComponent
       ],
       imports: [
-        HttpModule
+        HttpModule,
+        EventlogModule,
+        SettingsModule,
+        EurekaServiceModule
       ],
-      providers: [TroublemakerService]
+      providers: [AppService]
     });
     TestBed.compileComponents();
   });

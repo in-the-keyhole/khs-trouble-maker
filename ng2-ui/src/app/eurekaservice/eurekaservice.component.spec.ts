@@ -5,9 +5,13 @@ import { DebugElement } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
 import { EurekaServiceComponent } from './eurekaservice.component';
-import { EventlogComponent } from './eventlog.component';
-import { SettingsComponent } from './settings.component';
-import { TroublemakerService } from './troublemaker.service';
+
+//import { EventlogComponent } from '../eventlog/eventlog.component';
+//import { SettingsComponent } from '../settings/settings.component';
+import { EventlogModule } from '../eventlog/eventlog.module';
+import { SettingsModule } from '../settings/settings.module';
+
+import { AppService } from '../app.service';
 
 describe('ServicesComponent', () => {
   let component: EurekaServiceComponent;
@@ -17,14 +21,16 @@ describe('ServicesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ 
         EurekaServiceComponent,
-        EventlogComponent,
-        SettingsComponent
+//        EventlogComponent,
+//        SettingsComponent
       ],
       imports: [
-        HttpModule
+        HttpModule,
+        EventlogModule,
+        SettingsModule
       ],
       providers: [
-        TroublemakerService
+        AppService
       ],
     })
     .compileComponents();

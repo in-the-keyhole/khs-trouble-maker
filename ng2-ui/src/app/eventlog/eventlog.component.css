@@ -1,0 +1,9 @@
+.table th.created {
+    width: 20%;
+}
+.table th.action {
+    width: 15%;
+}
+.table th.description {
+    width: 65%;
+}
