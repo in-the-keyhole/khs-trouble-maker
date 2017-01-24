@@ -13,6 +13,10 @@ exports.configure = function (api) {
   api.use('/api', apiRouter);
   require('./routes').configure(apiRouter);
 
+  const webSocketRouter = express.Router();
+  require('./websocket').configure(webSocketRouter);
+  api.use('/ws', webSocketRouter);
+
   api.get('/favicon.ico', function (req, res) {
     res.status(200);
     res.end();

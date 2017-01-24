@@ -3,6 +3,8 @@ var bodyParser = require('body-parser');
 
 module.exports = api = express();
 
+var expressWs = require('express-ws')(api);
+
 api.use( bodyParser.json() );       // to support JSON-encoded bodies
 api.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
