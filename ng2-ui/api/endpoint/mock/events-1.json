@@ -1,0 +1,4 @@
+[
+    {"id":1,"created":1485187862444,"action":"STARTED","description":"Trouble maker started"},
+    {"id":2,"created":1485187940806,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"}
+]

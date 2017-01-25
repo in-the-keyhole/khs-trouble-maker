@@ -1,7 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import {AppService} from '../app.service';
 import {Event} from './event.model';
+
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/observable/fromEvent";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-eventlog',
@@ -9,11 +12,12 @@ import {Event} from './event.model';
   styleUrls: ['./eventlog.component.css']
 })
 
-export class EventlogComponent implements OnInit {
+export class EventlogComponent implements OnInit, OnDestroy {
   private eventLog: Event[];
   @Input() showSettings: boolean = false;
 
-
+  private webSocket: WebSocket;
+  private subscription: Subscription;
 
   constructor(private appService: AppService) { 
   }
@@ -26,8 +30,17 @@ export class EventlogComponent implements OnInit {
     this.appService.reloadEventLog.subscribe(boolValue => { 
       this.loadEventLog();
     });
-  }
 
+
+//    this.webSocket = new WebSocket('ws://' + window.location.hostname + ':3000/ws/events');
+//    this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
+//      console.log(events);
+//    });
+
+  }
+  ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+  }
 
   loadEventLog() {
     this.appService.getEvents().subscribe(events => {

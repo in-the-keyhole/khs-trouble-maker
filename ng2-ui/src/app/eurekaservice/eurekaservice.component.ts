@@ -4,6 +4,8 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/fromEvent";
 import {Subscription} from "rxjs/Subscription";
 
+import {EurekaApplication, EurekaService} from './eurekaservice.model';
+
 @Component({
     selector: 'app-eurekaservice',
     templateUrl: './eurekaservice.component.html',
@@ -12,7 +14,10 @@ import {Subscription} from "rxjs/Subscription";
 
 export class EurekaServiceComponent implements OnInit, OnDestroy {
 
-    private eurekaServices: string[];
+    //private eurekaServices: string[];
+    private eurekaApplications: EurekaApplication[];
+    //private eurekaServices: EurekaService[];
+
     private currentEurekaService: string;
     private showSettings: boolean = false;
     private serviceSocket: WebSocket;
@@ -23,14 +28,30 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.serviceSocket = new WebSocket('ws://' + window.location.hostname + ':3000/ws/services');
+
         this.serviceSubscription = Observable.fromEvent(this.serviceSocket, 'message').subscribe(services => {
-            console.log(services);
+            //console.log(services);
+            //console.dir(services['data']);
+            //console.dir(JSON.parse(services['data']));
+
+            let tmpData = JSON.parse(services['data']);
+            this.eurekaApplications = tmpData.applications;
+            //console.dir(tmp.applications[0]);
+            //console.dir(this.eurekaApplications[0]);
+            
+
+            // DATA STRUCTURE
+            // applications []
+            //      instance []
+
         });
+
 
         // GET SERVICES
         // this.appService.getEurekaServices().subscribe(eurekaServices => {
         //   this.eurekaServices = eurekaServices;
         // });
+
 
         // LISTEN FOR CHANGE IN DISPLAYSETTINGS
         this.appService.displaySettings.subscribe(boolValue => {
