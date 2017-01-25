@@ -24,11 +24,15 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
     private serviceSubscription: Subscription;
 
     constructor(private appService: AppService) {
+//        appService.applications.subscribe(msg => {			
+//            console.log("Response from websocket: ");
+//            console.dir(msg);
+//            this.eurekaApplications = msg;
+//		});
     }
 
     ngOnInit() {
         this.serviceSocket = new WebSocket('ws://' + window.location.hostname + ':3000/ws/services');
-
         this.serviceSubscription = Observable.fromEvent(this.serviceSocket, 'message').subscribe(services => {
             //console.log(services);
             //console.dir(services['data']);
@@ -43,7 +47,6 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             // DATA STRUCTURE
             // applications []
             //      instance []
-
         });
 
 
@@ -68,6 +71,7 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
     }
 
     changeService(eurekaServiceValue): void {
+        console.log('CHANGE SERVICE: ' + eurekaServiceValue);
         this.currentEurekaService = eurekaServiceValue;
     }
 

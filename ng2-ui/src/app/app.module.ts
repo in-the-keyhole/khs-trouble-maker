@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { EurekaServiceModule } from './eurekaservice/eurekaservice.module';
 import { EventlogModule } from './eventlog/eventlog.module';
 import { AppService } from './app.service';
+import { WebsocketService } from './websocket.service';
 import { SettingsModule } from './settings/settings.module';
 
 @NgModule({
@@ -21,7 +22,7 @@ import { SettingsModule } from './settings/settings.module';
     SettingsModule,
     EurekaServiceModule
   ],
-  providers: [AppService],
+  providers: [WebsocketService, AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,19 @@
 //import { EventEmitter } from 'events';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import 'rxjs/add/operator/map';
 
 import {Event} from './eventlog/event.model';
+//import { WebsocketService } from './websocket.service';
+//import {EurekaApplication} from './eurekaservice/eurekaservice.model';
+//
+//const CHAT_URL = 'ws://' + window.location.hostname + ':3000/ws/';
+//
+//export interface Message {
+//	author: string,
+//	message: string
+//}
 
 @Injectable()
 export class AppService {
@@ -13,8 +22,26 @@ export class AppService {
     @Output() displaySettings: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
+//    public messages: Subject<string>;
+//    public applications: Observable<EurekaApplication[]>;
+
 
     constructor(private http: Http) { 
+
+//        this.applications = <Observable<EurekaApplication[]>>wsService
+//			.connect(CHAT_URL + 'services')
+//			.map((response: MessageEvent): EurekaApplication[] => {
+//				let data = JSON.parse(response.data);
+//                console.log('MESSAGES: DATA');
+//                console.dir(data);
+//
+//
+//                return data;
+//				//return {
+//				//	author: data.author,
+//				//	message: data.message
+//				//}
+//			});
 
     }
 

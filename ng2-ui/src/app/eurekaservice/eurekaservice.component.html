@@ -1,22 +1,42 @@
 <div class="row">
+  <!--APPLICATIONS / SERVICES -->
   <div class="col-md-6">
-    <h1>Applications/Services</h1>
-    <ol>
-      <li *ngFor="let eurekaApplication of eurekaApplications">{{eurekaApplication.name}}
+    <div class="panel panel-primary">
+    <div class="panel-heading">
+      <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false" (click)="showSettingsInfo()"></span>
+      <h3 id="panel-title" class="panel-title">Applications/Services</h3>
+    </div>
+
+    <div *ngFor="let eurekaApplication of eurekaApplications">
+      <div style="background-color:yellow; font-weight:bold; text-align:center;">{{eurekaApplication.name}}</div>
         <ul>
-          <li *ngFor="let eurekaService of eurekaApplication.instance">{{eurekaService.app}} <em>{{eurekaService.instanceId}}</em></li>
+          <li *ngFor="let eurekaService of eurekaApplication.instance">
+            {{eurekaService.app}} 
+            <em (click)="changeService(eurekaService.instanceId)">{{eurekaService.instanceId}}</em>
+          
+          <div style="text-align:right;">
+            <button id="kill" class="btn btn-warning" type="button" (click)="kill()" [ngClass]="{disabled : !currentEurekaService}">Kill</button> 
+          </div>
+          </li>
         </ul>
-      </li>
-    </ol>
+      
+    </div>
+    
+    </div>
   </div>
 
+  <!-- EVENT LOG -->
   <div class="col-md-6">
-    <h1>Events</h1>
+    <app-settings *ngIf="showSettings"></app-settings>
+    <app-eventlog *ngIf="!showSettings"></app-eventlog>
   </div>
 
 </div>
 
+
 <hr>
+
+
 
 <div class="row">
   <!-- LIST -->
@@ -49,9 +69,6 @@
 <div class="row">
   <div class="col-md-12">
 
-    <app-settings *ngIf="showSettings"></app-settings>
-
-    <app-eventlog *ngIf="!showSettings"></app-eventlog>
-
+   
   </div>
 </div>

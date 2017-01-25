@@ -23,29 +23,33 @@ export class EventlogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // LOAD EVENT LOG INITIALLY
-    this.loadEventLog();
-
-    // LISTEN FOR EVENT TO RELOAD EVENT LOG FROM SERVICE
-    this.appService.reloadEventLog.subscribe(boolValue => { 
-      this.loadEventLog();
-    });
-
-
-//    this.webSocket = new WebSocket('ws://' + window.location.hostname + ':3000/ws/events');
-//    this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
-//      console.log(events);
+//    // LOAD EVENT LOG INITIALLY
+//    this.loadEventLog();
+//
+//    // LISTEN FOR EVENT TO RELOAD EVENT LOG FROM SERVICE
+//    this.appService.reloadEventLog.subscribe(boolValue => { 
+//      this.loadEventLog();
 //    });
+
+
+    this.webSocket = new WebSocket('ws://' + window.location.hostname + ':3000/ws/events');
+    this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
+      console.log(events);
+      let tmpData = JSON.parse(events['data']);
+      this.eventLog = tmpData;
+      //this.eventLog = events;
+    });
 
   }
   ngOnDestroy(): void {
         this.subscription.unsubscribe();
   }
 
-  loadEventLog() {
-    this.appService.getEvents().subscribe(events => {
-      this.eventLog = events;
-    });
-  }
+
+//  loadEventLog() {
+//    this.appService.getEvents().subscribe(events => {
+//      this.eventLog = events;
+//    });
+//  }
 
 }
