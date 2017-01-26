@@ -60,9 +60,7 @@ services[2] = require('./mock/services-3.json');
 function sendServices() {
     for (var i in _servicesClients) {
         var randomIndex = Math.floor(Math.random() * services.length);
-
         console.info('Services sent to clientId: ' + i + ': Index: ' + randomIndex);
-        
         _servicesClients[i].send(JSON.stringify(services[randomIndex]));
     }
 }
@@ -78,9 +76,7 @@ events[4] = require('./mock/events-5.json');
 function sendEvents() {
     for (var i in _eventsClients) {
         var randomIndex = Math.floor(Math.random() * events.length);
-
         console.info('Events sent to clientId: ' + i + ': Index: ' + randomIndex);
-
         _eventsClients[i].send(JSON.stringify(events[randomIndex]));
     }
 }
