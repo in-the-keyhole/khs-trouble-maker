@@ -37,16 +37,8 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             //console.log(services);
             //console.dir(services['data']);
             //console.dir(JSON.parse(services['data']));
-
             let tmpData = JSON.parse(services['data']);
             this.eurekaApplications = tmpData.applications;
-            //console.dir(tmp.applications[0]);
-            //console.dir(this.eurekaApplications[0]);
-            
-
-            // DATA STRUCTURE
-            // applications []
-            //      instance []
         });
 
 
@@ -67,21 +59,21 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
     }
 
     showSettingsInfo(): void {
-        this.appService.toggleSettings(true);
+        this.appService.toggleSettings(!this.showSettings);
     }
 
-    changeService(eurekaServiceValue): void {
-        console.log('CHANGE SERVICE: ' + eurekaServiceValue);
-        this.currentEurekaService = eurekaServiceValue;
-    }
+//    changeService(eurekaServiceValue): void {
+//        console.log('CHANGE SERVICE: ' + eurekaServiceValue);
+//        this.currentEurekaService = eurekaServiceValue;
+//    }
 
-    kill(): void {
-        if (this.currentEurekaService) {
+    kill(instanceId): void {
+        if (instanceId) {
             //console.log('KILL THIS SERVICE: ' + this.currentEurekaService);
-            if (confirm('Kill Service: ' + this.currentEurekaService)) {
-                this.appService.killEurekaService(this.currentEurekaService).subscribe(returnValue => {
+            if (confirm('Kill Service: ' + instanceId)) {
+                this.appService.killEurekaService(instanceId).subscribe(returnValue => {
 
-                    this.appService.triggerEventLogReload();
+                    //this.appService.triggerEventLogReload();
 
                     if (!returnValue) {
                         alert('A problem occurred while trying to kill this service');
@@ -90,14 +82,29 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
+//    kill(): void {
+//        if (this.currentEurekaService) {
+//            //console.log('KILL THIS SERVICE: ' + this.currentEurekaService);
+//            if (confirm('Kill Service: ' + this.currentEurekaService)) {
+//                this.appService.killEurekaService(this.currentEurekaService).subscribe(returnValue => {
+//
+//                    this.appService.triggerEventLogReload();
+//
+//                    if (!returnValue) {
+//                        alert('A problem occurred while trying to kill this service');
+//                    }
+//                });
+//            }
+//        }
+//    }
 
-    load(): void {
-        if (this.currentEurekaService) {
-            //console.log('LOAD THIS SERVICE: ' + this.currentEurekaService);
-            if (confirm('Apply Load Service: ' + this.currentEurekaService)) {
-                this.appService.loadEurekaService(this.currentEurekaService).subscribe(returnValue => {
+    load(instanceId): void {
+        if (instanceId) {
+            //console.log('LOAD THIS SERVICE: ' + instanceId);
+            if (confirm('Apply Load Service: ' + instanceId)) {
+                this.appService.loadEurekaService(instanceId).subscribe(returnValue => {
 
-                    this.appService.triggerEventLogReload();
+                    //this.appService.triggerEventLogReload();
 
                     if (!returnValue) {
                         alert('A problem occurred while trying to apply load to this service');
@@ -106,14 +113,29 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
+//    load(): void {
+//        if (this.currentEurekaService) {
+//            //console.log('LOAD THIS SERVICE: ' + this.currentEurekaService);
+//            if (confirm('Apply Load Service: ' + this.currentEurekaService)) {
+//                this.appService.loadEurekaService(this.currentEurekaService).subscribe(returnValue => {
+//
+//                    this.appService.triggerEventLogReload();
+//
+//                    if (!returnValue) {
+//                        alert('A problem occurred while trying to apply load to this service');
+//                    }
+//                });
+//            }
+//        }
+//    }
 
-    exception(): void {
-        if (this.currentEurekaService) {
-            //console.log('EXCEPTION THIS SERVICE: ' + this.currentEurekaService);
-            if (confirm('Invoke Exception on: ' + this.currentEurekaService)) {
-                this.appService.exceptionEurekaService(this.currentEurekaService).subscribe(returnValue => {
+    exception(instanceId): void {
+        if (instanceId) {
+            //console.log('EXCEPTION THIS SERVICE: ' + instanceId);
+            if (confirm('Invoke Exception on: ' + instanceId)) {
+                this.appService.exceptionEurekaService(instanceId).subscribe(returnValue => {
 
-                    this.appService.triggerEventLogReload();
+                    //this.appService.triggerEventLogReload();
 
                     if (!returnValue) {
                         alert('A problem occurred while trying to invoke exception on this service');
@@ -122,14 +144,29 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
+//    exception(): void {
+//        if (this.currentEurekaService) {
+//            //console.log('EXCEPTION THIS SERVICE: ' + this.currentEurekaService);
+//            if (confirm('Invoke Exception on: ' + this.currentEurekaService)) {
+//                this.appService.exceptionEurekaService(this.currentEurekaService).subscribe(returnValue => {
+//
+//                    this.appService.triggerEventLogReload();
+//
+//                    if (!returnValue) {
+//                        alert('A problem occurred while trying to invoke exception on this service');
+//                    }
+//                });
+//            }
+//        }
+//    }
 
-    memory(): void {
-        if (this.currentEurekaService) {
-            //console.log('MEMORY THIS SERVICE: ' + this.currentEurekaService);
-            if (confirm('Grow Memory on: ' + this.currentEurekaService)) {
-                this.appService.memoryEurekaService(this.currentEurekaService).subscribe(returnValue => {
+    memory(instanceId): void {
+        if (instanceId) {
+            //console.log('MEMORY THIS SERVICE: ' + instanceId);
+            if (confirm('Grow Memory on: ' + instanceId)) {
+                this.appService.memoryEurekaService(instanceId).subscribe(returnValue => {
 
-                    this.appService.triggerEventLogReload();
+                    //this.appService.triggerEventLogReload();
 
                     if (!returnValue) {
                         alert('A problem occurred while trying to grow memory on this service');
@@ -138,6 +175,21 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
+//    memory(): void {
+//        if (this.currentEurekaService) {
+//            //console.log('MEMORY THIS SERVICE: ' + this.currentEurekaService);
+//            if (confirm('Grow Memory on: ' + this.currentEurekaService)) {
+//                this.appService.memoryEurekaService(this.currentEurekaService).subscribe(returnValue => {
+//
+//                    this.appService.triggerEventLogReload();
+//
+//                    if (!returnValue) {
+//                        alert('A problem occurred while trying to grow memory on this service');
+//                    }
+//                });
+//            }
+//        }
+//    }
 
 
 }

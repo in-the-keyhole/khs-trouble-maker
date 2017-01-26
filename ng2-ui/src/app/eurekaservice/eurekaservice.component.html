@@ -2,26 +2,27 @@
   <!--APPLICATIONS / SERVICES -->
   <div class="col-md-6">
     <div class="panel panel-primary">
-    <div class="panel-heading">
-      <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false" (click)="showSettingsInfo()"></span>
-      <h3 id="panel-title" class="panel-title">Applications/Services</h3>
-    </div>
+      <div class="panel-heading">
+        <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false" (click)="showSettingsInfo()" title="View Settings"></span>
+        <h3 id="panel-title" class="panel-title">Applications/Services</h3>
+      </div>
 
-    <div *ngFor="let eurekaApplication of eurekaApplications">
-      <div style="background-color:yellow; font-weight:bold; text-align:center;">{{eurekaApplication.name}}</div>
-        <ul>
-          <li *ngFor="let eurekaService of eurekaApplication.instance">
-            {{eurekaService.app}} 
-            <em (click)="changeService(eurekaService.instanceId)">{{eurekaService.instanceId}}</em>
-          
-          <div style="text-align:right;">
-            <button id="kill" class="btn btn-warning" type="button" (click)="kill()" [ngClass]="{disabled : !currentEurekaService}">Kill</button> 
-          </div>
-          </li>
-        </ul>
-      
-    </div>
-    
+      <div class="panel-body">
+        <div *ngFor="let eurekaApplication of eurekaApplications">
+          <div class="bg-info text-center" style="font-weight:bold;">{{eurekaApplication.name}}</div>
+
+            <div class="row" *ngFor="let eurekaService of eurekaApplication.instance" style="margin-bottom: 1em;">
+              <div class="col-xs-2">{{eurekaService.app}}</div>
+              <div class="col-xs-5">{{eurekaService.instanceId}}</div>
+              <div class="col-xs-5 btn-toolbar text-right">
+                  <button id="kill" class="btn btn-xs btn-danger" type="button" (click)="kill(eurekaService.instanceId)" title="Kill Service">K</button> 
+                  <button id="load" class="btn btn-xs btn-primary" type="button" (click)="load(eurekaService.instanceId)" title="Load Service">L</button> 
+                  <button id="exception" class="btn btn-xs btn-warning" type="button" (click)="exception(eurekaService.instanceId)" title="Exception Service">E</button> 
+                  <button id="memory" class="btn btn-xs btn-info" type="button" (click)="memory(eurekaService.instanceId)" title="Memory Service">M</button>
+              </div>
+            </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -31,44 +32,4 @@
     <app-eventlog *ngIf="!showSettings"></app-eventlog>
   </div>
 
-</div>
-
-
-<hr>
-
-
-
-<div class="row">
-  <!-- LIST -->
-  <div id="actions" class="col-md-12">
-    <form id="actions" class="form-inline">
-      <div class="form-group">
-          <label for="srvc">Service: </label> 
-            <select id="services" class="form-control" (change)="changeService($event.target.value)">
-              <option value="">Select Eureka Service</option>
-              <option *ngFor="let eurekaService of eurekaServices" value="{{eurekaService}}">{{eurekaService}}</option>
-            </select>
-            <span>&nbsp;&nbsp;</span>
-      </div>
-        
-      <div class="form-group"> 
-          <button id="kill" class="btn btn-warning" type="button" (click)="kill()" [ngClass]="{disabled : !currentEurekaService}">Kill</button> 
-          <button id="load" class="btn btn-warning" type="button" (click)="load()" [ngClass]="{disabled : !currentEurekaService}">Load</button> 
-          <button id="exception" class="btn btn-warning" type="button" (click)="exception()" [ngClass]="{disabled : !currentEurekaService}">Exception</button> 
-          <button id="memory" class="btn btn-warning" type="button" (click)="memory()" [ngClass]="{disabled : !currentEurekaService}">Memory</button>
-      </div>
-      
-      <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false" (click)="showSettingsInfo()"></span>
-
-    </form>
-  </div>
-</div>
-
-
-
-<div class="row">
-  <div class="col-md-12">
-
-   
-  </div>
 </div>

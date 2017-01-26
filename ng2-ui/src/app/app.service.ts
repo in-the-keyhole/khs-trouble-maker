@@ -18,7 +18,7 @@ import {Event} from './eventlog/event.model';
 @Injectable()
 export class AppService {
     // THESE ARE OUTPUTS THAT WILL BE LISTENED FOR 
-    @Output() reloadEventLog: EventEmitter<boolean> = new EventEmitter<boolean>();
+//    @Output() reloadEventLog: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() displaySettings: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
@@ -56,19 +56,19 @@ export class AppService {
           .map(response => response.text() as string);
     }
 
-    getEurekaServices(): Observable<string[]> {
-        return this.http.get('/api/services')
-          .map(response => response.json() as string[]);
-    }
+//    getEurekaServices(): Observable<string[]> {
+//        return this.http.get('/api/services')
+//          .map(response => response.json() as string[]);
+//    }
+//
+//    getEvents(): Observable<Event[]> {
+//        return this.http.get('/api/events')
+//          .map(response => response.json() as Event[]);
+//    }
 
-    getEvents(): Observable<Event[]> {
-        return this.http.get('/api/events')
-          .map(response => response.json() as Event[]);
-    }
-
-    triggerEventLogReload(): void {
-        this.reloadEventLog.emit(true);
-    }
+//    triggerEventLogReload(): void {
+//        this.reloadEventLog.emit(true);
+//    }
 
     killEurekaService(eurekaService): Observable<boolean> {
         let returnValue = this.http.get('/api/kill/' + eurekaService)

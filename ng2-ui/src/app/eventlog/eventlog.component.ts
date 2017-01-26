@@ -36,8 +36,8 @@ export class EventlogComponent implements OnInit, OnDestroy {
     this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
       //console.log(events);
       let tmpData = JSON.parse(events['data']);
+
       this.eventLog = tmpData;
-      //this.eventLog = events;
     });
 
   }
