@@ -15,6 +15,6 @@ api.namespace = '/api';
 var apiModule = require('./endpoint/api');
 apiModule.configure(api);
 
-api.listen(3000, function () {
-    console.log('API is up and listening on port 3000');
+api.listen(9110, function () {
+    console.log('API is up and listening on port 9110');
 });

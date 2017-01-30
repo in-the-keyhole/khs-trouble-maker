@@ -32,13 +32,13 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.serviceSocket = new WebSocket('ws://' + window.location.hostname + ':3000/ws/services');
+        this.serviceSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/services');
         this.serviceSubscription = Observable.fromEvent(this.serviceSocket, 'message').subscribe(services => {
             //console.log(services);
             //console.dir(services['data']);
             //console.dir(JSON.parse(services['data']));
             let tmpData = JSON.parse(services['data']);
-            this.eurekaApplications = tmpData.applications;
+            this.eurekaApplications = tmpData.services;
         });
 
 

@@ -12,6 +12,7 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     khs.trouble: DEBUG
+    com.netflix.discovery: 'OFF'
     
 ###When to invoke trouble maker KILL service, default 2:00 pm Monday through Friday
 trouble:
@@ -24,3 +25,7 @@ trouble:
   ssl: false
   ###Threads to spawn when Blocking trouble is invoked, default is 200
   blocking-threads: 200  
+  
+security:
+  basic:
+    enabled: false

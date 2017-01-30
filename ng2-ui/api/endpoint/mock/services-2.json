@@ -1,94 +1,141 @@
 {
-  "applications": [
+  "services": [
     {
-      "name": "EMPLOYEES",
-      "instance": [
+      "name": "employees",
+      "instances": [
         {
-          "instanceId": "jaimes-mbp-2:employees:8082",
-          "hostName": "jaimes-mbp-2",
-          "app": "EMPLOYEES",
-          "ipAddr": "192.168.1.204",
-          "status": "UP",
-          "overriddenstatus": "UNKNOWN",
-          "port": {
-            "$": 8082,
-            "@enabled": "true"
-          },
-          "securePort": {
-            "$": 443,
-            "@enabled": "false"
-          },
-          "countryId": 1,
-          "dataCenterInfo": {
-            "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
-            "name": "MyOwn"
-          },
-          "leaseInfo": {
-            "renewalIntervalInSecs": 10,
-            "durationInSecs": 90,
-            "registrationTimestamp": 1485211444615,
-            "lastRenewalTimestamp": 1485212335110,
-            "evictionTimestamp": 0,
-            "serviceUpTimestamp": 1485211444615
-          },
-          "metadata": {
-            "@class": "java.util.Collections$EmptyMap"
-          },
-          "homePageUrl": "http://jaimes-mbp-2:8082/",
-          "statusPageUrl": "http://jaimes-mbp-2:8082/info",
-          "healthCheckUrl": "http://jaimes-mbp-2:8082/health",
-          "vipAddress": "employees",
-          "secureVipAddress": "employees",
-          "isCoordinatingDiscoveryServer": "false",
-          "lastUpdatedTimestamp": "1485211444615",
-          "lastDirtyTimestamp": "1485211444514",
-          "actionType": "ADDED"
+          "host": "jaimes-mbp-2",
+          "port": 8083,
+          "secure": false,
+          "serviceId": "EMPLOYEES",
+          "metadata": {},
+          "uri": "http://jaimes-mbp-2:8083",
+          "instanceInfo": {
+            "instanceId": "jaimes-mbp-2:employees:8083",
+            "app": "EMPLOYEES",
+            "appGroupName": null,
+            "ipAddr": "192.168.1.205",
+            "sid": "na",
+            "homePageUrl": "http://jaimes-mbp-2:8083/",
+            "statusPageUrl": "http://jaimes-mbp-2:8083/info",
+            "healthCheckUrl": "http://jaimes-mbp-2:8083/health",
+            "secureHealthCheckUrl": null,
+            "vipAddress": "employees",
+            "secureVipAddress": "employees",
+            "countryId": 1,
+            "dataCenterInfo": {
+              "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
+              "name": "MyOwn"
+            },
+            "hostName": "jaimes-mbp-2",
+            "status": "UP",
+            "leaseInfo": {
+              "renewalIntervalInSecs": 10,
+              "durationInSecs": 90,
+              "registrationTimestamp": 1485798058034,
+              "lastRenewalTimestamp": 1485798348047,
+              "evictionTimestamp": 0,
+              "serviceUpTimestamp": 1485798058034
+            },
+            "isCoordinatingDiscoveryServer": false,
+            "metadata": {},
+            "lastUpdatedTimestamp": 1485798058034,
+            "lastDirtyTimestamp": 1485798057988,
+            "actionType": "ADDED",
+            "asgName": null,
+            "overriddenStatus": "UNKNOWN"
+          }
+        },
+        {
+          "host": "jaimes-mbp-2",
+          "port": 8082,
+          "secure": false,
+          "serviceId": "EMPLOYEES",
+          "metadata": {},
+          "uri": "http://jaimes-mbp-2:8082",
+          "instanceInfo": {
+            "instanceId": "jaimes-mbp-2:employees:8082",
+            "app": "EMPLOYEES",
+            "appGroupName": null,
+            "ipAddr": "192.168.1.205",
+            "sid": "na",
+            "homePageUrl": "http://jaimes-mbp-2:8082/",
+            "statusPageUrl": "http://jaimes-mbp-2:8082/info",
+            "healthCheckUrl": "http://jaimes-mbp-2:8082/health",
+            "secureHealthCheckUrl": null,
+            "vipAddress": "employees",
+            "secureVipAddress": "employees",
+            "countryId": 1,
+            "dataCenterInfo": {
+              "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
+              "name": "MyOwn"
+            },
+            "hostName": "jaimes-mbp-2",
+            "status": "UP",
+            "leaseInfo": {
+              "renewalIntervalInSecs": 10,
+              "durationInSecs": 90,
+              "registrationTimestamp": 1485792466667,
+              "lastRenewalTimestamp": 1485797754519,
+              "evictionTimestamp": 0,
+              "serviceUpTimestamp": 1485792466668
+            },
+            "isCoordinatingDiscoveryServer": false,
+            "metadata": {},
+            "lastUpdatedTimestamp": 1485792466669,
+            "lastDirtyTimestamp": 1485792466476,
+            "actionType": "ADDED",
+            "asgName": null,
+            "overriddenStatus": "UNKNOWN"
+          }
         }
       ]
     },
     {
-      "name": "PROJECTS",
-      "instance": [
+      "name": "projects",
+      "instances": [
         {
-          "instanceId": "jaimes-mbp-2:projects:8081",
-          "hostName": "jaimes-mbp-2",
-          "app": "PROJECTS",
-          "ipAddr": "192.168.1.204",
-          "status": "UP",
-          "overriddenstatus": "UNKNOWN",
-          "port": {
-            "$": 8081,
-            "@enabled": "true"
-          },
-          "securePort": {
-            "$": 443,
-            "@enabled": "false"
-          },
-          "countryId": 1,
-          "dataCenterInfo": {
-            "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
-            "name": "MyOwn"
-          },
-          "leaseInfo": {
-            "renewalIntervalInSecs": 10,
-            "durationInSecs": 90,
-            "registrationTimestamp": 1485211557278,
-            "lastRenewalTimestamp": 1485212337756,
-            "evictionTimestamp": 0,
-            "serviceUpTimestamp": 1485211557278
-          },
-          "metadata": {
-            "@class": "java.util.Collections$EmptyMap"
-          },
-          "homePageUrl": "http://jaimes-mbp-2:8081/",
-          "statusPageUrl": "http://jaimes-mbp-2:8081/info",
-          "healthCheckUrl": "http://jaimes-mbp-2:8081/health",
-          "vipAddress": "projects",
-          "secureVipAddress": "projects",
-          "isCoordinatingDiscoveryServer": "false",
-          "lastUpdatedTimestamp": "1485211557278",
-          "lastDirtyTimestamp": "1485211557237",
-          "actionType": "ADDED"
+          "host": "jaimes-mbp-2",
+          "port": 8081,
+          "secure": false,
+          "serviceId": "PROJECTS",
+          "metadata": {},
+          "uri": "http://jaimes-mbp-2:8081",
+          "instanceInfo": {
+            "instanceId": "jaimes-mbp-2:projects:8081",
+            "app": "PROJECTS",
+            "appGroupName": null,
+            "ipAddr": "192.168.1.205",
+            "sid": "na",
+            "homePageUrl": "http://jaimes-mbp-2:8081/",
+            "statusPageUrl": "http://jaimes-mbp-2:8081/info",
+            "healthCheckUrl": "http://jaimes-mbp-2:8081/health",
+            "secureHealthCheckUrl": null,
+            "vipAddress": "projects",
+            "secureVipAddress": "projects",
+            "countryId": 1,
+            "dataCenterInfo": {
+              "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
+              "name": "MyOwn"
+            },
+            "hostName": "jaimes-mbp-2",
+            "status": "UP",
+            "leaseInfo": {
+              "renewalIntervalInSecs": 10,
+              "durationInSecs": 90,
+              "registrationTimestamp": 1485797889592,
+              "lastRenewalTimestamp": 1485798169624,
+              "evictionTimestamp": 0,
+              "serviceUpTimestamp": 1485797889592
+            },
+            "isCoordinatingDiscoveryServer": false,
+            "metadata": {},
+            "lastUpdatedTimestamp": 1485797889592,
+            "lastDirtyTimestamp": 1485797889550,
+            "actionType": "ADDED",
+            "asgName": null,
+            "overriddenStatus": "UNKNOWN"
+          }
         }
       ]
     }

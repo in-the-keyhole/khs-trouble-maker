@@ -11,14 +11,14 @@
         <div *ngFor="let eurekaApplication of eurekaApplications">
           <div class="bg-info text-center" style="font-weight:bold;">{{eurekaApplication.name}}</div>
 
-            <div class="row" *ngFor="let eurekaService of eurekaApplication.instance" style="margin-bottom: 1em;">
-              <div class="col-xs-2">{{eurekaService.app}}</div>
-              <div class="col-xs-5">{{eurekaService.instanceId}}</div>
+            <div class="row" *ngFor="let eurekaService of eurekaApplication.instances" style="margin-bottom: 1em;">
+              <div class="col-xs-2">{{eurekaService.instanceInfo.app}}</div>
+              <div class="col-xs-5">{{eurekaService.instanceInfo.instanceId}}</div>
               <div class="col-xs-5 btn-toolbar text-right">
-                  <button id="kill" class="btn btn-xs btn-danger" type="button" (click)="kill(eurekaService.instanceId)" title="Kill Service">K</button> 
-                  <button id="load" class="btn btn-xs btn-primary" type="button" (click)="load(eurekaService.instanceId)" title="Load Service">L</button> 
-                  <button id="exception" class="btn btn-xs btn-warning" type="button" (click)="exception(eurekaService.instanceId)" title="Exception Service">E</button> 
-                  <button id="memory" class="btn btn-xs btn-info" type="button" (click)="memory(eurekaService.instanceId)" title="Memory Service">M</button>
+                  <button id="kill" class="btn btn-xs btn-danger" type="button" (click)="kill(eurekaService.instanceInfo.instanceId)" title="Kill Service">K</button>
+                  <button id="load" class="btn btn-xs btn-primary" type="button" (click)="load(eurekaService.instanceInfo.instanceId)" title="Load Service">L</button>
+                  <button id="exception" class="btn btn-xs btn-warning" type="button" (click)="exception(eurekaService.instanceInfo.instanceId)" title="Exception Service">E</button>
+                  <button id="memory" class="btn btn-xs btn-info" type="button" (click)="memory(eurekaService.instanceInfo.instanceId)" title="Memory Service">M</button>
               </div>
             </div>
         </div>
