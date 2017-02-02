@@ -70,32 +70,65 @@ export class AppService {
 //        this.reloadEventLog.emit(true);
 //    }
 
-    killEurekaService(eurekaService): Observable<boolean> {
-        let returnValue = this.http.get('/api/kill/' + eurekaService)
+
+    killEurekaService(eurekaInstance): Observable<boolean> {
+        let url = '/api/kill/' + eurekaInstance.app + '/' + eurekaInstance.instanceId;
+        console.log('KILL URL: ' + url);
+
+        let returnValue = this.http.get(url)
           .map(response => response.json() as boolean);
 
         return returnValue;
     }
+//    killEurekaService(eurekaService): Observable<boolean> {
+//        let returnValue = this.http.get('/api/kill/' + eurekaService)
+//          .map(response => response.json() as boolean);
+//        return returnValue;
+//    }
 
-    loadEurekaService(eurekaService): Observable<boolean> {
-        let returnValue = this.http.get('/api/load/' + eurekaService)
+    loadEurekaService(eurekaInstance): Observable<boolean> {
+        let url = '/api/load/' + eurekaInstance.app + '/' + eurekaInstance.instanceId;
+        console.log('LOAD URL: ' + url);
+
+        let returnValue = this.http.get(url)
           .map(response => response.json() as boolean);
 
         return returnValue;
     }
+//    loadEurekaService(eurekaService): Observable<boolean> {
+//        let returnValue = this.http.get('/api/load/' + eurekaService)
+//          .map(response => response.json() as boolean);
+//        return returnValue;
+//    }
 
-    exceptionEurekaService(eurekaService): Observable<boolean> {
-        let returnValue = this.http.get('/api/exception/' + eurekaService)
+    exceptionEurekaService(eurekaInstance): Observable<boolean> {
+        let url = '/api/exception/' + eurekaInstance.app + '/' + eurekaInstance.instanceId;
+        console.log('EXCEPTION URL: ' + url);
+
+        let returnValue = this.http.get(url)
           .map(response => response.json() as boolean);
 
         return returnValue;
     }
+//    exceptionEurekaService(eurekaService): Observable<boolean> {
+//        let returnValue = this.http.get('/api/exception/' + eurekaService)
+//          .map(response => response.json() as boolean);
+//        return returnValue;
+//    }
 
-    memoryEurekaService(eurekaService): Observable<boolean> {
-        let returnValue = this.http.get('/api/memory/' + eurekaService)
+    memoryEurekaService(eurekaInstance): Observable<boolean> {
+        let url = '/api/memory/' + eurekaInstance.app + '/' + eurekaInstance.instanceId;
+        console.log('MEMORY URL: ' + url);
+
+        let returnValue = this.http.get(url)
           .map(response => response.json() as boolean);
-
+          
         return returnValue;
     }
+//    memoryEurekaService(eurekaService): Observable<boolean> {
+//        let returnValue = this.http.get('/api/memory/' + eurekaService)
+//          .map(response => response.json() as boolean);
+//        return returnValue;
+//    }
 
 }

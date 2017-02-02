@@ -20,10 +20,10 @@
               <div class="col-xs-3">{{eurekaServiceInstance.instanceInfo.app}}</div>
               <div class="col-xs-5">{{eurekaServiceInstance.instanceInfo.instanceId}}</div>
               <div class="col-xs-4 btn-toolbar text-right">
-                  <button id="kill" class="btn btn-xs btn-danger" type="button" (click)="kill(eurekaServiceInstance.instanceInfo.instanceId)" title="Kill Service">K</button>
-                  <button id="load" class="btn btn-xs btn-primary" type="button" (click)="load(eurekaServiceInstance.instanceInfo.instanceId)" title="Load Service">L</button>
-                  <button id="exception" class="btn btn-xs btn-warning" type="button" (click)="exception(eurekaServiceInstance.instanceInfo.instanceId)" title="Exception Service">E</button>
-                  <button id="memory" class="btn btn-xs btn-info" type="button" (click)="memory(eurekaServiceInstance.instanceInfo.instanceId)" title="Memory Service">M</button>
+                  <button id="kill" class="btn btn-xs btn-danger" type="button" (click)="kill(eurekaServiceInstance.instanceInfo)" title="Kill Service">K</button>
+                  <button id="load" class="btn btn-xs btn-primary" type="button" (click)="load(eurekaServiceInstance.instanceInfo)" title="Load Service">L</button>
+                  <button id="exception" class="btn btn-xs btn-warning" type="button" (click)="exception(eurekaServiceInstance.instanceInfo)" title="Exception Service">E</button>
+                  <button id="memory" class="btn btn-xs btn-info" type="button" (click)="memory(eurekaServiceInstance.instanceInfo)" title="Memory Service">M</button>
               </div>
             </div>
           </div>

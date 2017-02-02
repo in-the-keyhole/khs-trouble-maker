@@ -18,23 +18,23 @@ exports.configure = function (api) {
     res.status(200).json(true);
   });
 
-  api.get('/kill/:service', function (req, res) {
-    console.log('KILL: ' + req.params.service);
+  api.get('/kill/:service/:instance', function (req, res) {
+    console.log('KILL: ' + req.params.service + ' / ' + req.params.instance);
     //currentBooleanValue = !currentBooleanValue;
     res.status(200).json(currentBooleanValue);
   });
-  api.get('/load/:service', function (req, res) {
-    console.log('LOAD: ' + req.params.service);
+  api.get('/load/:service/:instance', function (req, res) {
+    console.log('LOAD: ' + req.params.service + ' / ' + req.params.instance);
     //currentBooleanValue = !currentBooleanValue;
     res.status(200).json(currentBooleanValue);
   });
-  api.get('/exception/:service', function (req, res) {
-    console.log('EXCEPTION: ' + req.params.service);
+  api.get('/exception/:service/:instance', function (req, res) {
+    console.log('EXCEPTION: ' + req.params.service + ' / ' + req.params.instance);
     //currentBooleanValue = !currentBooleanValue;
     res.status(200).json(currentBooleanValue);
   });
-  api.get('/memory/:service', function (req, res) {
-    console.log('MEMORY: ' + req.params.service);
+  api.get('/memory/:service/:instance', function (req, res) {
+    console.log('MEMORY: ' + req.params.service + ' / ' + req.params.instance);
     //currentBooleanValue = !currentBooleanValue;
     res.status(200).json(currentBooleanValue);
   });

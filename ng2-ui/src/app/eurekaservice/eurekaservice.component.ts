@@ -57,14 +57,12 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
     }
 
 
-    kill(instanceId): void {
-        if (instanceId) {
-            //console.log('KILL THIS SERVICE: ' + this.currentEurekaService);
-            if (confirm('Kill Service: ' + instanceId)) {
-                this.appService.killEurekaService(instanceId).subscribe(returnValue => {
 
+    kill(eurekaInstance): void {
+        if (eurekaInstance) {
+            if (confirm('Kill Service: ' + eurekaInstance.app + ' / ' + eurekaInstance.instanceId)) {
+                this.appService.killEurekaService(eurekaInstance).subscribe(returnValue => {
                     //this.appService.triggerEventLogReload();
-
                     if (!returnValue) {
                         alert('A problem occurred while trying to kill this service');
                     }
@@ -72,30 +70,12 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
-//    kill(): void {
-//        if (this.currentEurekaService) {
-//            //console.log('KILL THIS SERVICE: ' + this.currentEurekaService);
-//            if (confirm('Kill Service: ' + this.currentEurekaService)) {
-//                this.appService.killEurekaService(this.currentEurekaService).subscribe(returnValue => {
-//
-//                    this.appService.triggerEventLogReload();
-//
-//                    if (!returnValue) {
-//                        alert('A problem occurred while trying to kill this service');
-//                    }
-//                });
-//            }
-//        }
-//    }
 
-    load(instanceId): void {
-        if (instanceId) {
-            //console.log('LOAD THIS SERVICE: ' + instanceId);
-            if (confirm('Apply Load Service: ' + instanceId)) {
-                this.appService.loadEurekaService(instanceId).subscribe(returnValue => {
-
+    load(eurekaInstance): void {
+        if (eurekaInstance) {
+            if (confirm('Apply Load Service: ' + eurekaInstance.app + ' / ' + eurekaInstance.instanceId)) {
+                this.appService.loadEurekaService(eurekaInstance).subscribe(returnValue => {
                     //this.appService.triggerEventLogReload();
-
                     if (!returnValue) {
                         alert('A problem occurred while trying to apply load to this service');
                     }
@@ -103,30 +83,12 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
-//    load(): void {
-//        if (this.currentEurekaService) {
-//            //console.log('LOAD THIS SERVICE: ' + this.currentEurekaService);
-//            if (confirm('Apply Load Service: ' + this.currentEurekaService)) {
-//                this.appService.loadEurekaService(this.currentEurekaService).subscribe(returnValue => {
-//
-//                    this.appService.triggerEventLogReload();
-//
-//                    if (!returnValue) {
-//                        alert('A problem occurred while trying to apply load to this service');
-//                    }
-//                });
-//            }
-//        }
-//    }
 
-    exception(instanceId): void {
-        if (instanceId) {
-            //console.log('EXCEPTION THIS SERVICE: ' + instanceId);
-            if (confirm('Invoke Exception on: ' + instanceId)) {
-                this.appService.exceptionEurekaService(instanceId).subscribe(returnValue => {
-
+    exception(eurekaInstance): void {
+        if (eurekaInstance) {
+            if (confirm('Invoke Exception on: ' + eurekaInstance.app + ' / ' + eurekaInstance.instanceId)) {
+                this.appService.exceptionEurekaService(eurekaInstance).subscribe(returnValue => {
                     //this.appService.triggerEventLogReload();
-
                     if (!returnValue) {
                         alert('A problem occurred while trying to invoke exception on this service');
                     }
@@ -134,30 +96,12 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
-//    exception(): void {
-//        if (this.currentEurekaService) {
-//            //console.log('EXCEPTION THIS SERVICE: ' + this.currentEurekaService);
-//            if (confirm('Invoke Exception on: ' + this.currentEurekaService)) {
-//                this.appService.exceptionEurekaService(this.currentEurekaService).subscribe(returnValue => {
-//
-//                    this.appService.triggerEventLogReload();
-//
-//                    if (!returnValue) {
-//                        alert('A problem occurred while trying to invoke exception on this service');
-//                    }
-//                });
-//            }
-//        }
-//    }
 
-    memory(instanceId): void {
-        if (instanceId) {
-            //console.log('MEMORY THIS SERVICE: ' + instanceId);
-            if (confirm('Grow Memory on: ' + instanceId)) {
-                this.appService.memoryEurekaService(instanceId).subscribe(returnValue => {
-
+    memory(eurekaInstance): void {
+        if (eurekaInstance) {
+            if (confirm('Grow Memory on: ' + eurekaInstance.app + ' / ' + eurekaInstance.instanceId)) {
+                this.appService.memoryEurekaService(eurekaInstance).subscribe(returnValue => {
                     //this.appService.triggerEventLogReload();
-
                     if (!returnValue) {
                         alert('A problem occurred while trying to grow memory on this service');
                     }
@@ -165,21 +109,6 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
-//    memory(): void {
-//        if (this.currentEurekaService) {
-//            //console.log('MEMORY THIS SERVICE: ' + this.currentEurekaService);
-//            if (confirm('Grow Memory on: ' + this.currentEurekaService)) {
-//                this.appService.memoryEurekaService(this.currentEurekaService).subscribe(returnValue => {
-//
-//                    this.appService.triggerEventLogReload();
-//
-//                    if (!returnValue) {
-//                        alert('A problem occurred while trying to grow memory on this service');
-//                    }
-//                });
-//            }
-//        }
-//    }
 
 
 }
