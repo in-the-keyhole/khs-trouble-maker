@@ -31,23 +31,51 @@ export class EventlogComponent implements OnInit, OnDestroy {
 //      this.loadEventLog();
 //    });
 
+    // LOAD ALL EVENTS INITIALLY
+    this.appService.getEvents().subscribe(events => {
+      //console.log('LOAD EVENT LOG');
+      //console.dir(events);
 
-    this.webSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/events');
-    this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
-      //console.log(events);
-      let tmpData = JSON.parse(events['data']);
+      // APPEND TO EVENTLOG
+      this.eventLog = events;
 
-      this.eventLog = tmpData;
+      // SETUP WEBSOCKET TO LISTEN FOR NEW EVENTS
+      this.webSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/events');
+      this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
+        //console.log('WEBSOCKET LOAD EVENT LOG');
+        //console.dir(events);
+        let jsonData = JSON.parse(events['data']);
+        //console.dir(jsonData);
+        //this.eventLog = tmpData;
+
+        // PUSH NEW EVENTS INTO EVENTLOG
+        this.eventLog.push.apply(this.eventLog, jsonData);
+        //this.eventLog.push(jsonData);
+      });
+
+
     });
 
+
+//    this.webSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/events');
+//    this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
+//      console.log('WEBSOCKET LOAD EVENT LOG');
+//      console.dir(events);
+//      let tmpData = JSON.parse(events['data']);
+//
+//      this.eventLog = tmpData;
+//    });
   }
+
   ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
 
 //  loadEventLog() {
 //    this.appService.getEvents().subscribe(events => {
+//      console.log('LOAD EVENT LOG');
+//      console.dir(events);
 //      this.eventLog = events;
 //    });
 //  }

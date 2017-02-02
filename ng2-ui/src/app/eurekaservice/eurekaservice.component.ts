@@ -4,7 +4,7 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/fromEvent";
 import {Subscription} from "rxjs/Subscription";
 
-import {EurekaApplication, EurekaService} from './eurekaservice.model';
+import {EurekaService, EurekaServiceInstance} from './eurekaservice.model';
 
 @Component({
     selector: 'app-eurekaservice',
@@ -14,8 +14,7 @@ import {EurekaApplication, EurekaService} from './eurekaservice.model';
 
 export class EurekaServiceComponent implements OnInit, OnDestroy {
 
-    //private eurekaServices: string[];
-    private eurekaApplications: EurekaApplication[];
+    private eurekaServices: EurekaService[];
     //private eurekaServices: EurekaService[];
 
     private currentEurekaService: string;
@@ -24,21 +23,16 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
     private serviceSubscription: Subscription;
 
     constructor(private appService: AppService) {
-//        appService.applications.subscribe(msg => {			
-//            console.log("Response from websocket: ");
-//            console.dir(msg);
-//            this.eurekaApplications = msg;
-//		});
     }
 
     ngOnInit() {
         this.serviceSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/services');
         this.serviceSubscription = Observable.fromEvent(this.serviceSocket, 'message').subscribe(services => {
             //console.log(services);
-            //console.dir(services['data']);
+            console.dir(services['data']);
             //console.dir(JSON.parse(services['data']));
             let tmpData = JSON.parse(services['data']);
-            this.eurekaApplications = tmpData.services;
+            this.eurekaServices = tmpData.services;
         });
 
 
@@ -62,10 +56,6 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
         this.appService.toggleSettings(!this.showSettings);
     }
 
-//    changeService(eurekaServiceValue): void {
-//        console.log('CHANGE SERVICE: ' + eurekaServiceValue);
-//        this.currentEurekaService = eurekaServiceValue;
-//    }
 
     kill(instanceId): void {
         if (instanceId) {

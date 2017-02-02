@@ -8,7 +8,7 @@ exports.configure = function (api) {
   // ***************************************************
   // MOCK DATA
   //var services = require('./mock/services.json');
-  //var events = require('./mock/events.json');
+  var events = require('./mock/events-2.json');
 
   // API ROUTES
   api.get('/access/token', function (req, res) {
@@ -44,12 +44,12 @@ exports.configure = function (api) {
 //    res.status(200).json(services);
 //  });
 //
-//  api.get('/events', function (req, res) {
-//    var parts = events[0].action.split('-');
-//    events[0].action = parts[0] + '-' + incrementer;
-//    incrementer++;
-//    res.status(200).json(events);
-//  });
+  api.get('/events', function (req, res) {
+    //var parts = events[0].action.split('-');
+    //events[0].action = parts[0] + '-' + incrementer;
+    //incrementer++;
+    res.status(200).json(events);
+  });
 
 
   // THESE ARE NOT  CALLED FROM UI, BUT ARE IN TROUBLECONTROLLER

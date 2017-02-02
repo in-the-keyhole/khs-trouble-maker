@@ -18,14 +18,12 @@ export class EurekaServiceMetadata {
      class: string;
 }
 
-export class EurekaApplication {
+export class EurekaService {
     name: string;
-    instance: EurekaService[];
+    instance: EurekaServiceInstance[];
 }
 
-export class EurekaService {
-
-
+export class EurekaServiceInstance {
     instanceId: string;
     hostName: string;
     app: string;
@@ -37,43 +35,19 @@ export class EurekaService {
     // OBJECT
     port: EurekaServicePort;
 
-//          "port": {
-//            "$": 8082,
-//            "@enabled": "true"
-//          },
-
     // OBJECT
     securePort: EurekaServicePort;
-//          "securePort": {
-//            "$": 443,
-//            "@enabled": "false"
-//          },
 
     countryId: number;
 
     // OBJECT
     dataCenterInfo: EurekaServiceDataCenterInfo;
-//          "dataCenterInfo": {
-//            "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
-//            "name": "MyOwn"
-//          },
 
     // OBJECT
     leaseInfo: EurekaServiceLeaseInfo;
-//          "leaseInfo": {
-//            "renewalIntervalInSecs": 10,
-//            "durationInSecs": 90,
-//            "registrationTimestamp": 1485211444615,
-//            "lastRenewalTimestamp": 1485212335110,
-//            "evictionTimestamp": 0,
-//            "serviceUpTimestamp": 1485211444615
-//          },
 
     // OBJECT
     metadata: EurekaServiceMetadata;
-//          "metadata": {
-//            "@class": "java.util.Collections$EmptyMap"
-//          },
 
     homePageUrl: string;
     statusPageUrl: string;

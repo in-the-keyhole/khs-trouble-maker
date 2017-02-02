@@ -1,4 +1,18 @@
-/*form { 
-    margin-bottom: 1em; 
+
+.panel.application .panel-body{
+    padding: .5em;
 }
-*/
+
+.panel.service {
+    margin-bottom: .5em;
+}
+
+.panel.application > .panel-heading {
+    background-color: rgb(220, 94, 33);
+}
+
+.panel.service > .panel-heading {
+    background-color: rgb(248, 219, 205);
+    color: #000;
+}
+

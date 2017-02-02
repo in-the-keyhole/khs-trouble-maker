@@ -60,11 +60,11 @@ export class AppService {
 //        return this.http.get('/api/services')
 //          .map(response => response.json() as string[]);
 //    }
-//
-//    getEvents(): Observable<Event[]> {
-//        return this.http.get('/api/events')
-//          .map(response => response.json() as Event[]);
-//    }
+
+    getEvents(): Observable<Event[]> {
+        return this.http.get('/api/events')
+          .map(response => response.json() as Event[]);
+    }
 
 //    triggerEventLogReload(): void {
 //        this.reloadEventLog.emit(true);

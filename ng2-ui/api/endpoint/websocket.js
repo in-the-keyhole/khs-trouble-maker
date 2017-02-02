@@ -6,7 +6,7 @@ var _eventlogClients = {};
 var eventlogCount = 0;
 
 
-const servicesInterval = 7000;
+const servicesInterval = 30000;
 const eventsInterval = servicesInterval + 2000;
 
 
@@ -75,7 +75,6 @@ function sendServices() {
         // IF IT EXISTS AND IT'S READYSTATE IS "OPEN"
         if(_servicesClients[i] && _servicesClients[i].readyState === 1) {
             var randomIndex = Math.floor(Math.random() * services.length);
-            //console.info('Services sent to clientId: ' + i + ': Index: ' + randomIndex);
             _servicesClients[i].send(JSON.stringify(services[randomIndex]));
         }
     }
@@ -92,22 +91,33 @@ function sendServices() {
 
 
 // ******************************************************************************************
-var events = [];
-events[0] = require('./mock/events-1.json');
-events[1] = require('./mock/events-2.json');
-events[2] = require('./mock/events-3.json');
-events[3] = require('./mock/events-4.json');
-events[4] = require('./mock/events-5.json');
+var eventFiles = [];
+eventFiles[0] = require('./mock/events-1.json');
+eventFiles[1] = require('./mock/events-2.json');
+eventFiles[2] = require('./mock/events-3.json');
+eventFiles[3] = require('./mock/events-4.json');
+eventFiles[4] = require('./mock/events-5.json');
 
 function sendEvents() {
     //console.log('NEW NEW NEW Send Events Test');
     
+    // LOOP THROUGH ALL CLIENTS SUBSCRIBED TO GET EVENTS
     for (var i in _eventlogClients) {
         // IF IT EXISTS AND IT'S READYSTATE IS "OPEN"
         if(_eventlogClients[i] && _eventlogClients[i].readyState === 1) {
-            var randomIndex = Math.floor(Math.random() * events.length);
-            //console.info('Services sent to clientId: ' + i + ': Index: ' + randomIndex);
-            _eventlogClients[i].send(JSON.stringify(events[randomIndex]));
+//            _eventlogClients[i].send(JSON.stringify(eventFiles[randomFileIndex]));
+
+            // CHOOSE A RANDOM FILE
+            var randomFileIndex = Math.floor(Math.random() * eventFiles.length);
+            var events = eventFiles[randomFileIndex];
+
+            // CHOOSE A RANDOM RECORD
+            var randomRecordIndex = Math.floor(Math.random() * events.length);
+            var event = events[randomRecordIndex];
+            //console.log(event);
+            
+            // SEND BACK THE RECORD
+            _eventlogClients[i].send('[' + JSON.stringify(event) + ']');
         }
     }
 }
