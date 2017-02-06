@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import khs.trouble.model.Event;
 import khs.trouble.repository.EventRepository;
+//import khs.trouble.controller.EventsHandler;
 
 @Service
 public class EventService {
@@ -32,6 +33,10 @@ public class EventService {
 	@Autowired
 	private EventRepository repository;
 
+//	@Autowired
+//	private EventsHandler eventsHandler;
+
+	
 	@Value("${trouble.timeout:300000}")
 	private Long timeout;
 
@@ -41,6 +46,15 @@ public class EventService {
 		event.setAction("KILLED");
 		event.setDescription(serviceName.toUpperCase() + " killed at: " + url);
 		this.repository.save(event);
+		
+//		System.out.println("**** EVENT SERVICE KILLED");
+//		try {
+//			//EventsHandler eventsHandler = new EventsHandler();
+//			eventsHandler.sendSingleEvent(event);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	public void randomKilled(String serviceName) {

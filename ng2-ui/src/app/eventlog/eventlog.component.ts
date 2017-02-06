@@ -33,24 +33,30 @@ export class EventlogComponent implements OnInit, OnDestroy {
 
     // LOAD ALL EVENTS INITIALLY
     this.appService.getEvents().subscribe(events => {
-      //console.log('LOAD EVENT LOG');
-      //console.dir(events);
+      console.log('LOAD EVENT LOG');
+      console.dir(events);
 
       // APPEND TO EVENTLOG
       this.eventLog = events;
 
       // SETUP WEBSOCKET TO LISTEN FOR NEW EVENTS
       this.webSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/events');
+
+      this.webSocket.onopen = function(){
+        console.log('* Events Connection open!');
+      }
+
       this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
-        //console.log('WEBSOCKET LOAD EVENT LOG');
+        console.log('WEBSOCKET LOAD EVENT LOG');
         //console.dir(events);
         let jsonData = JSON.parse(events['data']);
-        //console.dir(jsonData);
-        //this.eventLog = tmpData;
+        console.dir(jsonData['events']);
 
-        // PUSH NEW EVENTS INTO EVENTLOG
-        this.eventLog.push.apply(this.eventLog, jsonData);
-        //this.eventLog.push(jsonData);
+        // REPLACE EVENTS WITH DATA FROM WEBSOCKET
+        this.eventLog = jsonData['events'];
+
+        // PUSH NEW EVENTS INTO EVENTLOG FROM WEBSOCKET
+        //this.eventLog.push.apply(this.eventLog, jsonData['events']);
       });
 
 

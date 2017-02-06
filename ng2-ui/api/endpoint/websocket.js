@@ -6,7 +6,7 @@ var _eventlogClients = {};
 var eventlogCount = 0;
 
 
-const servicesInterval = 30000;
+const servicesInterval = 10000;
 const eventsInterval = servicesInterval + 2000;
 
 
@@ -117,7 +117,9 @@ function sendEvents() {
             //console.log(event);
             
             // SEND BACK THE RECORD
-            _eventlogClients[i].send('[' + JSON.stringify(event) + ']');
+//            _eventlogClients[i].send('{"events": [' + JSON.stringify(event) + ']}');
+
+            _eventlogClients[i].send('{"events": ' + JSON.stringify(events) + '}');
         }
     }
 }
