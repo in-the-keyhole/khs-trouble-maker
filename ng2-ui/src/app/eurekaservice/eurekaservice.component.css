@@ -1,4 +1,8 @@
 
+.row.data {
+    margin-bottom: 1em;
+}
+
 .panel.application .panel-body{
     padding: .5em;
 }

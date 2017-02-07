@@ -15,11 +15,13 @@
             <span class="pull-right"><i class="glyphicon {{eurekaService.showBody ? ' glyphicon-chevron-up' : ' glyphicon-chevron-down'}}"></i></span>
           </div>
 
+
           <div class="panel-body {{!eurekaService.showBody ? 'collapse' : ''}}">
-            <div class="row" *ngFor="let eurekaServiceInstance of eurekaService.instances" style="margin-bottom: 1em;">
+
+            <div class="row data" *ngFor="let eurekaServiceInstance of eurekaService.instances">
               <div class="col-xs-3">{{eurekaServiceInstance.instanceInfo.app}}</div>
-              <div class="col-xs-5">{{eurekaServiceInstance.instanceInfo.instanceId}}</div>
-              <div class="col-xs-4 btn-toolbar text-right">
+              <div class="col-xs-6">{{eurekaServiceInstance.instanceInfo.instanceId}}</div>
+              <div class="col-xs-3 btn-toolbar text-right">
                   <button id="kill" class="btn btn-xs btn-danger" type="button" (click)="kill(eurekaServiceInstance.instanceInfo)" title="Kill Service">K</button>
                   <button id="load" class="btn btn-xs btn-primary" type="button" (click)="load(eurekaServiceInstance.instanceInfo)" title="Load Service">L</button>
                   <button id="exception" class="btn btn-xs btn-warning" type="button" (click)="exception(eurekaServiceInstance.instanceInfo)" title="Exception Service">E</button>

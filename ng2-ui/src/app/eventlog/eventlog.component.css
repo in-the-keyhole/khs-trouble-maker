@@ -12,6 +12,17 @@
 
 /* For small screen */
 
+.row.header {
+    border-bottom: 2px solid #000;
+}
+.row.header div {
+    font-weight:bold;
+}
+.row.data {
+    margin-bottom: 1em; 
+    border-bottom: 1px solid #ccc;
+}
+
 .row.eventlog:nth-child(odd){
   background-color: #eaeaea;
 }

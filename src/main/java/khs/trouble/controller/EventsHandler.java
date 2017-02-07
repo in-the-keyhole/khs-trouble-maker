@@ -6,8 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
+//import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -21,6 +22,7 @@ import khs.trouble.model.EventContainer;
 
 import khs.trouble.service.impl.EventService;
 
+@Component
 public class EventsHandler extends TextWebSocketHandler {
 
 	public List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
@@ -47,12 +49,21 @@ public class EventsHandler extends TextWebSocketHandler {
 	private void sendEvents(WebSocketSession session) throws JsonProcessingException, IOException {
 		session.sendMessage(new TextMessage(objectMapper.writeValueAsString(this.eventContainer)));
 	}
+	private void sendEvent(WebSocketSession session, Event event) throws JsonProcessingException, IOException {
+		session.sendMessage(new TextMessage(objectMapper.writeValueAsString(event)));
+	}
 
 	
-//	public void sendSingleEvent(Event event) {
-//		System.out.println("**** TRIGGER FETCH CURRENT EVENTS");
-//		System.out.println(event);
-//		
+	public void sendSingleEvent(Event event) throws JsonProcessingException, IOException  {
+		System.out.println("**** TRIGGER SEND SINGLE EVENT");
+		System.out.println("EVENT ACTION: " + event.getAction());
+		
+		for (Iterator<WebSocketSession> iterator = sessions.iterator(); iterator.hasNext();) {
+			WebSocketSession session = iterator.next();
+			sendEvent(session, event);
+		}
+		
+		
 //		try {
 //			for (Iterator<WebSocketSession> iterator = sessions.iterator(); iterator.hasNext();) {
 //				WebSocketSession session = iterator.next();
@@ -73,7 +84,7 @@ public class EventsHandler extends TextWebSocketHandler {
 ////
 ////		}
 ////
-//	}
+	}
 
 	
 	@Override
@@ -81,22 +92,16 @@ public class EventsHandler extends TextWebSocketHandler {
 		sessions.remove(session);
 	}
 
-	@Scheduled(fixedDelay = 30000)
-	private void fetchCurrentEvents() throws JsonProcessingException, IOException {
+//	@Scheduled(fixedDelay = 30000)
+	public void fetchCurrentEvents() throws JsonProcessingException, IOException {
+		System.out.println("**** FETCH CURRENT EVENTS");
+		
 		this.eventContainer = new EventContainer();
 		
 		Iterable<Event> list = eventService.events();
 
 		eventContainer.setEvents(list);
 
-//		for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
-//			//String serviceId = (String) iterator.next();
-//			Event application = new Event();
-//			//application.setName(serviceId);
-//			application.setInstances(discoveryClient.getInstances(serviceId));
-//			events.add(application);
-//		}
-		
 		for (Iterator<WebSocketSession> iterator = sessions.iterator(); iterator.hasNext();) {
 			WebSocketSession session = iterator.next();
 			sendEvents(session);

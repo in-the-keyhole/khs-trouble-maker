@@ -33,7 +33,7 @@ export class EventlogComponent implements OnInit, OnDestroy {
 
     // LOAD ALL EVENTS INITIALLY
     this.appService.getEvents().subscribe(events => {
-      console.log('LOAD EVENT LOG');
+      console.log('INITIAL LOAD OF EVENT LOG');
       console.dir(events);
 
       // APPEND TO EVENTLOG
@@ -46,19 +46,57 @@ export class EventlogComponent implements OnInit, OnDestroy {
         console.log('* Events Connection open!');
       }
 
-      this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
-        console.log('WEBSOCKET LOAD EVENT LOG');
-        //console.dir(events);
-        let jsonData = JSON.parse(events['data']);
-        console.dir(jsonData['events']);
+      // SET UP WEBSOCKET TO HANDLE MESSAGE FROM SERVER
+      let self = this;
+      this.webSocket.onmessage = function(message){
+        console.log('* Events Connection message');
+        console.dir(message);
 
-        // REPLACE EVENTS WITH DATA FROM WEBSOCKET
-        this.eventLog = jsonData['events'];
+        let jsonData = JSON.parse(message['data']);
+        console.dir(jsonData);
 
-        // PUSH NEW EVENTS INTO EVENTLOG FROM WEBSOCKET
-        //this.eventLog.push.apply(this.eventLog, jsonData['events']);
-      });
+        if(jsonData !== null) {
+        //if(jsonData !== 'null') {
+          //console.dir(message['data']);
 
+          //let tmpEvent = JSON.parse(message['data']) as Event;
+          //let tmp =  <Event>message['data'].json();
+          //console.dir(tmp);
+
+          // PUSH NEW EVENT ON THE END OF THE EVENT LOG
+          //self.eventLog.push.apply(self.eventLog, tmp);
+          self.eventLog.push(jsonData);
+
+          //Console.dir(self.eventLog);
+        }
+      }
+
+//      this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
+//        console.log('WEBSOCKET LOAD EVENT LOG');
+//        //console.dir(events);
+//        let jsonData = JSON.parse(events['data']);
+////        console.dir(jsonData['events']);
+////
+////        // REPLACE EVENTS WITH DATA FROM WEBSOCKET
+////        this.eventLog = jsonData['events'];
+////
+////        // PUSH NEW EVENTS INTO EVENTLOG FROM WEBSOCKET
+////        //this.eventLog.push.apply(this.eventLog, jsonData['events']);
+//
+//          if(jsonData !== null) {
+//            //console.dir(message['data']);
+//
+//            //let tmpEvent = jsonData as Event;
+//            //let tmp =  <Event>message['data'].json();
+//            //console.dir(tmp);
+//
+//            // PUSH NEW EVENT ON THE END OF THE EVENT LOG
+//            //self.eventLog.push.apply(self.eventLog, tmp);
+//            this.eventLog.push(jsonData);
+//
+//            //Console.dir(self.eventLog);
+//         }
+//      });
 
     });
 
@@ -74,7 +112,7 @@ export class EventlogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 
 

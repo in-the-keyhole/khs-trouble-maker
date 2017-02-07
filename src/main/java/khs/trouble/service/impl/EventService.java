@@ -22,10 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.WebSocketHandler;
 
 import khs.trouble.model.Event;
 import khs.trouble.repository.EventRepository;
-//import khs.trouble.controller.EventsHandler;
+import khs.trouble.controller.EventsHandler;
 
 @Service
 public class EventService {
@@ -33,13 +34,27 @@ public class EventService {
 	@Autowired
 	private EventRepository repository;
 
-//	@Autowired
+	@Autowired
 //	private EventsHandler eventsHandler;
+	private WebSocketHandler eventsHandler;
 
 	
 	@Value("${trouble.timeout:300000}")
 	private Long timeout;
 
+	
+	private void sendEvent(Event event) {
+		System.out.println("**** EVENT SERVICE: SEND EVENT");
+		System.out.println("EVENT ACTION: " + event.getAction());
+		
+		try {
+			((EventsHandler) eventsHandler).sendSingleEvent(event);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void killed(String serviceName, String url) {
 		Event event = new Event();
 		event.setCreated(new Date());
@@ -47,14 +62,7 @@ public class EventService {
 		event.setDescription(serviceName.toUpperCase() + " killed at: " + url);
 		this.repository.save(event);
 		
-//		System.out.println("**** EVENT SERVICE KILLED");
-//		try {
-//			//EventsHandler eventsHandler = new EventsHandler();
-//			eventsHandler.sendSingleEvent(event);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		sendEvent(event);
 	}
 
 	public void randomKilled(String serviceName) {
@@ -71,6 +79,8 @@ public class EventService {
 		event.setAction("LOAD");
 		event.setDescription(serviceName.toUpperCase() + " Load of (" + threads + " threads) started at: " + url + " will timeout in " + timeout());
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void exception(String serviceName, String url) {
@@ -79,6 +89,8 @@ public class EventService {
 		event.setAction("EXCEPTION");
 		event.setDescription(serviceName.toUpperCase() + " Exception thrown at: " + url);
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void memory(String serviceName, String url) {
@@ -87,6 +99,8 @@ public class EventService {
 		event.setAction("MEMORY");
 		event.setDescription(serviceName.toUpperCase() + " Memory Consumed at: " + url + " will timeout in " + timeout());
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void eventInfo(String msg) {

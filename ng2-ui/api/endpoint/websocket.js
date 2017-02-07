@@ -118,8 +118,9 @@ function sendEvents() {
             
             // SEND BACK THE RECORD
 //            _eventlogClients[i].send('{"events": [' + JSON.stringify(event) + ']}');
+            _eventlogClients[i].send(JSON.stringify(event));
 
-            _eventlogClients[i].send('{"events": ' + JSON.stringify(events) + '}');
+            //_eventlogClients[i].send('{"events": ' + JSON.stringify(events) + '}');
         }
     }
 }
