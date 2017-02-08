@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -53,37 +52,14 @@ public class EventsHandler extends TextWebSocketHandler {
 		session.sendMessage(new TextMessage(objectMapper.writeValueAsString(event)));
 	}
 
-	
 	public void sendSingleEvent(Event event) throws JsonProcessingException, IOException  {
-		System.out.println("**** TRIGGER SEND SINGLE EVENT");
-		System.out.println("EVENT ACTION: " + event.getAction());
+		// System.out.println("**** TRIGGER SEND SINGLE EVENT");
+		// System.out.println("EVENT ACTION: " + event.getAction());
 		
 		for (Iterator<WebSocketSession> iterator = sessions.iterator(); iterator.hasNext();) {
 			WebSocketSession session = iterator.next();
 			sendEvent(session, event);
 		}
-		
-		
-//		try {
-//			for (Iterator<WebSocketSession> iterator = sessions.iterator(); iterator.hasNext();) {
-//				WebSocketSession session = iterator.next();
-//				session.sendMessage(new TextMessage(objectMapper.writeValueAsString(event)));
-//			}
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		//this.fetchCurrentEvents();
-//
-//		//	public void sendSingleEvent(Event event) throws JsonProcessingException, IOException {
-////		
-////		for (Iterator<WebSocketSession> iterator = sessions.iterator(); iterator.hasNext();) {
-////			WebSocketSession session = iterator.next();
-////			//sendEvents(session);
-////			session.sendMessage(new TextMessage(objectMapper.writeValueAsString(this.eventContainer)));
-////
-////		}
-////
 	}
 
 	

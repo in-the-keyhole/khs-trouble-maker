@@ -35,22 +35,19 @@ public class EventService {
 	private EventRepository repository;
 
 	@Autowired
-//	private EventsHandler eventsHandler;
 	private WebSocketHandler eventsHandler;
-
 	
 	@Value("${trouble.timeout:300000}")
 	private Long timeout;
 
 	
 	private void sendEvent(Event event) {
-		System.out.println("**** EVENT SERVICE: SEND EVENT");
-		System.out.println("EVENT ACTION: " + event.getAction());
+		// System.out.println("**** EVENT SERVICE: SEND EVENT");
+		// System.out.println("EVENT ACTION: " + event.getAction());
 		
 		try {
 			((EventsHandler) eventsHandler).sendSingleEvent(event);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -71,6 +68,8 @@ public class EventService {
 		event.setAction("RANDOM");
 		event.setDescription(serviceName.toUpperCase() + " selected to be killed");
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void load(String serviceName, String url, int threads) {
@@ -109,6 +108,8 @@ public class EventService {
 		event.setAction("INFO");
 		event.setDescription(msg);
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void attempted(String msg) {
@@ -117,6 +118,8 @@ public class EventService {
 		event.setAction("ATTEMPTED");
 		event.setDescription(msg);
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void started() {
@@ -125,6 +128,8 @@ public class EventService {
 		event.setAction("STARTED");
 		event.setDescription("Trouble maker started");
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void notStarted() {
@@ -133,6 +138,8 @@ public class EventService {
 		event.setAction("NOT STARTED");
 		event.setDescription("Service Registry Not Found, Make sure it has been started or is accessible");
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public String timeout() {

@@ -68,7 +68,6 @@ public class TroubleService {
 	public String randomKill(String ltoken) {
 		String serviceName = randomService();
 		eventService.randomKilled(serviceName);
-		//return kill(serviceName, ltoken);
 		return kill(serviceName, "", ltoken);
 	}
 
@@ -77,7 +76,6 @@ public class TroubleService {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		//String url = FormatUrl.url(randomInstanceURL(serviceName) + "trouble/kill", ssl);
 		String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "trouble/kill", ssl);
 		
 		// invoke kill api...
@@ -120,7 +118,6 @@ public class TroubleService {
 	// }
 
 	public String randomLoad(String ltoken) {
-		//return load(randomService(), ltoken);
 		return load(randomService(), "", ltoken);
 	}
 
@@ -134,7 +131,6 @@ public class TroubleService {
 			spawnLoadThread(serviceName, instanceId, 1000);
 		}
 
-		//String url = FormatUrl.url(randomInstanceURL(serviceName) + "trouble/load", ssl);
 		String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "trouble/load", ssl);
 
 		eventService.load(serviceName, url, threads);
@@ -151,12 +147,13 @@ public class TroubleService {
 	}
 
 	public String serviceInstanceURL(String serviceName, String instanceId) {
+		// FORM LIST OF INSTANCES FOR SERVICENAME
 		List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
 
-		String returnVal = "";
+		String returnHostAndPort = "";
 
 		// IF AN "INSTANCEID" VALUE WAS PASSED IN, THEN FIND THAT PARTICULAR ONE
-		// ELSE JUST PICK A RANDOM INSTANCE
+		// ELSE JUST PICK A RANDOM INSTANCE FOR THE SERVICENAME
 		if(!instanceId.equals("")) { 
 			// LOOP THROUGH SERVICEINSTANCES OF SERVICE, ATTEMPING TO MATCH ON INSTANCEID
 			for (Iterator<ServiceInstance> iterator = instances.iterator(); iterator.hasNext();) {
@@ -166,7 +163,7 @@ public class TroubleService {
 				//System.out.println(tmpInstanceId);
 				
 				if(tmpInstanceId.equals(instanceId)) {
-					returnVal = serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/";
+					returnHostAndPort = serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/";
 					break;
 				}
 			}
@@ -175,20 +172,20 @@ public class TroubleService {
 			int range = instances.size();
 			int randomNum = rn.nextInt(range);
 			ServiceInstance rndm = instances.get(randomNum);
-			returnVal = rndm.getHost() + ":" + rndm.getPort() + "/";
+			returnHostAndPort = rndm.getHost() + ":" + rndm.getPort() + "/";
 		}
 
-		return returnVal;
+		return returnHostAndPort;
 	}
 
-	public String randomInstanceURL(String serviceName) {
-		List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
-		Random rn = new Random();
-		int range = instances.size();
-		int randomNum = rn.nextInt(range);
-		ServiceInstance serviceInstance = instances.get(randomNum);
-		return serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/";
-	}
+	//public String randomInstanceURL(String serviceName) {
+	//	List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
+	//	Random rn = new Random();
+	//	int range = instances.size();
+	//	int randomNum = rn.nextInt(range);
+	//	ServiceInstance serviceInstance = instances.get(randomNum);
+	//	return serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/";
+	//}
 
 	public String randomException(String ltoken) {
 		return exception(randomService(), "", ltoken);
@@ -199,13 +196,10 @@ public class TroubleService {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		//String url = FormatUrl.url(randomInstanceURL(serviceName) + "/trouble/exception", ssl);
 		String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "/trouble/exception", ssl);
 
 		// invoke kill api...
-
 		RestTemplate restTemplate = new RestTemplate();
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		headers.add("token", token);
@@ -229,13 +223,10 @@ public class TroubleService {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		//String url = FormatUrl.url(randomInstanceURL(serviceName) + "/trouble/memory", ssl);
 		String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "/trouble/memory", ssl);
 
 		// invoke memory api...
-
 		RestTemplate restTemplate = new RestTemplate();
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		headers.add("token", token);
@@ -258,13 +249,10 @@ public class TroubleService {
 			public void run() {
 				try {
 
-					//String url = FormatUrl.url(randomInstanceURL(serviceName) + "/trouble/load", ssl);
 					String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "/trouble/load", ssl);
 
 					// invoke kill api...
-
 					RestTemplate restTemplate = new RestTemplate();
-
 					HttpHeaders headers = new HttpHeaders();
 					headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 					headers.add("token", token);

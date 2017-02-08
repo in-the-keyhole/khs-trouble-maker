@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 
 import {Event} from './eventlog/event.model';
 //import { WebsocketService } from './websocket.service';
-//import {EurekaApplication} from './eurekaservice/eurekaservice.model';
+import {EurekaService} from './eurekaservice/eurekaservice.model';
 //
 //const CHAT_URL = 'ws://' + window.location.hostname + ':3000/ws/';
 //
@@ -56,10 +56,10 @@ export class AppService {
           .map(response => response.text() as string);
     }
 
-//    getEurekaServices(): Observable<string[]> {
-//        return this.http.get('/api/services')
-//          .map(response => response.json() as string[]);
-//    }
+    getEurekaServices(): Observable<EurekaService[]> {
+        return this.http.get('/api/services')
+          .map(response => response.json() as EurekaService[]);
+    }
 
     getEvents(): Observable<Event[]> {
         return this.http.get('/api/events')

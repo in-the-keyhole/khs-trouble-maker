@@ -23,20 +23,12 @@ export class EventlogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-//    // LOAD EVENT LOG INITIALLY
-//    this.loadEventLog();
-//
-//    // LISTEN FOR EVENT TO RELOAD EVENT LOG FROM SERVICE
-//    this.appService.reloadEventLog.subscribe(boolValue => { 
-//      this.loadEventLog();
-//    });
-
     // LOAD ALL EVENTS INITIALLY
     this.appService.getEvents().subscribe(events => {
-      console.log('INITIAL LOAD OF EVENT LOG');
+      console.log('* Initial load of Events from API');
       console.dir(events);
 
-      // APPEND TO EVENTLOG
+      // SET EVENTLOG
       this.eventLog = events;
 
       // SETUP WEBSOCKET TO LISTEN FOR NEW EVENTS
@@ -53,21 +45,12 @@ export class EventlogComponent implements OnInit, OnDestroy {
         console.dir(message);
 
         let jsonData = JSON.parse(message['data']);
-        console.dir(jsonData);
+        //console.dir(jsonData);
 
         if(jsonData !== null) {
-        //if(jsonData !== 'null') {
-          //console.dir(message['data']);
-
-          //let tmpEvent = JSON.parse(message['data']) as Event;
-          //let tmp =  <Event>message['data'].json();
-          //console.dir(tmp);
-
           // PUSH NEW EVENT ON THE END OF THE EVENT LOG
           //self.eventLog.push.apply(self.eventLog, tmp);
           self.eventLog.push(jsonData);
-
-          //Console.dir(self.eventLog);
         }
       }
 
@@ -97,31 +80,11 @@ export class EventlogComponent implements OnInit, OnDestroy {
 //            //Console.dir(self.eventLog);
 //         }
 //      });
-
     });
-
-
-//    this.webSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/events');
-//    this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(events => {
-//      console.log('WEBSOCKET LOAD EVENT LOG');
-//      console.dir(events);
-//      let tmpData = JSON.parse(events['data']);
-//
-//      this.eventLog = tmpData;
-//    });
   }
 
   ngOnDestroy(): void {
     //this.subscription.unsubscribe();
   }
-
-
-//  loadEventLog() {
-//    this.appService.getEvents().subscribe(events => {
-//      console.log('LOAD EVENT LOG');
-//      console.dir(events);
-//      this.eventLog = events;
-//    });
-//  }
 
 }

@@ -7,7 +7,7 @@ var currentBooleanValue = true;
 exports.configure = function (api) {
   // ***************************************************
   // MOCK DATA
-  //var services = require('./mock/services.json');
+  var services = require('./mock/services-1.json');
   var events = require('./mock/events-2.json');
 
   // API ROUTES
@@ -40,10 +40,10 @@ exports.configure = function (api) {
   });
 
 //  THESE WERE REPLACED BY THE WEBSOCKETS
-//  api.get('/services', function (req, res) {
-//    res.status(200).json(services);
-//  });
-//
+  api.get('/services', function (req, res) {
+    res.status(200).json(services);
+  });
+
   api.get('/events', function (req, res) {
     //var parts = events[0].action.split('-');
     //events[0].action = parts[0] + '-' + incrementer;

@@ -19,43 +19,51 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
 
     private currentEurekaService: string;
     private showSettings: boolean = false;
-    private serviceSocket: WebSocket;
-    private serviceSubscription: Subscription;
+    private webSocket: WebSocket;
+    private subscription: Subscription;
 
     constructor(private appService: AppService) {
     }
 
     ngOnInit() {
-        this.serviceSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/services');
-        this.serviceSubscription = Observable.fromEvent(this.serviceSocket, 'message').subscribe(services => {
-            //console.log(services);
-            console.dir(services['data']);
-            //console.dir(JSON.parse(services['data']));
-            let tmpData = JSON.parse(services['data']);
-            this.eurekaServices = tmpData.services;
-        });
+        // GET SERVICES INITIALLY FROM API
+        this.appService.getEurekaServices().subscribe(eurekaServices => {
+            console.log('* Initial load of Services from API');
+            console.dir(eurekaServices);
+
+           this.eurekaServices = eurekaServices['services'];
 
 
-        // GET SERVICES
-        // this.appService.getEurekaServices().subscribe(eurekaServices => {
-        //   this.eurekaServices = eurekaServices;
-        // });
+           // SETUP WEBSOCKET TO LISTEN FOR SERVICES
+           this.webSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/services');
+
+           this.webSocket.onopen = function(){
+               console.log('* Services Connection open!');
+           }
+
+           this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(services => {
+               console.log('* Services Connection message');
+               console.dir(services);
+               let tmpData = JSON.parse(services['data']);
+               this.eurekaServices = tmpData.services;
+           });
+         });
 
 
-        // LISTEN FOR CHANGE IN DISPLAYSETTINGS
+        // LISTEN FOR CHANGE IN DISPLAYSETTINGS. THIS COULD ALSO BE TRIGGERED FROM
+        // THE SETTINGS COMPONENT AS WELL AS FROM HERE.
         this.appService.displaySettings.subscribe(boolValue => {
             this.showSettings = boolValue;
         });
     }
 
     ngOnDestroy(): void {
-        this.serviceSubscription.unsubscribe();
+        this.subscription.unsubscribe();
     }
 
     showSettingsInfo(): void {
         this.appService.toggleSettings(!this.showSettings);
     }
-
 
 
     kill(eurekaInstance): void {
