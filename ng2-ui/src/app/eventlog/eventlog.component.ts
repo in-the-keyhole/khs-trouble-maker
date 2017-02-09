@@ -40,7 +40,7 @@ export class EventlogComponent implements OnInit, OnDestroy {
 
       // SET UP WEBSOCKET TO HANDLE MESSAGE FROM SERVER
       let self = this;
-      this.webSocket.onmessage = function(message){
+      this.webSocket.onmessage = function(message) {
         console.log('* Events Connection message');
         console.dir(message);
 
@@ -84,7 +84,18 @@ export class EventlogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //this.subscription.unsubscribe();
+    //if(this.subscription) {
+    //  this.subscription.unsubscribe();
+    //}
+  }
+
+
+  refreshData(): void {
+      this.appService.getEvents().subscribe(events => {
+          console.log('* Refresh load of Events from API');
+          console.dir(events);
+          this.eventLog = events;
+      });
   }
 
 }

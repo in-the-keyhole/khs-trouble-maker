@@ -9,6 +9,7 @@ import { EventlogModule } from './eventlog/eventlog.module';
 import { AppService } from './app.service';
 import { SettingsModule } from './settings/settings.module';
 
+
 @NgModule({
   declarations: [
     AppComponent

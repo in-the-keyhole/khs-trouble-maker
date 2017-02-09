@@ -4,6 +4,7 @@
     <div class="panel application panel-primary">
 
       <div class="panel-heading">
+        <span id="refreshServices" class="glyphicon glyphicon-refresh pull-left" aria-hidden="false" (click)="refreshData()" title="Refresh Services"></span>
         <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false" (click)="showSettingsInfo()" title="View Settings"></span>
         <h3 id="panel-title" class="panel-title">Services ({{eurekaServices ? eurekaServices.length : '0'}})</h3>
       </div>
@@ -29,7 +30,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>

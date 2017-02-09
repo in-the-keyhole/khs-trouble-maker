@@ -5,11 +5,16 @@ import { EurekaServiceComponent } from './eurekaservice.component';
 import { EventlogModule } from '../eventlog/eventlog.module';
 import { SettingsModule } from '../settings/settings.module';
 
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+
 @NgModule({
   imports: [
     CommonModule,
     EventlogModule,
-    SettingsModule
+    SettingsModule,
+    ModalModule.forRoot(),
+    BootstrapModalModule
   ],
   exports: [
       EurekaServiceComponent

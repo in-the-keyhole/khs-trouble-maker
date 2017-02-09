@@ -1,3 +1,32 @@
+export class EurekaService {
+    name: string;
+    instance: EurekaServiceInstance[];
+}
+
+export class EurekaServiceInstance {
+    instanceId: string;
+    hostName: string;
+    app: string;
+    ipAddr: string;
+    status: string;
+    overriddenstatus: string;
+    port: EurekaServicePort;
+    securePort: EurekaServicePort;
+    countryId: number;
+    dataCenterInfo: EurekaServiceDataCenterInfo;
+    leaseInfo: EurekaServiceLeaseInfo;
+    metadata: EurekaServiceMetadata;
+    homePageUrl: string;
+    statusPageUrl: string;
+    healthCheckUrl: string;
+    vipAddress: string;
+    secureVipAddress: string;
+    isCoordinatingDiscoveryServer: string;
+    lastUpdatedTimestamp: string;
+    lastDirtyTimestamp: string;
+    actionType: string;
+}
+
 export class EurekaServicePort {
     $: string;
     enabled: string;
@@ -17,48 +46,3 @@ export class EurekaServiceLeaseInfo {
 export class EurekaServiceMetadata {
      class: string;
 }
-
-export class EurekaService {
-    name: string;
-    instance: EurekaServiceInstance[];
-}
-
-export class EurekaServiceInstance {
-    instanceId: string;
-    hostName: string;
-    app: string;
-    ipAddr: string;
-
-    status: string;
-    overriddenstatus: string;
-    
-    // OBJECT
-    port: EurekaServicePort;
-
-    // OBJECT
-    securePort: EurekaServicePort;
-
-    countryId: number;
-
-    // OBJECT
-    dataCenterInfo: EurekaServiceDataCenterInfo;
-
-    // OBJECT
-    leaseInfo: EurekaServiceLeaseInfo;
-
-    // OBJECT
-    metadata: EurekaServiceMetadata;
-
-    homePageUrl: string;
-    statusPageUrl: string;
-    healthCheckUrl: string;
-    vipAddress: string;
-    secureVipAddress: string;
-    isCoordinatingDiscoveryServer: string;
-    lastUpdatedTimestamp: string;
-    lastDirtyTimestamp: string;
-    actionType: string;
-}
-
-
-

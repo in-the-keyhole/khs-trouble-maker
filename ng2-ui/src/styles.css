@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+.modal-header {
+    background-color: rgb(220, 94, 33);
+    color: #fff;
+}
+.modal-body {
+    text-align: center;
+    font-weight: bold;
+}

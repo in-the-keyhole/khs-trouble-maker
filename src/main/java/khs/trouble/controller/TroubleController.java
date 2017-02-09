@@ -1,5 +1,7 @@
 package khs.trouble.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import khs.trouble.model.Event;
+import khs.trouble.model.Service;
+import khs.trouble.model.ServiceContainer;
 import khs.trouble.service.impl.EventService;
 import khs.trouble.service.impl.TroubleService;
 
@@ -99,12 +103,30 @@ public class TroubleController {
 
 	@RequestMapping(value = "/services", method = RequestMethod.GET)
 	@ResponseBody
-	public List<String> services() {
+	public ServiceContainer services() {
+	//public List<Service> services() {
+	//public List<String> services() {
 		List<String> list = discoveryClient.getServices();
-		if (list.isEmpty()) {
+		
+		ServiceContainer serviceContainer = new ServiceContainer();
+		List<Service> services = new ArrayList<Service>();
+		serviceContainer.setServices(services);
+		for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
+			String serviceId = (String) iterator.next();
+			Service application = new Service();
+			application.setName(serviceId);
+			application.setInstances(discoveryClient.getInstances(serviceId));
+			services.add(application);
+		}
+		if (services.isEmpty()) {
 			eventService.eventInfo("No Services discovered, make sure service registry is started and visible");
 		}
-		return list;
+		return serviceContainer;
+		
+		//if (list.isEmpty()) {
+		//	eventService.eventInfo("No Services discovered, make sure service registry is started and visible");
+		//}
+		//return list;
 	}
 
 	@RequestMapping(value = "/events", method = RequestMethod.GET)

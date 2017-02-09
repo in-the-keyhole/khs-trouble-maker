@@ -1,8 +1,10 @@
 img {
-    min-width:9em; max-width: 13em; margin-right:2em
+    min-width:9em; 
+    max-width: 13em; 
+    margin-right:2em
 }
 
-h3 {
-    margin-top: 1.7em;
+.title {
+    padding-top: .5em;
+    color: rgb(220, 94, 33);
 }
-
