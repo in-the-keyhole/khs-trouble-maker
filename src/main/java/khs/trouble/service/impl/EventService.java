@@ -42,9 +42,6 @@ public class EventService {
 
 	
 	private void sendEvent(Event event) {
-		// System.out.println("**** EVENT SERVICE: SEND EVENT");
-		// System.out.println("EVENT ACTION: " + event.getAction());
-		
 		try {
 			((EventsHandler) eventsHandler).sendSingleEvent(event);
 		} catch (Exception e) {

@@ -27,17 +27,15 @@ public class EventsHandler extends TextWebSocketHandler {
 	public List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 
 	@Autowired
-	//private DiscoveryClient discoveryClient;
 	private EventService eventService;
-	
+
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	private EventContainer eventContainer;
 
 	public EventsHandler() {
 	}
-
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -48,34 +46,26 @@ public class EventsHandler extends TextWebSocketHandler {
 	private void sendEvents(WebSocketSession session) throws JsonProcessingException, IOException {
 		session.sendMessage(new TextMessage(objectMapper.writeValueAsString(this.eventContainer)));
 	}
+
 	private void sendEvent(WebSocketSession session, Event event) throws JsonProcessingException, IOException {
 		session.sendMessage(new TextMessage(objectMapper.writeValueAsString(event)));
 	}
 
-	public void sendSingleEvent(Event event) throws JsonProcessingException, IOException  {
-		// System.out.println("**** TRIGGER SEND SINGLE EVENT");
-		// System.out.println("EVENT ACTION: " + event.getAction());
-		
+	public void sendSingleEvent(Event event) throws JsonProcessingException, IOException {
 		for (Iterator<WebSocketSession> iterator = sessions.iterator(); iterator.hasNext();) {
 			WebSocketSession session = iterator.next();
 			sendEvent(session, event);
 		}
 	}
 
-	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessions.remove(session);
 	}
 
-//	@Scheduled(fixedDelay = 30000)
 	public void fetchCurrentEvents() throws JsonProcessingException, IOException {
-		System.out.println("**** FETCH CURRENT EVENTS");
-		
 		this.eventContainer = new EventContainer();
-		
 		Iterable<Event> list = eventService.events();
-
 		eventContainer.setEvents(list);
 
 		for (Iterator<WebSocketSession> iterator = sessions.iterator(); iterator.hasNext();) {

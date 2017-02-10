@@ -28,17 +28,12 @@ public class ServicesHandler extends TextWebSocketHandler {
 
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	private ServiceContainer serviceContainer;
 
 	public ServicesHandler() {
+		super();
 	}
-
-	// @Override
-	// public void handleTextMessage(WebSocketSession session, TextMessage
-	// message) throws IOException {
-	// session.sendMessage(new TextMessage("echo: " + message.getPayload()));
-	// }
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -55,7 +50,7 @@ public class ServicesHandler extends TextWebSocketHandler {
 		sessions.remove(session);
 	}
 
-	@Scheduled(fixedDelay = 30000)
+	@Scheduled(fixedDelayString = "${trouble.refreshInterval:30000}")
 	private void fetchCurrentServices() throws JsonProcessingException, IOException {
 		this.serviceContainer = new ServiceContainer();
 		List<Service> services = new ArrayList<Service>();
