@@ -1,10 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
-
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 .modal-header {
     background-color: rgb(220, 94, 33);
     color: #fff;
 }
+
 .modal-body {
     text-align: center;
     font-weight: bold;
