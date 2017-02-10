@@ -1,111 +1,109 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-
-import {AppService} from '../app.service';
-
+import {Component, OnInit, OnDestroy, ViewContainerRef} from "@angular/core";
+import {AppService} from "../app.service";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/observable/fromEvent";
+import {Subscription} from "rxjs/Subscription";
+import {EurekaService} from "./eurekaservice.model";
+import {Overlay} from "angular2-modal";
+import {Modal} from "angular2-modal/plugins/bootstrap";
 
 @Component({
-  selector: 'app-eurekaservice',
-  templateUrl: './eurekaservice.component.html',
-  styleUrls: ['./eurekaservice.component.css']
+    selector: 'app-eurekaservice',
+    templateUrl: './eurekaservice.component.html',
+    styleUrls: ['./eurekaservice.component.css']
 })
 
-export class EurekaServiceComponent implements OnInit {
-  private eurekaServices: string[];
-  private currentEurekaService: string;
-  private showSettings: boolean = false;
+export class EurekaServiceComponent implements OnInit, OnDestroy {
 
+    private eurekaServices: EurekaService[];
+    private showSettings: boolean = false;
+    private webSocket: WebSocket;
+    private subscription: Subscription;
 
-
-
-  constructor(private appService: AppService) { 
-  }
-
-  ngOnInit() {
-    // GET SERVICES
-    this.appService.getEurekaServices().subscribe(eurekaServices => {
-      this.eurekaServices = eurekaServices;
-    });
-
-    // LISTEN FOR CHANGE IN DISPLAYSETTINGS 
-    this.appService.displaySettings.subscribe(boolValue => { 
-      this.showSettings = boolValue;
-    });
-  }
-
-
-
-
-  showSettingsInfo(): void {
-    this.appService.toggleSettings(true);
-  }
-
-  changeService(eurekaServiceValue): void {
-    this.currentEurekaService = eurekaServiceValue;
-  }
-
-  kill(): void {
-    if(this.currentEurekaService) {
-      //console.log('KILL THIS SERVICE: ' + this.currentEurekaService);
-      if (confirm('Kill Service: ' + this.currentEurekaService))  {
-        this.appService.killEurekaService(this.currentEurekaService).subscribe(returnValue => {
-
-          this.appService.triggerEventLogReload();
-
-          if(!returnValue) {
-            alert('A problem occurred while trying to kill this service');
-          }
-        });
-		 }
+    constructor(private appService: AppService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
+        overlay.defaultViewContainer = vcRef;
     }
-  }
 
-  load(): void {
-    if(this.currentEurekaService) {
-      //console.log('LOAD THIS SERVICE: ' + this.currentEurekaService);
-      if (confirm('Apply Load Service: ' + this.currentEurekaService))  {
-        this.appService.loadEurekaService(this.currentEurekaService).subscribe(returnValue => {
+    ngOnInit() {
+        // GET SERVICES INITIALLY FROM API
+        this.appService.getEurekaServices().subscribe(eurekaServices => {
+            this.eurekaServices = eurekaServices['services'];
 
-          this.appService.triggerEventLogReload();
+            // SETUP WEBSOCKET TO LISTEN FOR SERVICES
+            this.webSocket = new WebSocket('ws://' + window.location.hostname + ':9110/ws/services');
 
-          if(!returnValue) {
-            alert('A problem occurred while trying to apply load to this service');
-          }
+            this.subscription = Observable.fromEvent(this.webSocket, 'message').subscribe(services => {
+                let tmpData = JSON.parse(services['data']);
+                this.eurekaServices = tmpData.services;
+            });
         });
-		 }
-    }
-  }
 
-  exception(): void {
-    if(this.currentEurekaService) {
-      //console.log('EXCEPTION THIS SERVICE: ' + this.currentEurekaService);
-      if (confirm('Invoke Exception on: ' + this.currentEurekaService))  {
-        this.appService.exceptionEurekaService(this.currentEurekaService).subscribe(returnValue => {
-
-          this.appService.triggerEventLogReload();
-
-          if(!returnValue) {
-            alert('A problem occurred while trying to invoke exception on this service');
-          }
+        // LISTEN FOR CHANGE IN DISPLAYSETTINGS. THIS COULD ALSO BE TRIGGERED FROM
+        // THE SETTINGS COMPONENT AS WELL AS FROM HERE.
+        this.appService.displaySettings.subscribe(boolValue => {
+            this.showSettings = boolValue;
         });
-		 }
     }
-  }
 
-  memory(): void {
-    if(this.currentEurekaService) {
-      //console.log('MEMORY THIS SERVICE: ' + this.currentEurekaService);
-      if (confirm('Grow Memory on: ' + this.currentEurekaService))  {
-        this.appService.memoryEurekaService(this.currentEurekaService).subscribe(returnValue => {
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
 
-          this.appService.triggerEventLogReload();
-
-          if(!returnValue) {
-            alert('A problem occurred while trying to grow memory on this service');
-          }
+    refreshData(): void {
+        this.appService.getEurekaServices().subscribe(eurekaServices => {
+            this.eurekaServices = eurekaServices['services'];
         });
-		 }
     }
-  }
+
+    showSettingsInfo(): void {
+        this.appService.toggleSettings(!this.showSettings);
+    }
 
 
+    confirmAction(eurekaInstance, appServiceMethod, title): void {
+        this.modal.confirm()
+        //.size('sm')
+            .isBlocking(true)
+            .showClose(true)
+            .keyboard(27)
+            .title(title)
+            .body(eurekaInstance.app + ' / ' + eurekaInstance.instanceId)
+            .open()
+            .then((dialog: any) => {
+                return dialog.result
+            })
+            .then((result: any) => {
+                // FORM APPROPRIATE APPSERVICE CALL
+                this.appService[appServiceMethod](eurekaInstance).subscribe(returnValue => {
+                });
+            })
+            .catch((err: any) => { /* DO NOTHING */
+            });
+    }
+
+    kill(eurekaInstance): void {
+        if (eurekaInstance) {
+            this.confirmAction(eurekaInstance, 'killEurekaService', 'Kill Service');
+        }
+    }
+
+    load(eurekaInstance): void {
+        if (eurekaInstance) {
+            this.confirmAction(eurekaInstance, 'loadEurekaService', 'Apply Load Service');
+        }
+    }
+
+    exception(eurekaInstance): void {
+        if (eurekaInstance) {
+            this.confirmAction(eurekaInstance, 'exceptionEurekaService', 'Invoke Exception on');
+        }
+    }
+
+    memory(eurekaInstance): void {
+        if (eurekaInstance) {
+            this.confirmAction(eurekaInstance, 'memoryEurekaService', 'Grow Memory on');
+        }
+    }
 }

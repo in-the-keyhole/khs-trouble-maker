@@ -1,5 +1,7 @@
 package khs.trouble.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import khs.trouble.model.Event;
+import khs.trouble.model.Service;
+import khs.trouble.model.ServiceContainer;
 import khs.trouble.service.impl.EventService;
 import khs.trouble.service.impl.TroubleService;
 
@@ -46,10 +50,10 @@ public class TroubleController {
 		return true;
 	}
 
-	@RequestMapping(value = "/kill/{service:.+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/kill/{service:.+}/{instanceId:.+}", method = RequestMethod.GET)
 	@ResponseBody
-	public boolean kill(@PathVariable("service") String serviceName, HttpServletRequest request) {
-		service.kill(serviceName, token);
+	public boolean kill(@PathVariable("service") String serviceName, @PathVariable("instanceId") String instanceId, HttpServletRequest request) {
+		service.kill(serviceName, instanceId, token);
 		return true;
 	}
 
@@ -60,49 +64,69 @@ public class TroubleController {
 		return true;
 	}
 
-	@RequestMapping(value = "/load/{service:.+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/load/{service:.+}/{instanceId:.+}", method = RequestMethod.GET)
 	@ResponseBody
-	public boolean block(@PathVariable("service") String serviceName, HttpServletRequest request) {
-		service.load(serviceName, token);
-		return true;
-	}
-
-	@RequestMapping(value = "/exception/{service:.+}", method = RequestMethod.GET)
-	@ResponseBody
-	public boolean exception(@PathVariable("service") String serviceName, HttpServletRequest request) {
-		service.exception(serviceName, token);
+	public boolean block(@PathVariable("service") String serviceName, @PathVariable("instanceId") String instanceId, HttpServletRequest request) {
+		service.load(serviceName, instanceId, token);
 		return true;
 	}
 
 	@RequestMapping(value = "/random/exception/{service:.+}", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean randomException(@PathVariable("service") String serviceName, HttpServletRequest request) {
-		service.exception(serviceName, token);
+		service.exception(serviceName, "", token);
 		return true;
 	}
 
-	@RequestMapping(value = "/memory/{service:.+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/exception/{service:.+}/{instanceId:.+}", method = RequestMethod.GET)
 	@ResponseBody
-	public boolean memory(@PathVariable("service") String serviceName, HttpServletRequest request) {
-		service.memory(serviceName, token);
+	public boolean exception(@PathVariable("service") String serviceName, @PathVariable("instanceId") String instanceId, HttpServletRequest request) {
+		service.exception(serviceName, instanceId, token);
 		return true;
 	}
 
 	@RequestMapping(value = "/random/memory/{service:.+}", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean randomMemory(@PathVariable("service") String serviceName, HttpServletRequest request) {
-		service.memory(serviceName, token);
+		service.memory(serviceName, "", token);
 		return true;
 	}
 
+	@RequestMapping(value = "/memory/{service:.+}/{instanceId:.+}", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean memory(@PathVariable("service") String serviceName, @PathVariable("instanceId") String instanceId, HttpServletRequest request) {
+		service.memory(serviceName, instanceId, token);
+		return true;
+	}
+	
+	
+
 	@RequestMapping(value = "/services", method = RequestMethod.GET)
 	@ResponseBody
-	public List<String> services() {
+	public ServiceContainer services() {
+	//public List<Service> services() {
+	//public List<String> services() {
 		List<String> list = discoveryClient.getServices();
-		if (list.isEmpty()) {
+		
+		ServiceContainer serviceContainer = new ServiceContainer();
+		List<Service> services = new ArrayList<Service>();
+		serviceContainer.setServices(services);
+		for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
+			String serviceId = (String) iterator.next();
+			Service application = new Service();
+			application.setName(serviceId);
+			application.setInstances(discoveryClient.getInstances(serviceId));
+			services.add(application);
+		}
+		if (services.isEmpty()) {
 			eventService.eventInfo("No Services discovered, make sure service registry is started and visible");
 		}
-		return list;
+		return serviceContainer;
+		
+		//if (list.isEmpty()) {
+		//	eventService.eventInfo("No Services discovered, make sure service registry is started and visible");
+		//}
+		//return list;
 	}
 
 	@RequestMapping(value = "/events", method = RequestMethod.GET)

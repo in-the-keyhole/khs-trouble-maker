@@ -1,3 +1,27 @@
-form { 
-    margin-bottom: 1em; 
+
+.row.data {
+    margin-bottom: 1em;
 }
+
+.panel.application .panel-body {
+    padding: .5em;
+}
+
+.panel.service {
+    margin-bottom: .5em;
+}
+
+.panel.application > .panel-heading {
+    background-color: rgb(220, 94, 33);
+}
+
+.panel.service > .panel-heading {
+    /*background-color: rgb(248, 219, 205);*/
+    background-color: rgb(254, 237, 230);
+    color: #000;
+}
+
+span.glyphicon-refresh {
+    margin-right: 1em;
+}
+

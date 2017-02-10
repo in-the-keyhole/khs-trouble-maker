@@ -1,0 +1,14 @@
+[
+    {"id":1,"created":1485187862444,"action":"STARTED","description":"Trouble maker started"},
+    {"id":2,"created":1485187940806,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":3,"created":1485187972497,"action":"KILLED","description":"EMPLOYEES killed at: http://John-HP:8082/trouble/kill"},
+    {"id":4,"created":1485188041518,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":5,"created":1485188060667,"action":"LOAD","description":"EMPLOYEES Load of (200 threads) started at: http://John-HP:8082/trouble/load will timeout in 5 minute(s)"},
+    {"id":6,"created":1485188906812,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":7,"created":1485188940441,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":8,"created":1485188982579,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":9,"created":1485188997837,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":10,"created":1485189022644,"action":"EXCEPTION","description":"EMPLOYEES Exception thrown at: http://John-HP:8082//trouble/exception"},
+    {"id":11,"created":1485189214580,"action":"KILLED","description":"EMPLOYEES killed at: http://John-HP:8082/trouble/kill"},
+    {"id":12,"created":1485189230833,"action":"ATTEMPTED","description":"Attempted to Kill service employees at http://John-HP:8082/trouble/kill Failed due to exception I/O error on GET request for \"http://John-HP:8082/trouble/kill\": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect"}
+]

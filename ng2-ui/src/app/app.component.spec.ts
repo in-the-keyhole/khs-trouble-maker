@@ -1,45 +1,40 @@
 /* tslint:disable:no-unused-variable */
-
-import { TestBed, async } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
-
-import { AppComponent } from './app.component';
-
+import {TestBed, async} from "@angular/core/testing";
+import {HttpModule} from "@angular/http";
+import {AppComponent} from "./app.component";
 //import { EurekaServiceComponent } from './eurekaservice.component';
-import { EurekaServiceModule } from './eurekaservice/eurekaservice.module';
-
+import {EurekaServiceModule} from "./eurekaservice/eurekaservice.module";
 //import { EventlogComponent } from './eventlog.component';
 //import { SettingsComponent } from './settings.component';
-import { EventlogModule } from './eventlog/eventlog.module';
-import { SettingsModule } from './settings/settings.module';
-
-import { AppService } from './app.service';
+import {EventlogModule} from "./eventlog/eventlog.module";
+import {SettingsModule} from "./settings/settings.module";
+import {AppService} from "./app.service";
 
 describe('AppComponent', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                AppComponent,
 //        EurekaServiceComponent,
 //        EventlogComponent,
 //        SettingsComponent
-      ],
-      imports: [
-        HttpModule,
-        EventlogModule,
-        SettingsModule,
-        EurekaServiceModule
-      ],
-      providers: [AppService]
+            ],
+            imports: [
+                HttpModule,
+                EventlogModule,
+                SettingsModule,
+                EurekaServiceModule
+            ],
+            providers: [AppService]
+        });
+        TestBed.compileComponents();
     });
-    TestBed.compileComponents();
-  });
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
+    it('should create the app', async(() => {
+        const fixture = TestBed.createComponent(AppComponent);
+        const app = fixture.debugElement.componentInstance;
+        expect(app).toBeTruthy();
+    }));
 
 //  it(`should have as title 'app works!'`, async(() => {
 //    const fixture = TestBed.createComponent(AppComponent);

@@ -1,0 +1,10 @@
+[
+    {"id":1,"created":1485187862444,"action":"STARTED","description":"Trouble maker started"},
+    {"id":2,"created":1485187940806,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":3,"created":1485187972497,"action":"KILLED","description":"EMPLOYEES killed at: http://John-HP:8082/trouble/kill"},
+    {"id":4,"created":1485188041518,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":5,"created":1485188060667,"action":"LOAD","description":"EMPLOYEES Load of (200 threads) started at: http://John-HP:8082/trouble/load will timeout in 5 minute(s)"},
+    {"id":6,"created":1485188906812,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":7,"created":1485188940441,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"},
+    {"id":8,"created":1485188982579,"action":"INFO","description":"No Services discovered, make sure service registry is started and visible"}
+]

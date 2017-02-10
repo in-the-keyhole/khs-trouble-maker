@@ -25,3 +25,9 @@ trouble:
   ssl: false
   ###Threads to spawn when Blocking trouble is invoked, default is 200
   blocking-threads: 200  
+  ### Refresh interval for WebSocket clients
+  refreshInterval: 10000
+  
+security:
+  basic:
+    enabled: false

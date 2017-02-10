@@ -22,9 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.WebSocketHandler;
 
 import khs.trouble.model.Event;
 import khs.trouble.repository.EventRepository;
+import khs.trouble.controller.EventsHandler;
 
 @Service
 public class EventService {
@@ -32,15 +34,29 @@ public class EventService {
 	@Autowired
 	private EventRepository repository;
 
+	@Autowired
+	private WebSocketHandler eventsHandler;
+	
 	@Value("${trouble.timeout:300000}")
 	private Long timeout;
 
+	
+	private void sendEvent(Event event) {
+		try {
+			((EventsHandler) eventsHandler).sendSingleEvent(event);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void killed(String serviceName, String url) {
 		Event event = new Event();
 		event.setCreated(new Date());
 		event.setAction("KILLED");
 		event.setDescription(serviceName.toUpperCase() + " killed at: " + url);
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void randomKilled(String serviceName) {
@@ -49,6 +65,8 @@ public class EventService {
 		event.setAction("RANDOM");
 		event.setDescription(serviceName.toUpperCase() + " selected to be killed");
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void load(String serviceName, String url, int threads) {
@@ -57,6 +75,8 @@ public class EventService {
 		event.setAction("LOAD");
 		event.setDescription(serviceName.toUpperCase() + " Load of (" + threads + " threads) started at: " + url + " will timeout in " + timeout());
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void exception(String serviceName, String url) {
@@ -65,6 +85,8 @@ public class EventService {
 		event.setAction("EXCEPTION");
 		event.setDescription(serviceName.toUpperCase() + " Exception thrown at: " + url);
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void memory(String serviceName, String url) {
@@ -73,6 +95,8 @@ public class EventService {
 		event.setAction("MEMORY");
 		event.setDescription(serviceName.toUpperCase() + " Memory Consumed at: " + url + " will timeout in " + timeout());
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void eventInfo(String msg) {
@@ -81,6 +105,8 @@ public class EventService {
 		event.setAction("INFO");
 		event.setDescription(msg);
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void attempted(String msg) {
@@ -89,6 +115,8 @@ public class EventService {
 		event.setAction("ATTEMPTED");
 		event.setDescription(msg);
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void started() {
@@ -97,6 +125,8 @@ public class EventService {
 		event.setAction("STARTED");
 		event.setDescription("Trouble maker started");
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public void notStarted() {
@@ -105,6 +135,8 @@ public class EventService {
 		event.setAction("NOT STARTED");
 		event.setDescription("Service Registry Not Found, Make sure it has been started or is accessible");
 		this.repository.save(event);
+		
+		sendEvent(event);
 	}
 
 	public String timeout() {

@@ -1,9 +1,25 @@
-.table th.created {
-    width: 20%;
+.row.header {
+    border-bottom: 2px solid #000;
 }
-.table th.action {
-    width: 15%;
+
+.row.header div {
+    font-weight: bold;
 }
-.table th.description {
-    width: 65%;
+
+.row.data {
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+/* ALTERNATE ROW COLOR */
+.row.data:nth-child(odd) {
+    background-color: rgb(254, 237, 230);
+}
+
+.panel > .panel-heading {
+    background-color: rgb(220, 94, 33);
+}
+
+span.glyphicon-refresh {
+    margin-right: 1em;
 }

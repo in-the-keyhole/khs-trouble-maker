@@ -19,6 +19,7 @@ package khs.trouble.service.impl;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 
 import khs.trouble.util.FormatUrl;
 
@@ -66,15 +68,16 @@ public class TroubleService {
 	public String randomKill(String ltoken) {
 		String serviceName = randomService();
 		eventService.randomKilled(serviceName);
-		return kill(serviceName, ltoken);
+		return kill(serviceName, "", ltoken);
 	}
 
-	public String kill(String serviceName, String ltoken) {
+	public String kill(String serviceName, String instanceId, String ltoken) {
 		if (token != ltoken) {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(randomInstanceURL(serviceName) + "trouble/kill", ssl);
+		String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "trouble/kill", ssl);
+		
 		// invoke kill api...
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -115,20 +118,20 @@ public class TroubleService {
 	// }
 
 	public String randomLoad(String ltoken) {
-		return load(randomService(), ltoken);
+		return load(randomService(), "", ltoken);
 	}
 
-	public String load(String serviceName, String ltoken) {
+	public String load(String serviceName, String instanceId, String ltoken) {
 		if (token != ltoken) {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
 		for (int i = 0; i < threads; i++) {
 			LOG.info("Starting Thread " + i);
-			spawnLoadThread(serviceName, 1000);
+			spawnLoadThread(serviceName, instanceId, 1000);
 		}
 
-		String url = FormatUrl.url(randomInstanceURL(serviceName) + "trouble/load", ssl);
+		String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "trouble/load", ssl);
 
 		eventService.load(serviceName, url, threads);
 
@@ -143,31 +146,60 @@ public class TroubleService {
 		return list.get(randomNum);
 	}
 
-	public String randomInstanceURL(String serviceName) {
+	public String serviceInstanceURL(String serviceName, String instanceId) {
+		// FORM LIST OF INSTANCES FOR SERVICENAME
 		List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
-		Random rn = new Random();
-		int range = instances.size();
-		int randomNum = rn.nextInt(range);
-		ServiceInstance serviceInstance = instances.get(randomNum);
-		return serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/";
+
+		String returnHostAndPort = "";
+
+		// IF AN "INSTANCEID" VALUE WAS PASSED IN, THEN FIND THAT PARTICULAR ONE
+		// ELSE JUST PICK A RANDOM INSTANCE FOR THE SERVICENAME
+		if(!instanceId.equals("")) { 
+			// LOOP THROUGH SERVICEINSTANCES OF SERVICE, ATTEMPING TO MATCH ON INSTANCEID
+			for (Iterator<ServiceInstance> iterator = instances.iterator(); iterator.hasNext();) {
+				EurekaDiscoveryClient.EurekaServiceInstance serviceInstance = (EurekaDiscoveryClient.EurekaServiceInstance) iterator.next();
+
+				String tmpInstanceId = serviceInstance.getInstanceInfo().getInstanceId();
+				//System.out.println(tmpInstanceId);
+				
+				if(tmpInstanceId.equals(instanceId)) {
+					returnHostAndPort = serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/";
+					break;
+				}
+			}
+		} else {
+			Random rn = new Random();
+			int range = instances.size();
+			int randomNum = rn.nextInt(range);
+			ServiceInstance rndm = instances.get(randomNum);
+			returnHostAndPort = rndm.getHost() + ":" + rndm.getPort() + "/";
+		}
+
+		return returnHostAndPort;
 	}
+
+	//public String randomInstanceURL(String serviceName) {
+	//	List<ServiceInstance> instances = discoveryClient.getInstances(serviceName);
+	//	Random rn = new Random();
+	//	int range = instances.size();
+	//	int randomNum = rn.nextInt(range);
+	//	ServiceInstance serviceInstance = instances.get(randomNum);
+	//	return serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/";
+	//}
 
 	public String randomException(String ltoken) {
-		return exception(randomService(), ltoken);
+		return exception(randomService(), "", ltoken);
 	}
 
-	public String exception(String serviceName, String ltoken) {
-
+	public String exception(String serviceName, String instanceId, String ltoken) {
 		if (token != ltoken) {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(randomInstanceURL(serviceName) + "/trouble/exception", ssl);
+		String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "/trouble/exception", ssl);
 
 		// invoke kill api...
-
 		RestTemplate restTemplate = new RestTemplate();
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		headers.add("token", token);
@@ -183,20 +215,18 @@ public class TroubleService {
 	}
 
 	public String randomMemory(String ltoken) {
-		return memory(randomService(), ltoken);
+		return memory(randomService(), "", ltoken);
 	}
 
-	public String memory(String serviceName, String ltoken) {
+	public String memory(String serviceName, String instanceId, String ltoken) {
 		if (token != ltoken) {
 			throw new RuntimeException("Invalid Access Token");
 		}
 
-		String url = FormatUrl.url(randomInstanceURL(serviceName) + "/trouble/memory", ssl);
+		String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "/trouble/memory", ssl);
 
 		// invoke memory api...
-
 		RestTemplate restTemplate = new RestTemplate();
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 		headers.add("token", token);
@@ -212,19 +242,17 @@ public class TroubleService {
 		return serviceName;
 	}
 
-	public void spawnLoadThread(final String serviceName, final long sleep) {
+	public void spawnLoadThread(final String serviceName, String instanceId, final long sleep) {
 
 		Runnable run = new Runnable() {
 
 			public void run() {
 				try {
 
-					String url = FormatUrl.url(randomInstanceURL(serviceName) + "/trouble/load", ssl);
+					String url = FormatUrl.url(serviceInstanceURL(serviceName, instanceId) + "/trouble/load", ssl);
 
 					// invoke kill api...
-
 					RestTemplate restTemplate = new RestTemplate();
-
 					HttpHeaders headers = new HttpHeaders();
 					headers.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
 					headers.add("token", token);
