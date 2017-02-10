@@ -36,13 +36,13 @@ export class EurekaServiceDataCenterInfo {
     name: string;
 }
 export class EurekaServiceLeaseInfo {
-     renewalIntervalInSecs: number;
-     durationInSecs: number;
-     registrationTimestamp: number;
-     lastRenewalTimestamp: number;
-     evictionTimestamp: number;
-     serviceUpTimestamp: number;
+    renewalIntervalInSecs: number;
+    durationInSecs: number;
+    registrationTimestamp: number;
+    lastRenewalTimestamp: number;
+    evictionTimestamp: number;
+    serviceUpTimestamp: number;
 }
 export class EurekaServiceMetadata {
-     class: string;
+    class: string;
 }

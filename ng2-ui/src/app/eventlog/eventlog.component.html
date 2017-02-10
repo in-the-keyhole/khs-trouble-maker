@@ -1,22 +1,23 @@
 <div class="panel panel-primary">
 
-  <div class="panel-heading">
-    <span id="refreshEventLog" class="glyphicon glyphicon-refresh pull-left" aria-hidden="false" (click)="refreshData()" title="Refresh Event Log"></span>
-    <h3 id="panel-title" class="panel-title">Event Log ({{eventLog ? eventLog.length : '0'}})</h3>
-  </div>
-
-  <div id="eventlog" class="panel-body">
-    <div class="row header">
-      <div class="col-xs-4" >Date</div>
-      <div class="col-xs-4" >Action</div>
-      <div class="col-xs-4" >Description</div>
+    <div class="panel-heading">
+        <span id="refreshEventLog" class="glyphicon glyphicon-refresh pull-left" aria-hidden="false"
+              (click)="refreshData()" title="Refresh Event Log"></span>
+        <h3 id="panel-title" class="panel-title">Event Log ({{eventLog ? eventLog.length : '0'}})</h3>
     </div>
 
-    <div class="row data" *ngFor="let event of eventLog">
-      <div class="col-xs-4">{{event.created | date: 'short'}}</div>
-      <div class="col-xs-4">{{event.action}}</div>
-      <div class="col-xs-4">{{event.description}}</div>
+    <div id="eventlog" class="panel-body">
+        <div class="row header">
+            <div class="col-xs-4">Date</div>
+            <div class="col-xs-4">Action</div>
+            <div class="col-xs-4">Description</div>
+        </div>
+
+        <div class="row data" *ngFor="let event of eventLog">
+            <div class="col-xs-4">{{event.created | date: 'short'}}</div>
+            <div class="col-xs-4">{{event.action}}</div>
+            <div class="col-xs-4">{{event.description}}</div>
+        </div>
+
     </div>
-    
-  </div>	 	
 </div>

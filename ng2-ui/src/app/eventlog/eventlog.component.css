@@ -1,17 +1,19 @@
 .row.header {
     border-bottom: 2px solid #000;
 }
+
 .row.header div {
-    font-weight:bold;
+    font-weight: bold;
 }
 
 .row.data {
-    padding-top: .5em; 
-    padding-bottom: .5em; 
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
+
 /* ALTERNATE ROW COLOR */
-.row.data:nth-child(odd){
-  background-color: rgb(254, 237, 230);
+.row.data:nth-child(odd) {
+    background-color: rgb(254, 237, 230);
 }
 
 .panel > .panel-heading {
