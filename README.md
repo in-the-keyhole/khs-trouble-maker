@@ -51,7 +51,7 @@ The Trouble Maker Dashboard has an event log and also allows services to be sele
 
 ![](/img/trouble-screen.png)
 
-####Dashboard Trouple Options
+####Dashboard Trouble Options
 From the dashboard a service can be selected and the following troubles applied: 
 
 `KILL` - Terminate the service (i.e. system exit will be performed). Tests fail over and alert mechanisms.
