@@ -50,7 +50,7 @@ Otherwise, you can use the platform agnostic client found [here](https://github.
 The Trouble Maker Dashboard has an event log and also allows services to be selected and killed on demand. It also invokes other troublemaking issues against these services. NOTE: The Dashboard defaults to and discovers services from a local instance of `Eureka`. 
 
 ![](/img/trouble-screen.png)
-
+ 
 ####Dashboard Trouble Options
 From the dashboard a service can be selected and the following troubles applied: 
 
