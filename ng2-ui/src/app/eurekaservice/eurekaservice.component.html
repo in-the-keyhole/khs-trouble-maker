@@ -15,14 +15,14 @@
             <div class="panel-body">
                 <div class="panel service panel-primary" *ngFor="let eurekaService of eurekaServices">
 
-                    <div class="panel-heading" (click)="eurekaService.showBody = !eurekaService.showBody">
+                    <div class="panel-heading" (click)="eurekaService.collapseBody = !eurekaService.collapseBody">
                         {{eurekaService.name | uppercase}} ({{eurekaService.instances ? eurekaService.instances.length :
                         '0'}})
                         <span class="pull-right"><i
-                                class="glyphicon {{eurekaService.showBody ? ' glyphicon-chevron-up' : ' glyphicon-chevron-down'}}"></i></span>
+                                class="glyphicon {{eurekaService.collapseBody ? ' glyphicon-chevron-up' : ' glyphicon-chevron-down'}}"></i></span>
                     </div>
 
-                    <div class="panel-body {{!eurekaService.showBody ? 'collapse' : ''}}">
+                    <div class="panel-body {{eurekaService.collapseBody ? 'collapse' : ''}}">
                         <div class="row data" *ngFor="let eurekaServiceInstance of eurekaService.instances">
                             <div class="col-xs-3">{{eurekaServiceInstance.instanceInfo.app}}</div>
                             <div class="col-xs-6">{{eurekaServiceInstance.instanceInfo.instanceId}}</div>
