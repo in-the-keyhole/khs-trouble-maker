@@ -3,15 +3,15 @@ Proactive Failure
 -----------------
 A successful Microservices platform requires a durable and resilient environment that supports the ability to continuously deploy multiple services. Automated deployment is a must, and when possible, automated recovery from failures should be implemented, because failures will happen, (i.e. "Murphy's Law").
 
-Instead of waiting for a failure to occur and seeing how durable and resilient your platform is, be proactive and make failure a `USE CASE` of your platform. Having failure as a use case is truly helpful in ensuring stability. When failure occurs, automated or manual procedures should occur to remediate problems, while still continuing to operate and serve users. 
+You will never know how stable your platform is until failure happens. Instead of waiting for a failure to occur and seeing how durable and resilient your platform is, be proactive and make failure a `USE CASE` of your platform. When failure occurs, automated or manual procedures should occur to remediate problems, while still continuing to operate and serve users. 
 
-Your will never truly know how stable your platform is until the failure happens. If you know failures are occurring, yet pagers are not going off at 3 a.m. and the help desk is not being called, then you know your system is durable. 
+If you know that failures are occurring, yet pagers are not going off at 3 a.m. and the help desk is not being called, then you know your system is durable. 
 
 What Is Trouble Maker? 
 ---------------------
 Trouble Maker is an open source tool that invokes service troublemaking issues both randomly and on-demand. 
 
-Trouble Maker is configurable to produce a variety of troublemaker services. Additionally, it provides an ad hoc dashboard console to produce common troublesome issues in your platform for testing of durability on-demand. 
+Trouble Maker is configurable to produce a variety of troublemaking - like heavy loading, killing of services, and exception throwing, among others. Additionally, it provides an ad hoc dashboard console to produce common troublesome issuesfor testing of durability on-demand. 
 
 Related: Netflix implemented `Chaos Monkey` which also randomly take down services during normal business hours. However, Chaos Monkey is based on the EC2 API, while Trouble Maker is not dependent on the cloud, so it can be used within an enterprise environment.
 
