@@ -1,5 +1,5 @@
 # Trouble Maker
-Proactive Failure
+A Case For Proactive Failure
 -----------------
 A successful Microservices platform requires a durable and resilient environment that supports the ability to continuously deploy multiple services. Automated deployment is a must, and when possible, automated recovery from failures should be implemented, because failures will happen, (i.e. "Murphy's Law").
 
@@ -11,11 +11,18 @@ What Is Trouble Maker?
 ---------------------
 Trouble Maker is an open source tool that invokes service troublemaking issues both randomly and on-demand. 
 
-Trouble Maker is configurable to produce a variety of troublemaking - like heavy loading, killing of services, and exception throwing, among others. Additionally, it provides an ad hoc dashboard console to produce common troublesome issuesfor testing of durability on-demand. 
+Trouble Maker is configurable to produce a variety of troublemaking - like heavy loading, killing of services, and exception throwing, among others. Additionally, it provides an ad hoc dashboard console to produce common troublesome issues for testing of durability on-demand. 
 
 Related: Netflix implemented `Chaos Monkey` which also randomly take down services during normal business hours. However, Chaos Monkey is based on the EC2 API, while Trouble Maker is not dependent on the cloud, so it can be used within an enterprise environment.
 
-####How Trouble Maker Works
+##Quick Links
+[Trouble Maker Client](https://github.com/in-the-keyhole/khs-trouble-maker-client)
+
+[Trouble Maker Spring Boot Starter](https://github.com/in-the-keyhole/khs-spring-boot-troublemaker-starter)
+
+[Trouble Maker Website](https://keyholelabs.com/trouble-maker/)
+
+##How Trouble Maker Works
 Trouble Maker is a Java Spring Boot application that communicates with a client service that has a small servlet registered with a Java API-based service application. By default, Trouble Maker accesses `Eureka` to discover services, and based upon a `cron` task, randomly selects a service to kill (i.e. shut down).
 
 By default, when started, once per day Monday through Friday, a random service will be selected and killed. This option can be turned off, and when this occurs, can be configured. See configuration options section below. 
