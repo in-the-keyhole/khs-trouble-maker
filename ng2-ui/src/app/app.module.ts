@@ -7,6 +7,7 @@ import {EurekaServiceModule} from "./eurekaservice/eurekaservice.module";
 import {EventlogModule} from "./eventlog/eventlog.module";
 import {AppService} from "./app.service";
 import {SettingsModule} from "./settings/settings.module";
+import {EmailModule} from "./email/email.module";
 
 
 @NgModule({
@@ -17,9 +18,10 @@ import {SettingsModule} from "./settings/settings.module";
         BrowserModule,
         FormsModule,
         HttpModule,
-        EventlogModule,
-        SettingsModule,
-        EurekaServiceModule
+      /*  EventlogModule,
+        SettingsModule, */
+        EurekaServiceModule,
+        EmailModule
     ],
     providers: [AppService],
     bootstrap: [AppComponent]

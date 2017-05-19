@@ -72,7 +72,7 @@ export class EurekaServiceComponent implements OnInit, OnDestroy {
             .body(eurekaInstance.app + ' / ' + eurekaInstance.instanceId)
             .open()
             .then((dialog: any) => {
-                return dialog.result
+                return dialog.result;
             })
             .then((result: any) => {
                 // FORM APPROPRIATE APPSERVICE CALL

@@ -1,57 +1,62 @@
 <div class="row">
     <!--APPLICATIONS / SERVICES -->
-    <div class="col-md-6">
-        <div class="panel application panel-primary">
+<!--     <div class="col-md-6"> -->
+<!--         <div class="panel application panel-primary"> -->
 
-            <div class="panel-heading">
-                <span id="refreshServices" class="glyphicon glyphicon-refresh pull-left" aria-hidden="false"
-                      (click)="refreshData()" title="Refresh Services"></span>
-                <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false"
-                      (click)="showSettingsInfo()" title="View Settings"></span>
-                <h3 id="panel-title" class="panel-title">Services ({{eurekaServices ? eurekaServices.length :
-                    '0'}})</h3>
-            </div>
+<!--             <div class="panel-heading"> -->
+<!--                 <span id="refreshServices" class="glyphicon glyphicon-refresh pull-left" aria-hidden="false" -->
+<!--                       (click)="refreshData()" title="Refresh Services"></span> -->
+<!--                 <span id="settings" class="glyphicon glyphicon-cog pull-right" aria-hidden="false" -->
+<!--                       (click)="showSettingsInfo()" title="View Settings"></span> -->
+<!--                 <h3 id="panel-title" class="panel-title">Services ({{eurekaServices ? eurekaServices.length : -->
+<!--                     '0'}})</h3> -->
+<!--             </div> -->
 
-            <div class="panel-body">
-                <div class="panel service panel-primary" *ngFor="let eurekaService of eurekaServices">
+<!--             <div class="panel-body"> -->
+<!--                 <div class="panel service panel-primary" *ngFor="let eurekaService of eurekaServices"> -->
 
-                    <div class="panel-heading" (click)="eurekaService.collapseBody = !eurekaService.collapseBody">
-                        {{eurekaService.name | uppercase}} ({{eurekaService.instances ? eurekaService.instances.length :
-                        '0'}})
-                        <span class="pull-right"><i
-                                class="glyphicon {{eurekaService.collapseBody ? ' glyphicon-chevron-up' : ' glyphicon-chevron-down'}}"></i></span>
-                    </div>
+<!--                     <div class="panel-heading" (click)="eurekaService.collapseBody = !eurekaService.collapseBody"> -->
+<!--                         {{eurekaService.name | uppercase}} ({{eurekaService.instances ? eurekaService.instances.length : -->
+<!--                         '0'}}) -->
+<!--                         <span class="pull-right"><i -->
+<!--                                 class="glyphicon {{eurekaService.collapseBody ? ' glyphicon-chevron-up' : ' glyphicon-chevron-down'}}"></i></span> -->
+<!--                     </div> -->
 
-                    <div class="panel-body {{eurekaService.collapseBody ? 'collapse' : ''}}">
-                        <div class="row data" *ngFor="let eurekaServiceInstance of eurekaService.instances">
-                            <div class="col-xs-3">{{eurekaServiceInstance.instanceInfo.app}}</div>
-                            <div class="col-xs-6">{{eurekaServiceInstance.instanceInfo.instanceId}}</div>
-                            <div class="col-xs-3 btn-toolbar text-right">
-                                <button id="kill" class="btn btn-xs btn-danger" type="button"
-                                        (click)="kill(eurekaServiceInstance.instanceInfo)" title="Kill Service">K
-                                </button>
-                                <button id="load" class="btn btn-xs btn-primary" type="button"
-                                        (click)="load(eurekaServiceInstance.instanceInfo)" title="Load Service">L
-                                </button>
-                                <button id="exception" class="btn btn-xs btn-warning" type="button"
-                                        (click)="exception(eurekaServiceInstance.instanceInfo)"
-                                        title="Exception Service">E
-                                </button>
-                                <button id="memory" class="btn btn-xs btn-info" type="button"
-                                        (click)="memory(eurekaServiceInstance.instanceInfo)" title="Memory Service">M
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--                     <div class="panel-body {{eurekaService.collapseBody ? 'collapse' : ''}}"> -->
+<!--                         <div class="row data" *ngFor="let eurekaServiceInstance of eurekaService.instances"> -->
+<!--                             <div class="col-xs-3">{{eurekaServiceInstance.instanceInfo.app}}</div> -->
+<!--                             <div class="col-xs-6">{{eurekaServiceInstance.instanceInfo.instanceId}}</div> -->
+<!--                             <div class="col-xs-3 btn-toolbar text-right"> -->
+<!--                                 <button id="kill" class="btn btn-xs btn-danger" type="button" -->
+<!--                                         (click)="kill(eurekaServiceInstance.instanceInfo)" title="Kill Service">K -->
+<!--                                 </button> -->
+<!--                                 <button id="load" class="btn btn-xs btn-primary" type="button" -->
+<!--                                         (click)="load(eurekaServiceInstance.instanceInfo)" title="Load Service">L -->
+<!--                                 </button> -->
+<!--                                 <button id="exception" class="btn btn-xs btn-warning" type="button" -->
+<!--                                         (click)="exception(eurekaServiceInstance.instanceInfo)" -->
+<!--                                         title="Exception Service">E -->
+<!--                                 </button> -->
+<!--                                 <button id="memory" class="btn btn-xs btn-info" type="button" -->
+<!--                                         (click)="memory(eurekaServiceInstance.instanceInfo)" title="Memory Service">M -->
+<!--                                 </button> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </div> -->
 
     <!-- EVENT LOG -->
+<!--     <div class="col-md-6"> -->
+<!--         <app-settings *ngIf="showSettings"></app-settings> -->
+<!--         <app-email *ngIf="showSettings"></app-email> -->
+<!--         <app-eventlog *ngIf="!showSettings"></app-eventlog>        -->
+<!--     </div> -->
+    <!-- EMAIL -->
     <div class="col-md-6">
-        <app-settings *ngIf="showSettings"></app-settings>
-        <app-eventlog *ngIf="!showSettings"></app-eventlog>
+        <app-email></app-email>
     </div>
 
 </div>

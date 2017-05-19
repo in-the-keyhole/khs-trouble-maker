@@ -1,0 +1,53 @@
+.panel > .panel-heading {
+    background-color: rgb(220, 94, 33);
+}
+
+button#done {
+    background-color: rgb(254, 237, 230);
+    color: #000;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    font-size: .75em;
+    margin-bottom: 2px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+input {
+    font-size: 16px;
+    border: 1px solid #b3b3b3;
+    display: block;
+    width: 100%;
+    line-height: 18px;
+    padding: 10px 11px;
+    height: 30px;
+}
+
+.input-error {
+    color: red;
+    font-size: 12px;
+}
+
+button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    color: #FFFFFF;
+    background-color: #3093c7;
+    border: 1px solid #25729a;
+}
+
+button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.errorMessage {
+    font-weight: bold;
+    color: red;
+}

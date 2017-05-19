@@ -1,0 +1,30 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 id="panel-title" class="panel-title">Settings</h3>
+    </div>
+
+    <div id="events" class="panel-body">
+        <h1>RON TEST</h1>
+        <form [formGroup]="emailForm" (ngSubmit)="onsubmit()">
+            <div class="form-group" *ngIf="errorMessage">
+                <span class="errorMessage">{{errorMessage}}</span>
+            </div>
+            <div class="form-group">
+                <label for="fullname">Fullname</label>
+                <input type="text" id="fullname" class="form-control" formControlName="fullname" required>
+                <div *ngIf="formErrors.fullname" class="input-error">{{ formErrors.fullname }}</div>
+            </div>
+
+            <div class="form-group">
+                <label for="emailaddress">Email address</label>
+                <input type="emailaddress" id="emailaddress" class="form-control" formControlName="emailaddress" required>
+                <div *ngIf="formErrors.emailaddress" class="input-error">
+                    {{ formErrors.emailaddress }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-default" [disabled]="!loginForm.valid">Add email</button>
+
+        </form>
+    </div>
+</div>
