@@ -3,9 +3,9 @@
         <h3 id="panel-title" class="panel-title">Settings</h3>
     </div>
 
-    <div id="events" class="panel-body">
+    <div id="addemail" class="panel-body">
         <h1>RON TEST</h1>
-        <form [formGroup]="emailForm" (ngSubmit)="onsubmit()">
+        <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
             <div class="form-group" *ngIf="errorMessage">
                 <span class="errorMessage">{{errorMessage}}</span>
             </div>
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-default" [disabled]="!loginForm.valid">Add email</button>
+            <button type="submit" class="btn btn-default" [disabled]="!emailForm.valid">Add email</button>
 
         </form>
     </div>

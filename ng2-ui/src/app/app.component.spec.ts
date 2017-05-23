@@ -8,6 +8,7 @@ import {EurekaServiceModule} from "./eurekaservice/eurekaservice.module";
 //import { SettingsComponent } from './settings.component';
 import {EventlogModule} from "./eventlog/eventlog.module";
 import {SettingsModule} from "./settings/settings.module";
+import {EmailModule} from "./email/email.module";
 import {AppService} from "./app.service";
 
 describe('AppComponent', () => {
@@ -23,6 +24,7 @@ describe('AppComponent', () => {
                 HttpModule,
                 EventlogModule,
                 SettingsModule,
+                EmailModule,
                 EurekaServiceModule
             ],
             providers: [AppService]

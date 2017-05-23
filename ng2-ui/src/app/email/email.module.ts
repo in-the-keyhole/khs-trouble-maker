@@ -7,6 +7,9 @@ import {EmailComponent} from './email.component';
         CommonModule,
         ReactiveFormsModule
     ],
+    exports: [
+        EmailComponent
+    ],
     declarations: [
         EmailComponent
     ]

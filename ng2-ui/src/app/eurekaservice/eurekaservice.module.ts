@@ -10,11 +10,11 @@ import {BootstrapModalModule} from "angular2-modal/plugins/bootstrap";
 @NgModule({
     imports: [
         CommonModule,
-       /* EventlogModule,
-        SettingsModule, */
+        EventlogModule,
+        SettingsModule,
+        EmailModule,
         ModalModule.forRoot(),
-        BootstrapModalModule,
-        EmailModule
+        BootstrapModalModule
     ],
     exports: [
         EurekaServiceComponent

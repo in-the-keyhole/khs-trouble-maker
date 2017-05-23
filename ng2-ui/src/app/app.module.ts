@@ -18,10 +18,10 @@ import {EmailModule} from "./email/email.module";
         BrowserModule,
         FormsModule,
         HttpModule,
-      /*  EventlogModule,
-        SettingsModule, */
-        EurekaServiceModule,
-        EmailModule
+        EventlogModule,
+        SettingsModule,
+        EmailModule,
+        EurekaServiceModule
     ],
     providers: [AppService],
     bootstrap: [AppComponent]
