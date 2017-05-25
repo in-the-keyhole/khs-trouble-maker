@@ -4,7 +4,10 @@
     </div>
 
     <div id="addemail" class="panel-body">
-        <h1>RON TEST</h1>
+        <div class="row data" *ngFor="let email of emailList">
+            <div class="col-xs-4">{{email.fullName}}</div>
+            <div class="col-xs-4">{{email.emailAddress}}</div>
+        </div>
         <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
             <div class="form-group" *ngIf="errorMessage">
                 <span class="errorMessage">{{errorMessage}}</span>

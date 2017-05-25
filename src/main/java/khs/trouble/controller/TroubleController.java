@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import khs.trouble.model.Email;
 import khs.trouble.model.Event;
 import khs.trouble.model.Service;
 import khs.trouble.model.ServiceContainer;
+import khs.trouble.service.impl.EmailService;
 import khs.trouble.service.impl.EventService;
 import khs.trouble.service.impl.TroubleService;
 
@@ -30,6 +32,9 @@ public class TroubleController {
 
 	@Autowired
 	EventService eventService;
+	
+	@Autowired
+	EmailService emailService;
 
 	@Autowired
 	DiscoveryClient discoveryClient;
@@ -139,5 +144,20 @@ public class TroubleController {
 	@ResponseBody
 	public boolean valid(@PathVariable("token") String ltoken) {
 		return token.equals(ltoken);
+	}
+	
+	@RequestMapping(value = "/emails", method = RequestMethod.GET)
+	@ResponseBody
+	public Iterable<Email> retrieveEmails() {
+		return emailService.emails();		
+	}
+	
+	@RequestMapping(value = "/emails{fullname}{emailaddress}", method = RequestMethod.POST)
+	@ResponseBody
+	public Email updateEmail(@PathVariable("fullname") String fullName, @PathVariable("emailaddress") String emailAddress, HttpServletRequest request) {
+		Email email = new Email();
+		email.setFullName(fullName);
+		email.setEmailAddress(emailAddress);
+		return emailService.updateEmail(email);		
 	}
 }
