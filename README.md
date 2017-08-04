@@ -130,6 +130,6 @@ Here's a [LINK](https://github.com/in-the-keyhole/khs-trouble-maker-client) to t
 
 Trouble Maker is implemented to register itself with a Eureka registry. You can set Eureka client properties from the command line. Here's how a Eureka registry location is set from the command line:
 
-	java -jar khs-trouble-maker.jar -Deureka.serviceUrl.default=http://localhost:8761/eureka/
+	java -jar khs-trouble-maker.jar -Deureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka/
 
 You can also create a Jar and set properties in the `src/main/resources/eureka-client.properties` file. 
