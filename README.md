@@ -15,7 +15,7 @@ Trouble Maker is configurable to produce a variety of troublemaking - like heavy
 
 Related: Netflix implemented `Chaos Monkey` which also randomly take down services during normal business hours. However, Chaos Monkey is based on the EC2 API, while Trouble Maker is not dependent on the cloud, so it can be used within an enterprise environment.
 
-##Quick Links
+## Quick Links
 [Trouble Maker Client](https://github.com/in-the-keyhole/khs-trouble-maker-client)
 
 [Trouble Maker Spring Boot Starter](https://github.com/in-the-keyhole/khs-spring-boot-troublemaker-starter)
@@ -27,9 +27,9 @@ Trouble Maker is a Java Spring Boot application that communicates with a client 
 
 By default, when started, once per day Monday through Friday, a random service will be selected and killed. This option can be turned off, and when this occurs, can be configured. See configuration options section below. 
 
-####Installing And Running
+#### Installing And Running
 
-#####Dashboard WEB UI 
+##### Dashboard WEB UI 
 
 1. Git clone this repo.
 
@@ -66,7 +66,7 @@ NOTE: The Dashboard defaults to and discovers services from a local instance of 
 
 ![](/img/trouble-screen.png)
  
-####Dashboard Trouble Options
+#### Dashboard Trouble Options
 From the dashboard a service can be selected and the following troubles applied: 
 
 `KILL` - Terminate the service (i.e. system exit will be performed). Tests fail over and alert mechanisms.
@@ -77,7 +77,7 @@ From the dashboard a service can be selected and the following troubles applied:
 
 `EXCEPTION` - The selected service will throw an exception. This tests the exception handling, logging, handling, and reporting mechanisms of the service.
 
-####Configuration Options
+#### Configuration Options
 
 These options are defined in the property file located at src/main/resources/META-INF/spring/trouble.properties
 
@@ -103,7 +103,7 @@ These properties can be set from the command line using VM argument. An example 
 
 	java -jar khs-trouble-maker.jar -Dtrouble.timeout=200000
 
-####Pluggable Service Registry
+#### Pluggable Service Registry
 
 By default, Trouble Maker uses Netflix's Eureka service registry. However, any other service registry mechanism can be used.  Trouble Maker uses a service registry to discover services instances that it can apply trouble to.  
 
@@ -120,13 +120,13 @@ Then register it in the `src/main/resources/META-INF/spring/application-context-
 	<bean id="serviceregistry" class="khs.trouble.service.impl.MyServiceRegistry">
 	</bean> 
 
-####Token-Based Access 
+#### Token-Based Access 
 
 Requests made to a client trouble servlet supplies a token defined in the `trouble.properties` in the request header. This token needs to match the token supplied in the trouble client servlets init parameters. If they match then the operation will be performed. This type of access should be sufficient for internal behind-the-firewall access.
 
 Here's a [LINK](https://github.com/in-the-keyhole/khs-trouble-maker-client) to the Trouble Client repository.  
 
-####Eureka Registry Properties 
+#### Eureka Registry Properties 
 
 Trouble Maker is implemented to register itself with a Eureka registry. You can set Eureka client properties from the command line. Here's how a Eureka registry location is set from the command line:
 
