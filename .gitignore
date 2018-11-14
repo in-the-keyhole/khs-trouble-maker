@@ -7,3 +7,4 @@
 !/src/main/webapp/WEB-INF
 npm-debug.log*
 .DS_Store
+/.idea/
